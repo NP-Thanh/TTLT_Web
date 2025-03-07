@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý thông báo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/notify_manage_style.css">
+</head>
+<body>
+<div class="admin-container">
+    <div id="sidebar-placeholder"></div>
+
+    <div class="content">
+        <header>
+            <h2>Quản lý thông báo</h2>
+        </header>
+        <section>
+            <button class="btn-notify" onclick="toggleNotificationForm()">Thông báo</button>
+            <!-- Form thông báo -->
+            <form id="notificationForm" class="hidden">
+                <label for="customerSelect">Khách hàng:</label>
+                <select id="customerSelect" style="width: 100%;">
+                    <option value="all">Tất cả</option>
+                    <option value="active">Hoạt động</option>
+                    <option value="restricted">Hạn chế</option>
+                </select>
+
+                <label for="notificationType">Loại thông báo:</label>
+                <select id="notificationType" style="width: 100%;">
+                    <option value="order">Đơn hàng</option>
+                    <option value="newProduct">Sản phẩm mới</option>
+                    <option value="accountSecurity">Bảo mật tài khoản</option>
+                    <option value="promotion">Chương trình giảm giá</option>
+                </select>
+
+                <label for="notificationTitle">Tiêu đề nội dung:</label>
+                <input type="text" id="notificationTitle" placeholder="Nhập tiêu đề" required>
+
+                <label for="notificationContent">Nội dung:</label>
+                <textarea id="notificationContent" rows="5" placeholder="Nhập nội dung thông báo" style="resize: none"
+                          required></textarea>
+
+                <button type="button" onclick="sendNotification()">Gửi thông báo</button>
+            </form>
+
+            <!-- Bộ lọc -->
+            <div class="filters">
+                <div class="d-flex align-items-center">
+                    <h3>Bộ lọc</h3>
+                    <button class="btn-clear" onclick="resetFilters()">Xóa</button>
+                </div>
+                <div class="filter-group">
+                    <label for="filterID">Mã thông báo:</label>
+                    <select id="filterID" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="asc">Tăng dần</option>
+                        <option value="desc">Giảm dần</option>
+                    </select>
+
+                    <label for="filterType">Loại:</label>
+                    <select id="filterType" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="order">Đơn hàng</option>
+                        <option value="product">Sản phẩm mới</option>
+                        <option value="account">Bảo mật tài khoản</option>
+                        <option value="sales">Khuyến mãi</option>
+                    </select>
+
+                    <label for="filterUser">Đối tượng:</label>
+                    <select id="filterUser" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="all">Tất cả</option>
+                        <option value="active">Hoạt động</option>
+                        <option value="inactive">Hạn chế</option>
+                    </select>
+
+                    <label for="filterDate">Ngày:</label>
+                    <select id="filterDate" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="asc">Tăng dần</option>
+                        <option value="desc">Giảm dần</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Bảng thông tin -->
+            <table>
+                <thead>
+                <tr>
+                    <th>Mã thông báo</th>
+                    <th>Loại</th>
+                    <th>Tiêu đề</th>
+                    <th>Nội dung</th>
+                    <th>Đối tượng</th>
+                    <th>Ngày</th>
+                </tr>
+                </thead>
+                <tbody id="userTable">
+                <!-- Các thông báo thêm vào đây -->
+                <tr>
+                    <td>TB001</td>
+                    <td>Sản phẩm mới</td>
+                    <td>Về hàng key Office 2021</td>
+                    <td>Key office 2021 vừa cập nhật số lượng, hãy nhanh tay mua!</td>
+                    <td>Tất cả</td>
+                    <td>17:05 20/11/2024</td>
+                </tr>
+                <tr>
+                    <td>TB002</td>
+                    <td>Bảo mật tài khoản</td>
+                    <td>Xác thực tài khoản</td>
+                    <td>Hãy xác thực email và số điện thoại để sử dụng dịch vụ tốt nhất!</td>
+                    <td>Hạn chế</td>
+                    <td>16:45 10/9/2024</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+<script src="../JS/sidebar_script.js"></script>
+<script src="../JS/notify_management_script.js"></script>
+</body>
+</html>

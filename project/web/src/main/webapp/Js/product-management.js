@@ -1,0 +1,62 @@
+// Toggle visibility for add product form
+function toggleAddForm() {
+    const form = document.getElementById('addProductForm');
+    form.classList.toggle('hidden');
+}
+// Toggle visibility for edit product form
+function toggleEditForm() {
+    const form = document.getElementById('editProductForm');
+    form.classList.toggle('hidden');
+}
+function toggleAddKeyForm() {
+    const form = document.getElementById('editKeyForm');
+    form.classList.toggle('hidden');
+}
+
+
+// Load product info for editing
+function loadProductInfo() {
+    const productId = document.getElementById('editProductId').value; // ID của sản phẩm cần chỉnh sửa
+    const rows = document.querySelectorAll('#productTable tr');
+
+    for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        if (cells[0] && cells[0].innerText === productId) {
+            document.getElementById('editProductDetails').classList.remove('hidden'); // Hiện form sửa sản phẩm
+
+            // Điền giá trị vào form
+            document.getElementById('editIDProduct').value = productId; // Tên sản phẩm
+            document.getElementById('editProductName').value = cells[2].innerText; // Tên sản phẩm
+            document.getElementById('editProductType').value = cells[1].innerText; // Loại sản phẩm
+            document.getElementById('editProductPrice').value = cells[3].innerText; // Giá sản phẩm
+            document.getElementById('editProductDuration').value = cells[4].innerText; // Thời hạn
+            document.getElementById('editProductImage').value = cells[6].querySelector('img').src; // Hình ảnh (URL của ảnh)
+
+
+            return;
+        }
+    }
+
+    alert('Không tìm thấy sản phẩm với mã này!');
+}
+function loadProductKeyInfo() {
+    const productId = document.getElementById('addProductId').value; // ID của sản phẩm cần chỉnh sửa
+    const rows = document.querySelectorAll('#productTable tr');
+
+    for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName('td');
+        if (cells[0] && cells[0].innerText === productId) {
+            document.getElementById('addKey').classList.remove('hidden'); // Hiện form sửa sản phẩm
+
+            // Điền giá trị vào form
+            document.getElementById('idProductKey').value = productId; // Tên sản phẩm
+
+
+
+            return;
+        }
+    }
+
+    alert('Không tìm thấy sản phẩm với mã này!');
+}
+

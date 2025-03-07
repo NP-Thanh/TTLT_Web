@@ -1,0 +1,71 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer Design</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="CSS_JSP/footer.css">
+</head>
+<body>
+<div class="container">
+    <div class="footer" id="footer">
+        <div id="logo">
+            <img src="CSS_JSP/logo.png" height="40" width="175" alt="Company Logo"/>
+            <p>Theo dõi chúng tôi trên</p>
+            <div class="social-icons">
+                <a href="#" target="_blank">
+                    <i class="fab fa-facebook" style="font-size: 24px; color: #3b5998;"></i>
+                </a>
+                <a href="#" target="_blank">
+                    <i class="fab fa-youtube" style="font-size: 24px; color: #FF0000;"></i>
+                </a>
+                <a href="#" target="_blank">
+                    <i class="fab fa-instagram" style="font-size: 24px; color: #C13584;"></i>
+                </a>
+            </div>
+        </div>
+        <div class="column" id="product-categories">
+            <h3>DANH MỤC SẢN PHẨM</h3>
+            <ul>
+                <li><a href="../HTML/giai_tri.html" target="_top">Giải trí</a></li>
+                <li><a href="../HTML/hoc_tap.html" target="_top">Học tập</a></li>
+                <li><a href="../HTML/lam_viec.html" target="_top">Làm việc</a></li>
+                <li><a href="../HTML/tien_ich.html" target="_top">Tiện ích</a></li>
+                <li><a href="../HTML/bao_mat.html" target="_top">Bảo mật</a></li>
+                <li><a href="../HTML/luu_tru.html" target="_top">Lưu trữ</a></li>
+            </ul>
+        </div>
+        <div class="column" id="guides">
+            <h3>HƯỚNG DẪN</h3>
+            <ul>
+                <li><a href="../trungtamtrogiup.jsp" target="_blank">Trung tâm trợ giúp</a></li>
+                <li><a href="../dieukhoanvadichvu.jsp" target="_blank">Điều khoản dịch vụ</a></li>
+                <li><a href="../chinhsachbaomat.jsp" target="_blank">Chính sách bảo mật</a></li>
+            </ul>
+        </div>
+        <div class="column" id="account">
+            <h3>TÀI KHOẢN</h3>
+            <ul>
+                <li><a href="../HTML/gio_hang.html" target="_top">Giỏ hàng</a></li>
+                <li><a href="../HTML/taikhoan.html" target="_top">Trang cá nhân</a></li>
+            </ul>
+        </div>
+        <div class="column" id="about-us">
+            <h3>GIỚI THIỆU</h3>
+            <ul>
+                <li><a href="../vechungtoi.jsp" target="_blank">Về chúng tôi</a></li>
+                <li><a href="../lienhehotro.jsp" target="_blank">Liên hệ hỗ trợ</a></li>
+            </ul>
+        </div>
+        <div class="bottom-text">
+            Trụ sở chính: Khu phố 6, phường Linh Trung, thành phố Thủ Đức, Thành phố Hồ Chí Minh<br>
+            Công ty cổ phần (NASDAQ: MSFT) Dow Jones Industrial Average Component S&P 500 Component<br>
+            Email: nlu@hcmuaf.edu.vn - Hotline: 028-38966780 (Vui lòng gửi tin nhắn)<br>
+            © Copyright 2024 microsoft.vn. All rights reserved.
+        </div>
+    </div>
+</div>
+</body>
+</html>

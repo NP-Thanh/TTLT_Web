@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hóa Đơn</title>
+    <link rel="stylesheet" href="../CSS/hoa_don_style.css">
+</head>
+<body>
+<div class="page" id="page">
+    <iframe class="iframe-header" src="./header.html" frameborder="0" scrolling="no"></iframe>
+    <div class="body_content" id="body_page">
+        <div class="container alpha">
+            <div class="d-flex justify-between items-center">
+                <h5 class="font-600 text-title">
+                    Hóa đơn
+                </h5>
+                <div class="text-title text-gray font-600">
+                    <span>Mã đơn hàng:</span>
+                    <span class="text-code">#WBT2024HT2Y6</span>
+                </div>
+            </div>
+            <div class="info d-flex items-center">
+                <div style="margin-bottom: 15px; margin-left: 139px">
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Tên người nhận:</label>
+                        <input class="text-gray editable" id="name" style="margin-left: 10px" value="Nguyen Phuc Thanh"
+                               readonly>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Số điện thoại:</label>
+                        <input class="text-gray editable" id="phone-number" style="margin-left: 10px" value="0826661039"
+                               readonly>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Email:</label>
+                        <input class="text-gray editable" id="email" style="margin-left: 10px"
+                               value="22130259@st.hcmuaf.edu.vn" readonly>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Sản phẩm:</label>
+                        <input class="text-gray editable" id="product" style="margin-left: 10px"
+                               value="Bản quyền Microsoft Office 2019"
+                               readonly>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Số lượng:</label>
+                        <input class="text-gray editable" id="quality" style="margin-left: 10px" value="x1"
+                               readonly>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Ngày giao dịch:</label>
+                        <input class="text-gray editable" id="date" style="margin-left: 10px" value="19:40 20/11/2024"
+                               readonly>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Tổng tiền:</label>
+                        <input class="text-gray editable" id="cost" style="margin-left: 10px" value="349,000đ"
+                               readonly>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Thanh toán:</label>
+                        <input class="text-gray editable" id="bank" style="margin-left: 10px" value="Momo"
+                               readonly>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Trạng thái:</label>
+                        <input class="text-green font-600 editable" id="status" style="margin-left: 10px" value="Đã thanh toán"
+                               readonly>
+                    </div>
+                </div>
+                <div class="pd-12" style="background: #f6f8f9; margin-top: auto; color: #7a8c96; font-size: 13px;
+                    width: 97%; margin-left: auto; margin-right: auto;">
+                    Cảm ơn bạn đã sử dụng dịch vụ, nếu có vấn đề thắc mắc hãy
+                    <span class="font-600" style="color: #5f6c73; cursor: pointer" onclick="window.location.href='#'">liên hệ chúng tôi.</span>
+                </div>
+            </div>
+            <div class="related-products">
+                <h2 class="font-600 text-title" style="margin-bottom: 15px">Sản phẩm liên quan</h2>
+                <div class="products-grid">
+                    <div class="product" onclick="window.location.href='../HTML/chi_tiet_sp.html'">
+                        <img src="../Images/Product/Office 366 1 SLOT.jpg" alt="Sản phẩm 1" class="product-image">
+                        <p class="product-name">Office 365 1 slot</p>
+                        <p class="product-price">350,000đ</p>
+                    </div>
+                    <div class="product" onclick="window.location.href='../HTML/chi_tiet_sp.html'">
+                        <img src="../Images/Product/Office365.jpg" alt="Sản phẩm 2" class="product-image">
+                        <p class="product-name">Office 365</p>
+                        <p class="product-price">450,000đ</p>
+                    </div>
+                    <div class="product" onclick="window.location.href='../HTML/chi_tiet_sp.html'">
+                        <img src="../Images/Product/Office2021.jpg" alt="Sản phẩm 3" class="product-image">
+                        <p class="product-name">Office 2021</p>
+                        <p class="product-price">550,000đ</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container omega">
+            <div class="box-shadow border-gray rate">
+                <h2 class="font-600 text-title" style="margin-bottom: 10px">Đánh Giá</h2>
+                <div class="d-flex rating">
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                </div>
+                <textarea class="review-box" placeholder="Viết đánh giá của bạn..."></textarea>
+                <button class="font-sz18 font-600 submit-button">Gửi</button>
+                <div class="pd-12" style="background: #f6f8f9; margin-top: 20px; color: #7a8c96; font-size: 13px">
+                    Hãy trải nghiệm sản phẩm 3-5 ngày trước khi gửi đánh giá.
+                </div>
+            </div>
+        </div>
+    </div>
+    <iframe class="iframe-footer" src="./footer.html" frameborder="0" scrolling="no"></iframe>
+    <script src="../JS/hoa_don_script.js"></script>
+</div>
+</body>
+</html>

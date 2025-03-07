@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang giỏ hàng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="../CSS/gio_hang_style.css">
+    <script src="../JS/gio_hang_script.js"></script>
+</head>
+<body>
+<div class="page" id="page">
+    <iframe class="iframe-header" src="./header.html" frameborder="0" scrolling="no"></iframe>
+    <div class="body_content" id="body_page">
+        <div class="container alpha">
+            <div class="d-flex justify-between items-center">
+                <h5 class="font-600 text-title">
+                    Giỏ hàng
+                </h5>
+                <span class="text-gray">
+                        <span id="countProduct">3</span> Sản phẩm
+                    </span>
+            </div>
+            <div class="list-item">
+                <div class="d-flex items-center loc-relative item">
+                    <div class="product-img">
+                        <img src="../Images/Product/Office2021.jpg" height="120" width="120"/>
+                    </div>
+                    <div class="w-full pd-12">
+                        <div class="w-full d-flex" style="padding-left: 10px; height: auto">
+                            <h4 class="font-600 text-title">Bản quyền Microsoft Office 2021...</h4>
+                        </div>
+                        <div class="w-full wrapper justify-between" style="margin-top: 8px; height: auto">
+                            <span class="duration-round-border">Thời hạn: vĩnh viễn</span>
+                            <div class="d-flex btn-add-sub">
+                                <span class="d-flex items-center justify-center btn">-</span>
+                                <div class="d-flex items-center justify-center count">
+                                    <span>1</span>
+                                </div>
+                                <span class="d-flex items-center justify-center btn">+</span>
+                            </div>
+                            <div class="d-flex items-center justify-center" style="width: 200px">
+                                <span class="main-cost cost">11,500,000đ</span>
+                                <span class="cost checkbox-cost">349,000đ</span>
+                            </div>
+                        </div>
+                        <hr class="w-full" style="height: auto">
+                        <input type="checkbox" class="select-checkbox">
+                        <div class="f-right">
+                            <div class="d-flex items-center justify-center btn-delete">
+                                <i class="fas fa-trash-alt fa-lg" style="color: #ed5252;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex items-center loc-relative item">
+                    <div class="product-img">
+                        <img src="../Images/Product/Windows11Professional.jpg" height="120" width="120"/>
+                    </div>
+                    <div class="w-full pd-12">
+                        <div class="w-full d-flex" style="padding-left: 10px; height: auto">
+                            <h4 class="font-600 text-title">Bản quyền Windows 11 Profess...</h4>
+                        </div>
+                        <div class="w-full wrapper justify-between" style="margin-top: 8px; height: auto">
+                            <span class="duration-round-border">Thời hạn: vĩnh viễn</span>
+                            <div class="d-flex btn-add-sub">
+                                <span class="d-flex items-center justify-center btn">-</span>
+                                <div class="d-flex items-center justify-center count">
+                                    <span>1</span>
+                                </div>
+                                <span class="d-flex items-center justify-center btn">+</span>
+                            </div>
+                            <div class="d-flex items-center justify-center" style="width: 200px">
+                                <span class="main-cost cost">4,667,147đ</span>
+                                <span class="cost checkbox-cost">99,000đ</span>
+                            </div>
+                        </div>
+                        <hr class="w-full" style="height: auto">
+                        <input type="checkbox" class="select-checkbox">
+                        <div class="f-right">
+                            <div class="d-flex items-center justify-center btn-delete">
+                                <i class="fas fa-trash-alt fa-lg" style="color: #ed5252;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex items-center loc-relative item">
+                    <div class="product-img">
+                        <img src="../Images/Product/GlaryUtilities1nam.jpg" height="120" width="120"/>
+                    </div>
+                    <div class="w-full pd-12">
+                        <div class="w-full d-flex" style="padding-left: 10px; height: auto">
+                            <h4 class="font-600 text-title">Glary Utilities PRO 5</h4>
+                        </div>
+                        <div class="w-full wrapper justify-between" style="margin-top: 8px; height: auto">
+                            <span class="duration-round-border">Thời hạn: 1 năm</span>
+                            <div class="d-flex btn-add-sub">
+                                <span class="d-flex items-center justify-center btn">-</span>
+                                <div class="d-flex items-center justify-center count">
+                                    <span>1</span>
+                                </div>
+                                <span class="d-flex items-center justify-center btn">+</span>
+                            </div>
+                            <div class="d-flex items-center justify-center" style="width: 200px">
+                                <span class="main-cost cost">900,000đ</span>
+                                <span class="cost checkbox-cost">159,000đ</span>
+                            </div>
+                        </div>
+                        <hr class="w-full" style="height: auto">
+                        <input type="checkbox" class="select-checkbox">
+                        <div class="f-right">
+                            <div class="d-flex items-center justify-center btn-delete">
+                                <i class="fas fa-trash-alt fa-lg" style="color: #ed5252;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="container omega">
+            <div class="box-shadow-payment border-gray payment" >
+                <h5 class="font-600 text-title" style="margin-bottom: 15px">Đơn hàng của bạn</h5>
+                <p class="font-600 upper-case text-middle">Sản phẩm</p>
+                <hr class="w-full" style="height: auto; margin-top: 5px">
+                <!-- Ô sản phẩm đc thêm vào -->
+                <hr class="w-full checkbox-content" style="height: auto; margin-top: 5px">
+                <div class="d-flex items-center justify-between" style="margin-top: 20px; margin-bottom: 20px">
+                    <div>
+                        <span class="text-gray">Tạm tính</span>
+                    </div>
+                    <div class="font-sz16 cost-all">0đ</div>
+                </div>
+                <div class="d-flex items-center">
+                    <i class="fas fa-ticket-alt fa-2x"></i>
+                    <p class="font-600 text-middle upper-case" style="margin-left: 10px">Mã ưu đãi</p>
+                </div>
+                <div class="d-flex items-center justify-between" style="margin-top: 15px; margin-bottom: 15px">
+                    <input placeholder="Nhập mã giảm giá" class="border-gray pd-12 text-gray" style="width: 230px">
+                    <button type="button" class="button-voucher">
+                        <span class="font-sz16" style="color: #1976d2">Áp dụng</span>
+                    </button>
+                </div>
+                <hr class="w-full" style="height: auto; margin-top: 5px">
+                <a href="thanh_toan.html">
+                    <button type="button" class="button-pay">
+                        <span class="font-sz18 font-600" style="color: white">Thanh toán ngay</span>
+                    </button>
+                </a>
+                <div class="pd-12" style="background: #f6f8f9; margin-top: 20px; color: #7a8c96; font-size: 13px">
+                    Thông tin cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng, tăng trải nghiệm sử dụng website, và cho các mục đích cụ thể khác đã được mô tả trong
+                    <span style="color: rgba(0,0,0,0.62); font-weight: 600 ">chính sách riêng tư của chúng tôi.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <iframe class="iframe-footer" src="./footer.html" frameborder="0" scrolling="no"></iframe>
+</div>
+
+</body>
+</html>

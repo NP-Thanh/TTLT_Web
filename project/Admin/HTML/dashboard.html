@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../CSS/dashboard_style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="admin-container">
+    <div id="sidebar-placeholder"></div>
+    <div class="content">
+        <div class="revenue">
+            <h2>Doanh thu</h2>
+            <!-- Phần sắp xếp -->
+            <div class="sorting" style="margin-bottom: 15px">
+                <div class="chart-sorting">
+                    <label for="chartTimeRange" style="font-size: 14px; margin-right: 5px">Biểu đồ:</label>
+                    <select id="chartTimeRange">
+                        <option value="7days">Tuần</option>
+                        <option value="month">Tháng</option>
+                        <option value="year">Năm</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Biểu đồ doanh thu -->
+            <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+        <!-- Top sản phẩm bán chạy -->
+        <div class="top-products">
+            <h2>Top sản phẩm bán chạy</h2>
+            <div class="products-sorting" style="margin-bottom: 15px">
+                <label for="productTimeRange" style="font-size: 14px; margin-right: 5px">Sắp xếp:</label>
+                <select id="productTimeRange">
+                    <option value="1day">1 ngày</option>
+                    <option value="7days">7 ngày</option>
+                    <option value="1month">1 tháng</option>
+                    <option value="1year">1 năm</option>
+                </select>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="../../Images/Product/Office365.jpg">
+                    <h3>Office 365</h3>
+                    <p>150 lượt bán</p>
+                </div>
+                <div class="product-card">
+                    <img src="../../Images/Product/Office2019.jpg">
+                    <h3>Office 2019</h3>
+                    <p>120 lượt bán</p>
+                </div>
+                <div class="product-card">
+                    <img src="../../Images/Product/Office2019macOS.jpg">
+                    <h3>Office macOS 2019</h3>
+                    <p>100 lượt bán</p>
+                </div>
+                <div class="product-card">
+                    <img src="../../Images/Product/Windows11Professional.jpg">
+                    <h3>Windows 11 Pro</h3>
+                    <p>90 lượt bán</p>
+                </div>
+                <div class="product-card">
+                    <img src="../../Images/Product/GlaryUtilities1nam.jpg">
+                    <h3>Glary Utilities 1 năm</h3>
+                    <p>80 lượt bán</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../JS/dashboard_script.js"></script>
+    <script src="../JS/sidebar_script.js"></script>
+</div>
+</body>
+</html>

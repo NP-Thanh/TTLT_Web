@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng Dẫn Sử Dụng - Trung Tâm Hướng Dẫn</title>
+    <link rel="stylesheet" type="text/css" href="CSS_JSP/trungtamtrogiup.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="main-title">Hướng Dẫn Sử Dụng Trung Tâm Hướng Dẫn</h1>
+
+    <h2 class="section-title">Hướng dẫn sử dụng tài liệu</h2>
+    <p class="section-description">Trang Trung Tâm Trợ Giúp của chúng tôi cung cấp cho bạn các thông tin và hướng dẫn chi tiết về các sản phẩm và dịch vụ của chúng tôi, giúp bạn giải quyết mọi vấn đề một cách nhanh chóng và hiệu quả. Chúng tôi luôn sẵn sàng trợ giúp và tạo ra một trải nghiệm tốt nhất cho bạn.</p>
+    <p class="section-description">Trên trang trung tâm hướng dẫn này, bạn cũng có thể tìm kiếm toàn bộ từ A đến Z về các chức năng và quy trình của chúng tôi.</p>
+
+    <h2 class="section-title">Tìm kiếm bài viết</h2>
+    <p class="section-description">Các bài viết được sắp xếp và hệ thống cùng với tiêu đề chính xác liên quan tới các vấn đề của người dùng. Bạn có thể nhấn nút tìm kiếm (Search) để tìm kiếm bài viết tại đây.</p>
+
+    <h2 class="section-title">Cấu trúc các bài viết trong tài liệu</h2>
+    <p class="section-description">Các bài viết và danh mục hướng dẫn được chia thành các nhóm thư mục -> Các bài viết lớn -> Các bài viết nhỏ để hướng dẫn toàn bộ chi tiết.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Khoản</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/taikhoan.css">
+</head>
+<body>
+<div id="page" class="page">
+    <iframe class="iframe-header" src="..\HTML\header.html" frameborder="0" scrolling="no"></iframe>
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <li><a href="../HTML/taikhoan.html" style="color: #007bff;"><i class="fas fa-user"></i>Tài khoản</a></li>
+                <li><a href="sanphamvuaxem.html"><i class="fas fa-clock"></i>Sản phẩm vừa xem</a></li>
+                <li><a href="../HTML/lichsugiaodich.html"><i class="fas fa-history"></i>Lịch sử giao dịch</a></li>
+            </ul>
+        </div>
+        <div id="main-content" class="main-content-section">
+            <div id="stats-card" class="stats-card card">
+                <div class="stats-container">
+                    <div class="stat-item">Khách hàng<br>Giá bán lẻ</div>
+                    <div class="stat-item">Ngày tham gia<br>28/10/2024</div>
+                </div>
+            </div>
+
+            <div id="personal-info-card" class="personal-info-card card">
+                <h2>Thông tin cá nhân</h2>
+                <div class="form-group">
+                    <label for="username" class="form-label">Tên người dùng *</label>
+                    <input type="text" id="username" class="form-input personal-input" placeholder="Nhập tên người dùng">
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="form-label">Số điện thoại</label>
+                    <input type="text" id="phone" class="form-input personal-input" placeholder="Nhập số điện thoại">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-input personal-input" value="nlu@gmail.com" disabled>
+                </div>
+                <div class="form-group">
+                    <div class="form-label"></div>
+                    <button class="form-button personal-button" id="saveInfoButton">Lưu thông tin</button>
+                </div>
+            </div>
+
+            <div id="password-change-card" class="password-change-card card">
+                <h2>Đổi mật khẩu</h2>
+                <div class="form-group">
+                    <label for="old-password" class="form-label">Mật khẩu cũ</label>
+                    <input type="password" id="old-password" class="form-input password-input" placeholder="Nhập mật khẩu cũ">
+                </div>
+                <div class="form-group">
+                    <label for="new-password" class="form-label">Mật khẩu mới</label>
+                    <input type="password" id="new-password" class="form-input password-input" placeholder="Nhập mật khẩu mới">
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password" class="form-label">Nhập lại mật khẩu mới</label>
+                    <input type="password" id="confirm-password" class="form-input password-input" placeholder="Nhập lại mật khẩu mới">
+                </div>
+                <div class="form-group">
+                    <div class="form-label"></div>
+                    <button class="form-button password-button" id="changePasswordButton">Xác nhận thay đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <iframe class="iframe-footer" src="..\HTML\footer.html" frameborder="0" scrolling="no"></iframe>
+</div>
+
+<div id="notification" class="notification"></div>
+<script src="../JS/taikhoan.js"></script>
+</body>
+</html>

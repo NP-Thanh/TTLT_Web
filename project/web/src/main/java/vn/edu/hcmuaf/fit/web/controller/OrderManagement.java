@@ -1,0 +1,57 @@
+package vn.edu.hcmuaf.fit.web.controller;
+
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
+import vn.edu.hcmuaf.fit.web.model.OrderWithUser;
+import vn.edu.hcmuaf.fit.web.servieces.OrderServiece;
+
+import java.io.IOException;
+import java.util.List;
+
+@WebServlet(name = "OrderManagement", value = "/orderManagement")
+public class OrderManagement extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        OrderServiece orderServiece = new OrderServiece();
+        List<OrderWithUser> list= orderServiece.getAllOrders();
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("/orderManagement.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String orderId = request.getParameter("orderID");
+        String productName = request.getParameter("productName");
+        String status = request.getParameter("status");
+
+        if (status.equals("Paid")) {
+            status = "Đã thanh toán";
+        } else if (status.equals("NotPaid")) {
+            status = "Chưa thanh toán";
+        } else if (status.equals("Pending")) {
+            status = "Chờ xử lý";
+        }
+        OrderServiece orderServiece = new OrderServiece();
+
+        // Kiểm tra nếu orderId không rỗng và có thể chuyển đổi sang Integer
+        Integer orderIdInt = null;
+        if (orderId != null && !orderId.isEmpty()) {
+            try {
+                orderIdInt = Integer.parseInt(orderId);  // Chuyển đổi nếu có giá trị hợp lệ
+            } catch (NumberFormatException e) {
+                // Xử lý khi không thể chuyển đổi, ví dụ: báo lỗi cho người dùng
+                System.out.println("Invalid Order ID");
+            }
+        }
+
+        // Chỉ lọc đơn hàng nếu orderId hợp lệ
+        List<OrderWithUser> filteredOrders = orderServiece.filterOrders(orderIdInt, productName, status);
+
+        request.setAttribute("list", filteredOrders);
+        request.getRequestDispatcher("/orderManagement.jsp").forward(request, response);
+    }
+
+
+}

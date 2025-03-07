@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang thanh toán</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="../CSS/thanh_toan_style.css">
+</head>
+<body>
+<div class="page" id="page">
+    <iframe class="iframe-header" src="./header.html" frameborder="0" scrolling="no"></iframe>
+    <div class="body_content" id="body_page">
+        <div class="container alpha">
+            <div class="d-flex justify-between items-center">
+                <h5 class="font-600 text-title">
+                    Thông tin nhận hàng
+                </h5>
+                <div class="text-title text-gray font-600">
+                    <span>Mã đơn hàng:</span>
+                    <span class="text-code">#WBT2024HT2Y6</span>
+                </div>
+            </div>
+            <div class="info d-flex items-center">
+                <div style="margin-bottom: 15px; margin-left: 120px">
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Tên người nhận:</label>
+                        <input class="text-gray editable" id="name" style="margin-left: 10px" value="Nguyen Phuc Thanh"
+                               readonly>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Số điện thoại:</label>
+                        <input class="text-gray editable" id="phone-number" style="margin-left: 10px" value="0826661039"
+                               readonly>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Email:</label>
+                        <input class="text-gray editable" id="email" style="margin-left: 10px"
+                               value="22130259@st.hcmuaf.edu.vn" readonly>
+                    </div>
+                </div>
+
+                <div class="pd-12" style="background: #f6f8f9; margin-top: auto; color: #7a8c96; font-size: 13px">
+                    Hãy kiểm tra kĩ thông tin cá nhân để chúng tôi có thể liên hệ bạn dễ dàng và nhanh chóng.
+                    <span class="font-600" style="color: #5f6c73">Mã kích hoạt sản phẩm sẽ được gửi về email và số điện thoại !</span>
+                </div>
+            </div>
+            <h5 class="font-600 text-title" style="margin-top: 20px">
+                Thông tin thanh toán
+            </h5>
+            <div class="info transfer-info d-flex items-center" style="height: auto">
+                <div style="margin-bottom: 15px; margin-left: 55px">
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">NH thụ hưởng:</label>
+                        <div style="width: 200px">
+                            <select id="bankSelect" class="editable" onchange="updateTransferInfo()">
+                                <option value="momo">Momo</option>
+                                <option value="bidv">BIDV</option>
+                                <option value="mbbank">MBBank</option>
+                                <option value="vietcombank">Vietcombank</option>
+                                <!-- Các ngân hàng khác -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Chủ tài khoản:</label>
+                        <span class="text-gray" id="accountHolder">Nguyen Phuc Thanh</span>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Số tài khoản:</label>
+                        <span class="copyable text-gray" id="accountNumber" onclick="copyText('accountNumber')">123456789</span>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Nội dung:</label>
+                        <span class="copyable text-gray" id="description" onclick="copyText('description')">#WBT2024HT2Y6</span>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Số tiền:</label>
+                        <span class="copyable text-gray" id="amount" onclick="copyText('amount')">349,000đ</span>
+                    </div>
+                    <div class="d-flex info-item">
+                        <label class="font-600 font-sz16">Mã QR:</label>
+                        <img src="../Images/QRCode.png" alt="QR Code" class="qr-code">
+                    </div>
+                </div>
+                <div class="pd-12" style="background: #f6f8f9; margin-top: auto; color: #7a8c96; font-size: 13px">
+                    Vui lòng chọn NH thụ hưởng phù hợp và chuyển khoản đúng thông tin trên.
+                    <span class="font-600" style="color: #5f6c73">Chúng tôi sẽ không chịu trách nhiệm nếu đơn thanh toán sai nội dung và số tiền !</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="container omega">
+            <div class="box-shadow-payment border-gray payment">
+                <h5 class="font-600 text-title" style="margin-bottom: 15px">Đơn hàng của bạn</h5>
+                <p class="font-600 upper-case text-middle">Sản phẩm</p>
+                <hr class="w-full" style="height: auto; margin-top: 5px">
+                <div class="d-flex items-center justify-between" style="margin-top: 20px; margin-bottom: 20px">
+                    <div>
+                        <span class="text-gray">Bản quyền Microsoft Offic...</span>
+                        <span class="font-sz16">X 1</span>
+                    </div>
+                    <div class="font-sz16">349,000đ</div>
+                </div>
+                <hr class="w-full" style="height: auto; margin-top: 5px">
+                <div class="d-flex items-center justify-between" style="margin-top: 20px; margin-bottom: 20px">
+                    <div>
+                        <span class="text-gray">Số tiền cần thanh toán</span>
+                    </div>
+                    <div class="font-sz16">349,000đ</div>
+                </div>
+                <div class="d-flex items-center justify-between" style="margin-top: 20px; margin-bottom: 20px">
+                    <div>
+                        <span class="text-gray">Trạng thái</span>
+                    </div>
+                    <div class="font-sz16 font-600" id="status" style="color: rgba(255,0,0,0.7)">Chưa thanh toán</div>
+                </div>
+                <hr class="w-full" style="height: auto; margin-top: 5px">
+                <div class="wrapper justify-between">
+                    <button type="button" class="button-pay" onclick="confirmPayment()">
+                        <span class="font-sz18 font-600" id="confirmText" style="color: white">Xác nhận</span>
+                    </button>
+                    <button type="button" class="back-button" onclick="goBack()" id="btn-back">
+                        <span>Hủy</span>
+                    </button>
+                </div>
+                <div class="pd-12" style="background: #f6f8f9; margin-top: 20px; color: #7a8c96; font-size: 13px">
+                    Thông tin cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng, tăng trải nghiệm sử dụng website, và
+                    cho các mục đích cụ thể khác đã được mô tả trong
+                    <span style="color: rgba(0,0,0,0.62); font-weight: 600 ">chính sách riêng tư của chúng tôi.</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <iframe class="iframe-footer" src="./footer.html" frameborder="0" scrolling="no"></iframe>
+</div>
+<script src="../JS/thanh_toan_script.js"></script>
+</body>
+</html>

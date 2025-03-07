@@ -1,0 +1,111 @@
+/* Tổng quan */
+html, body, p {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    color: #404040;
+    font-family: Arial, sans-serif;
+    height: 100%;
+}
+
+.btn-add{
+    background: #4cbf6c;
+    font-weight: bold;
+}
+
+.btn-add:hover{
+    background: #409f5b;
+}
+
+.btn-edit:hover{
+    background: #0063d1;
+}
+
+/* Content */
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+header h1 {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #f64b4b;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+form.hidden,
+#editProductDetails.hidden {
+    display: none;
+}
+
+form input,
+form button {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Bảng sản phẩm */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+table td.status {
+    font-weight: bold;
+}
+
+table td.status.in-stock {
+    color: green;
+}
+
+table td.status.out-of-stock {
+    color: red;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#specList div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+

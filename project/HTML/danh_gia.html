@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Đánh Giá</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link rel="stylesheet" href="../CSS/danh_gia_style.css">
+</head>
+<body>
+<div class="page" id="page">
+    <iframe class="iframe-header" src="./header.html" frameborder="0" scrolling="no"></iframe>
+    <div id="body_page">
+        <div class="alpha container">
+            <div class="d-flex justify-space items-center">
+                <h2 style="float: right;font-weight: 600; font-size: 24px; color: #686868">Bình luận & Đánh giá (<span
+                        class="comment-count">2</span>)</h2>
+                <button class="back-button" onclick="goBack()">
+                    <i class="fas fa-chevron-left fa-lg"></i>
+                    Quay lại</button>
+            </div>
+            <div class="filter-sort-menu">
+                <div class="filter">
+                    <span class="text-filter">Phân loại:</span>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle">Tất cả</button>
+                        <ul class="dropdown-menu" style="width: 100px">
+                            <li data-value="all">Tất cả</li>
+                            <li data-value="1">1 <i class="fas fa-star" style="color: #FFD43B"></i></li>
+                            <li data-value="2">2 <i class="fas fa-star" style="color: #FFD43B"></i></li>
+                            <li data-value="3">3 <i class="fas fa-star" style="color: #FFD43B"></i></li>
+                            <li data-value="4">4 <i class="fas fa-star" style="color: #FFD43B"></i></li>
+                            <li data-value="5">5 <i class="fas fa-star" style="color: #FFD43B"></i></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sort">
+                    <span class="text-filter">Sắp xếp:</span>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle">Gần đây nhất</button>
+                        <ul class="dropdown-menu" style="width: 140px">
+                            <li data-value="newest">Gần đây nhất</li>
+                            <li data-value="oldest">Cũ nhất</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-box">
+                <div class="review-content">
+                    <h4 class="customer-name">Trọng N*** <span class="time-comment">16:42 28-10-2024</span></h4>
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="customer-comment">Sản phẩm tuyệt vời! Rất hài lòng với chất lượng và dịch vụ.</p>
+                </div>
+                <hr class="divider" style="width: 96%">
+                <div class="review-content">
+                    <h4 class="customer-name">Nguyễn Kh*** <span class="time-comment">10:03 26-09-2024</span>
+                    </h4>
+                    <div class="star-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="customer-comment">Sản phẩm tuyệt vời! Rất hài lòng với chất lượng và dịch vụ.</p>
+                </div>
+            </div>
+        </div>
+        <div class="container omega">
+            <div class=box-omega>
+                <div class="buyer-border">
+                    <h1 class="title" style="font-size: 18px; margin-top: 0">Bản quyền Microsoft Office 2021 cho
+                        Windows</h1>
+                    <h3 class="kind_product">OFFICE</h3>
+                    <div class="duration">
+                        <p style="font-size: 15px; font-weight: 600; color: #5c5c5c">Thời hạn</p>
+                        <div class="time-duration">
+                            <span class="time">VĨNH VIỄN</span>
+                        </div>
+                    </div>
+                    <div class="cost">
+                        <p style="font-size: 18px; font-weight: 600">349,000đ</p>
+                        <span class="main-cost">11,500,000đ</span>
+                    </div>
+                    <hr class="divider">
+                    <div class="button-buyer">
+                        <button type="button" class="elevation-0 btn-buy"
+                                style="height: 48px; width: 40%; margin-right: 10px;
+                                background-color: #076CE3; border-color: #076CE3; color: white">
+                            <span class="text">Mua ngay</span>
+                        </button>
+                        <button type="button" class="elevation-0"
+                                style="height:48px; width:60% ;color:#076CE3;
+                                background-color: #ffffff">
+                            <i class="fas fa-shopping-cart fa-lg" style="color: #076CE3; margin-right: 7px"></i>
+                            <span class="text">Thêm giỏ hàng</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <iframe class="iframe-footer" src="./footer.html" frameborder="0" scrolling="no"></iframe>
+</div>
+<script src="../JS/danh_gia_script.js"></script>
+</body>
+</html>

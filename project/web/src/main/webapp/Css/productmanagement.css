@@ -1,0 +1,280 @@
+/* Tổng quan */
+html, body, p {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    color: #404040;
+    font-family: Arial, Helvetica, sans-serif, Inter;
+    height: 100%;
+}
+
+.btn-add{
+    background: #4cbf6c;
+    font-weight: bold;
+}
+
+.btn-add:hover{
+    background: #409f5b;
+}
+
+.btn-edit:hover{
+    background: #0063d1;
+}
+
+/* Content */
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+header h1 {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #f64b4b;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.filters {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(249, 249, 249, 0.71);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.filters h3 {
+    margin-bottom: 10px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+.filter-group label {
+    margin-right: 5px;
+}
+
+.filter-group select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.d-flex{
+    display: flex;
+}
+
+.align-items-center{
+    align-items: center;
+}
+
+.btn-clear {
+    background-color: #f64b4b;
+    color: #fff;
+    height: 25px;
+    width: 50px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.btn-clear:hover {
+    background-color: #ff2e2e;
+}
+
+form.hidden,
+#editProductDetails.hidden {
+    display: none;
+}
+
+form input,
+form button {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Bảng sản phẩm */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+table td.status {
+    font-weight: bold;
+}
+
+table td.status.in-stock {
+    color: green;
+}
+
+table td.status.out-of-stock {
+    color: red;
+}
+
+#editDetailsForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Overlay cho nền mờ */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Màu nền đen mờ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Popup chi tiết sản phẩm */
+.detail-popup {
+    background-color: white;
+    padding: 20px;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+}
+
+.detail-popup h3 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.detail-popup input[type="text"],
+.detail-popup textarea {
+    width: calc(100% - 20px);
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.detail-popup textarea {
+    height: 100px;
+    resize: none;
+    font-family: Arial;
+}
+
+.detail-popup button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.detail-popup button:first-of-type {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.detail-popup button:last-of-type {
+    background-color: #f44336;
+    color: white;
+    margin-left: 10px;
+}
+
+.detail-popup button:hover {
+    opacity: 0.9;
+}
+.delete {
+    color: red;
+}
+/* Căn giữa nội dung trong thẻ <td> */
+.icon-trash {
+    text-align: center;  /* Căn giữa nội dung theo chiều ngang */
+    vertical-align: middle;  /* Căn giữa nội dung theo chiều dọc */
+}
+
+/* Căn giữa biểu tượng trash */
+.delete {
+    display: inline-block;  /* Giữ nguyên kích thước biểu tượng */
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1; /* Giảm khoảng cách giữa các dòng, nếu cần */
+}
+
+
+.description-cell {
+    max-width: 200px;  /* Đặt chiều rộng tối đa cho ô mô tả */
+    white-space: nowrap;  /* Giữ văn bản trong một dòng */
+    overflow: hidden;  /* Ẩn phần văn bản tràn ra ngoài */
+    text-overflow: ellipsis;  /* Hiển thị '...' khi văn bản vượt quá giới hạn */
+    display: block;  /* Đảm bảo ô có thể xử lý overflow */
+
+}
+#addProductType{
+    height: 35px;
+    border-radius: 4px;
+    border: 1px solid #CCC;
+    max-width: 417px;
+    width: 100%;
+    padding: 8px;
+    color: #757587;
+    border-bottom: none;
+}
+#description-cell:last-of-type {
+    border-bottom: 1px solid #ccc; /* Giữ lại đường viền dưới cho thẻ cuối */
+}
+

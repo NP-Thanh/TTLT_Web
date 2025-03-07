@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"
+    integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="../CSS/home.css">
+  <link rel="stylesheet" href="../CSS/product.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="header">
+    <iframe class="iframe-header" src="./header.html" frameborder="0" scrolling="no"></iframe>
+  </div>
+  <div id="content">
+    <div id="container" class="row">
+      <div class="col-md-2">
+        <div id="list-categoty">
+          <p style="font-weight: bold; font-size: 16px;">Chọn Danh Mục</p>
+          <div class="mt-8">
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <a href="./product.html" class="ml-8 text-decoration-none t-black f-weight-600">Tất Cả</a>
+                
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <!-- <a href="" class="ml-8 text-decoration-none t-black f-weight-600">Giải Trí</a> -->
+                <a href="./giai_tri.html" class="ml-8 text-decoration-none f-weight-600 t-black" data-category="giải_trí"
+                  >Giải Trí</a>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <!-- <a href="" class="ml-8 text-decoration-none t-black f-weight-600 t-black">Học Tập</a> -->
+                <a href="#" class="ml-8 text-decoration-none f-weight-600 t-black" data-category="hoc_tap"
+                  style="color: #1b5bd7;">Học Tập</a>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <!-- <a href="" class="ml-8 text-decoration-none t-black f-weight-600 t-black">Làm Việc</a> -->
+                <a href="./lam_viec.html" class="ml-8 text-decoration-none f-weight-600 t-black" data-category="lam_viec"
+                  >Làm Việc</a>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <!-- <a href="" class="ml-8 text-decoration-none t-black f-weight-600 t-black">Tiện Ích</a> -->
+                <a href="./tien_ich.html" class="ml-8 text-decoration-none f-weight-600 t-black" data-category="tien_ich"
+                  >Tiện Ích</a>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <!-- <a href="" class="ml-8 text-decoration-none t-black f-weight-600 t-black">Bảo Mật</a> -->
+                <a href="./bao_mat.html" class="ml-8 text-decoration-none f-weight-600 t-black" data-category="bao_mat"
+                  >Bảo Mật</a>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <!-- <a href="" class="ml-8 text-decoration-none t-black f-weight-600 t-black">Lưu Trữ</a> -->
+                <a href="./luu_tru.html" class="ml-8 text-decoration-none f-weight-600 t-black" data-category="luu_tru"
+                  >Lưu Trữ</a>
+              </div>
+            </div>
+              
+          </div>
+          <hr style="border-color: rgba(0, 0, 0, .12);" class="mt-16">
+          <div class="mt-16">
+            <div class="">
+              <div class="d-flex align-center justify-space-between">
+                <p style="font-weight: bold; font-size: 16px;">Giá</p>
+
+              </div>
+              <div class="d-flex t-between align-center mt-8" style="justify-content: space-around;">
+                <div class="d-flex price">
+                  <input type="" name="" id="start-number" placeholder="0">
+                  <div class="d-flex align-center">đ</div>
+                </div>
+                <div class="">Đến</div>
+                <div class="d-flex price">
+                  <input type="" name="" id="end-number" placeholder="0">
+                  <div class="d-flex align-center">đ</div>
+                </div>
+              </div>
+              <button class="btn-confirm">Xác Nhận</button>
+            </div>
+          </div>
+          <hr style="border-color: rgba(0, 0, 0, .12);" class="mt-16">
+          <div class="mt-16">
+            <div class="">
+              <div class="d-flex align-center justify-space-between cursor-pointer title-sort" onclick="toggleSort()">
+                <p style="font-weight: bold; font-size: 16px;">Sắp Xếp Theo</p>
+                <i id="icon-down" class="fa-solid fa-caret-down "></i>
+                <i id="icon-up" class="fa-solid fa-caret-up " style="display: none;"></i>
+              </div>
+              <div id="sort-options" class="hide-list-category mt-16" style="display: none;">
+                <div class="mt-8">
+                  <div class="mt-8 d-flex align-center cursor-pointer">
+                    <div class="wrap-btn">
+                      <div class="radio-btn"></div>
+                    </div>
+                    <p class="ml-8" style="color: gray;">Bán Chạy Nhất</p class="ml-8">
+                  </div>
+                </div>
+                <div class="mt-8">
+                  <div class="mt-8 d-flex align-center cursor-pointer">
+                    <div class="wrap-btn">
+                      <div class="radio-btn"></div>
+                    </div>
+                    <p class="ml-8" style="color: gray;">Mới Cập Nhật</p>
+                  </div>
+                </div>
+                <div class="mt-8">
+                  <div class="mt-8 d-flex align-center cursor-pointer">
+                    <div class="wrap-btn">
+                      <div class="radio-btn"></div>
+                    </div>
+                    <p class="ml-8" style="color: gray;">Giá Thấp Đến Cao</p>
+                  </div>
+                </div>
+                <div class="mt-8">
+                  <div class="mt-8 d-flex align-center cursor-pointer">
+                    <div class="wrap-btn">
+                      <div class="radio-btn"></div>
+                    </div>
+                    <p class="ml-8" style="color: gray;">Giá Cao Đến Thấp</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="list-product">
+          <div class="ml-24">
+            <p class="title-list-product">
+              Danh Sách Sản Phẩm
+            </p>
+            <div class=""></div>
+            <div class="row justify-space-between">
+                <a href="../HTML/chi_tiet_sp.html" class="product" data-category="hoc_tap"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1680513347400-Quillbot.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Tài khoản Quillbot Premium 1 Năm
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 NĂM</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">439,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">1,299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="hoc_tap"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1691984617646-HelloChinese Premium 1 nÄ_m.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Nâng cấp HelloChinese Premium 1 Năm
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 NĂM</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">799,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">1,280,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="hoc_tap"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1682503852240-cOURSERA.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Tài khoản Coursera Plus 6 Tháng
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">6 THÁNG</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">725,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">3,299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              
+              
+              <!-- 4 -->
+
+            </div>
+            <!-- Nút phân trang -->
+            <div class="pagination">
+              <button id="page1" onclick="changePage(1)">1</button>
+              <button id="page2" onclick="changePage(2)">2</button>
+              <button id="page3" onclick="changePage(3)">3</button>
+              <!-- Thêm các nút trang nếu cần -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div id="section6">
+        <i class="fa-solid fa-comment-dots" style="color: white;font-size: 40px;"></i>
+      </div> -->
+    </div>
+  </div>
+  <div id="footer" style="margin-top: 20px;">
+    
+    <iframe class="iframe-footer" src="./footer.html" frameborder="0" scrolling="no"></iframe>
+ 
+</div>
+  <script src="../JS/product.js"></script>
+</body>
+
+</html>

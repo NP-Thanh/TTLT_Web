@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sản phẩm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/product_manage_style.css">
+</head>
+<body>
+<div class="admin-container">
+    <div id="sidebar-placeholder"></div>
+
+    <div class="content">
+        <header>
+            <h2>Quản lý sản phẩm</h2>
+        </header>
+        <section>
+            <!-- Nút Thêm sản phẩm -->
+            <button class="btn-add" onclick="toggleAddForm()">+ Thêm sản phẩm</button>
+            <form id="addProductForm" class="hidden">
+                <input type="text" id="addProductId" placeholder="Mã sản phẩm" required>
+                <input type="text" id="addProductName" placeholder="Tên sản phẩm" required>
+                <input type="text" id="addProductType" placeholder="Loại" required>
+                <input type="number" id="addProductPrice" placeholder="Giá (VNĐ)" required>
+                <input type="number" id="addProductQuantity" placeholder="Số lượng" required>
+                <input type="text" id="addProductImage" placeholder="Link hình ảnh (URL)" required>
+                <button type="button" onclick="addProduct()">Lưu</button>
+            </form>
+
+            <!-- Nút Sửa thông tin -->
+            <button class="btn-edit" onclick="toggleEditForm()">Sửa thông tin</button>
+            <form id="editProductForm" class="hidden">
+                <input type="text" id="editProductId" placeholder="Nhập mã sản phẩm để sửa" required>
+                <button type="button" onclick="loadProductInfo()">Tìm kiếm</button>
+            </form>
+            <div id="editProductDetails" class="hidden">
+                <table style="margin-bottom: 10px">
+                    <tr>
+                        <td>Tên sản phẩm:</td>
+                        <td><input type="text" id="editProductName" required></td>
+                    </tr>
+                    <tr>
+                        <td>Loại:</td>
+                        <td><input type="text" id="editProductType" required></td>
+                    </tr>
+                    <tr>
+                        <td>Giá:</td>
+                        <td><input type="number" id="editProductPrice" required></td>
+                    </tr>
+                    <tr>
+                        <td>Số lượng:</td>
+                        <td><input type="number" id="editProductQuantity" required></td>
+                    </tr>
+                    <tr>
+                        <td>Hình ảnh (URL):</td>
+                        <td><input type="text" id="editProductImage" required></td>
+                    </tr>
+                </table>
+                <button onclick="saveProduct()">Lưu</button>
+                <button onclick="deleteProduct()">Xóa</button>
+            </div>
+
+            <!-- Bộ lọc -->
+            <div class="filters">
+                <div class="d-flex align-items-center">
+                    <h3>Bộ lọc</h3>
+                    <button class="btn-clear" onclick="resetFilters()">Xóa</button>
+                </div>
+                <div class="filter-group">
+                    <label for="filterID">Mã sản phẩm:</label>
+                    <select id="filterID" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="asc">Tăng dần</option>
+                        <option value="desc">Giảm dần</option>
+                    </select>
+
+                    <label for="filterType">Loại:</label>
+                    <select id="filterType" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="relax">Giải trí</option>
+                        <option value="learn">Học tập</option>
+                        <option value="work">Làm việc</option>
+                        <option value="utilities">Tiện ích</option>
+                        <option value="security">Bảo mật</option>
+                        <option value="save">Lưu trữ</option>
+                    </select>
+
+                    <label for="filterPrice">Giá:</label>
+                    <select id="filterPrice" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="asc">Tăng dần</option>
+                        <option value="desc">Giảm dần</option>
+                    </select>
+
+                    <label for="filterStatus">Tình trạng:</label>
+                    <select id="filterStatus" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="in-stock">Còn hàng</option>
+                        <option value="out-stock">Hết hàng</option>
+                    </select>
+
+                    <label for="filterDate">Ngày:</label>
+                    <select id="filterDate" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="desc">Mới nhất</option>
+                        <option value="asc">Cũ nhất</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Bảng sản phẩm -->
+            <table>
+                <thead>
+                <tr>
+                    <th>Mã sản phẩm</th>
+                    <th>Loại</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Hình ảnh</th>
+                    <th>Ngày tạo</th>
+                    <th>Tình trạng</th>
+                    <th>Chi tiết</th>
+                </tr>
+                </thead>
+                <tbody  id="productTable">
+                <!-- Các sản phẩm cố định được thêm vào ở đây -->
+                <tr>
+                    <td>SP001</td>
+                    <td>Làm việc</td>
+                    <td>Windows 11 Pro</td>
+                    <td>450,000 VNĐ</td>
+                    <td>5</td>
+                    <td><img src="../../Images/Product/Windows11Professional.jpg"
+                    style="width: 50px; height: 50px;"></td>
+                    <td>19:05 20/11/2024</td>
+                    <td class="status in-stock">Còn hàng</td>
+                    <td>
+                        <button onclick="editProductDetails('SP001')">Chi tiết</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>SP002</td>
+                    <td>Tiện ích</td>
+                    <td>Office 2019</td>
+                    <td>500,000 VNĐ</td>
+                    <td>0</td>
+                    <td><img src="../../Images/Product/Office2019.jpg"
+                    style="width: 50px; height: 50px;"></td>
+                    <td>7:00 03/10/2024</td>
+                    <td class="status out-of-stock">Hết hàng</td>
+                    <td>
+                        <button onclick="editProductDetails('SP002')">Chi tiết</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+<script src="../JS/product_manage_script.js"></script>
+<script src="../JS/sidebar_script.js"></script>
+</body>
+</html>

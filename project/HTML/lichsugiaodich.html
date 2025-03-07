@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử giao dịch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/lichsugiaodich.css">
+</head>
+<body>
+<div id="page" class="page">
+    <iframe class="iframe-header" src="..\HTML\header.html" frameborder="0" scrolling="no"></iframe>
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <li><a href="../HTML/taikhoan.html"><i class="fas fa-user"></i>Tài khoản</a></li>
+                <li><a href="sanphamvuaxem.html"><i class="fas fa-clock"></i>Sản phẩm vừa xem</a></li>
+                <li><a href="../HTML/lichsugiaodich.html" style="color: #007bff;"><i
+                        class="fas fa-history"></i>Lịch sử giao dịch</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <h2>Lịch sử giao dịch</h2>
+            <p>Hiển thị toàn bộ các giao dịch bạn đã thực hiện</p>
+            <div class="filters">
+                <input type="text" id="orderCode" placeholder="Nhập mã đơn hàng">
+                <input type="date" value="2024-11-01">
+                <input type="date" value="2024-11-30">
+                <input type="number" id="minAmount" placeholder="Số tiền từ" min="0">
+                <input type="number" id="maxAmount" placeholder="Số tiền đến" min="0">
+                <button id="filterButton">Áp Dụng Lọc</button>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Sản phẩm</th>
+                    <th>Thời gian</th>
+                    <th>Số tiền</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="noResultRow">
+                    <td colspan="4" style="text-align: center;">Không tìm thấy sản phẩm</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <iframe class="iframe-footer" src="..\HTML\footer.html" frameborder="0" scrolling="no"></iframe>
+</div>
+<script src="../JS/lichsugiaodich.js"></script>
+</body>
+</html>

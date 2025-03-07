@@ -1,0 +1,89 @@
+body , html {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    background-color: #ffffff;
+    color: #404040;
+    font-size: 14px;
+}
+
+h1.title {
+    font-size: 40px;
+    color: #333;
+}
+
+h2.reasons-title {
+    font-size: 28px;
+    color: #333;
+    margin-top: 16px;
+}
+
+p.description,
+p.reasons-description,
+p.reason-description,
+p.info-description,
+p.contact-detail {
+    color: #555;
+    margin-bottom: 16px;
+}
+
+.section {
+    margin-bottom: 40px;
+}
+
+.goals {
+    background-color: white;
+    padding: 10px;
+    margin: 20px 0;
+}
+
+.goals-image {
+    width: 70%;
+    max-width: 300px; /* Changed to max-width for better responsiveness */
+    height: auto;
+}
+
+.list {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.reason-item {
+    margin-bottom: 20px; /* Added margin for better separation */
+}
+
+.info-box {
+    background-color: #e7f3ff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border-left: 5px solid #007bff;
+}
+
+.info-box strong.info-title {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.contact-info {
+    margin-top: 20px;
+}
+
+.contact-info h3.contact-title {
+    font-size: 24px;
+    color: #333;
+}
+
+.contact-info p {
+    margin: 5px 0;
+}
+
+.payment-list {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.payment-item {
+    margin-bottom: 5px;
+}

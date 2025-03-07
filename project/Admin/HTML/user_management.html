@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý khách hàng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/user_manage_style.css">
+</head>
+<body>
+<div class="admin-container">
+    <div id="sidebar-placeholder"></div>
+
+    <div class="content">
+        <header>
+            <h2>Quản lý khách hàng</h2>
+        </header>
+        <section>
+            <!-- Nút Sửa thông tin -->
+                <button class="btn-edit" onclick="toggleEditForm()">Sửa thông tin</button>
+            <form id="editUserForm" class="hidden">
+                <input type="text" id="editUserID" placeholder="Nhập mã khách hàng" required>
+                <button type="button" onclick="loadProductInfo()">Tìm kiếm</button>
+            </form>
+            <div id="editUserDetails" class="hidden">
+                <table style="margin-bottom: 10px">
+                    <tr>
+                        <td>Trạng thái:</td>
+                    </tr>
+                </table>
+                <button onclick="saveUser()">Lưu</button>
+                <button onclick="deleteUser()">Xóa</button>
+            </div>
+
+            <!-- Bộ lọc -->
+            <div class="filters">
+                <div class="d-flex align-items-center">
+                    <h3>Bộ lọc</h3>
+                    <button class="btn-clear" onclick="resetFilters()">Xóa</button>
+                </div>
+                <div class="filter-group">
+                    <label for="filterID">Mã khách hàng:</label>
+                    <select id="filterID" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="asc">Tăng dần</option>
+                        <option value="desc">Giảm dần</option>
+                    </select>
+
+                    <label for="filterEmail">Email:</label>
+                    <select id="filterEmail" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="verified">Đã xác thực</option>
+                        <option value="unverified">Chưa xác thực</option>
+                    </select>
+
+                    <label for="filterPhone">SĐT:</label>
+                    <select id="filterPhone" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="verified">Đã xác thực</option>
+                        <option value="unverified">Chưa xác thực</option>
+                    </select>
+
+                    <label for="filterOrders">Đơn hàng:</label>
+                    <select id="filterOrders" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="asc">Tăng dần</option>
+                        <option value="desc">Giảm dần</option>
+                    </select>
+
+                    <label for="filterStatus">Trạng thái:</label>
+                    <select id="filterStatus" onchange="applyFilters()">
+                        <option value="">--Chọn--</option>
+                        <option value="active">Hoạt động</option>
+                        <option value="restricted">Hạn chế</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Bảng thông tin -->
+            <table>
+                <thead>
+                <tr>
+                    <th>Mã khách hàng</th>
+                    <th>Tên khách hàng</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Đơn hàng</th>
+                    <th>Trạng thái</th>
+                </tr>
+                </thead>
+                <tbody id="userTable">
+                <!-- Các user thêm vào đây -->
+                <tr>
+                    <td>KH001</td>
+                    <td>Phúc Thạnh</td>
+                    <td>22130259@st.hcmuaf.edu.vn</td>
+                    <td>0826661039</td>
+                    <td class="font-600" style="color: green">5</td>
+                    <td class="font-600" style="color: green">Hoạt động</td>
+                </tr>
+                <tr>
+                    <td>KH002</td>
+                    <td>Quốc Thái</td>
+                    <td>22130250@st.hcmuaf.edu.vn</td>
+                    <td></td>
+                    <td class="font-600" style="color: green">8</td>
+                    <td class="font-600" style="color: green">Hoạt động</td>
+                </tr>
+                <tr>
+                    <td>KH003</td>
+                    <td>Thanh sơn</td>
+                    <td>22130237@st.hcmùa.edu.vn</td>
+                    <td>0123456789</td>
+                    <td class="font-600" style="color: green">6</td>
+                    <td class="font-600" style="color: red">Hạn chế</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+<script src="../JS/sidebar_script.js"></script>
+<script src="../JS/user_management_script.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý mã giảm giá</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="../CSS/discount_manage_style.css">
+</head>
+<body>
+<div class="admin-container">
+  <div id="sidebar-placeholder"></div>
+
+  <div class="content">
+    <header>
+      <h2>Quản lý mã giảm giá</h2>
+    </header>
+    <section>
+      <!-- Nút Thêm mã -->
+      <button class="btn-add" onclick="toggleAddForm()">+ Thêm mã giảm giá</button>
+      <form id="addDiscountForm" class="hidden">
+        <input type="text" id="addDiscountId" placeholder="Mã" required>
+        <input type="number" id="addDiscountNum" placeholder="Số lượng" required>
+        <input type="text" id="addDiscountContent" placeholder="Nội dung" required>
+        <select id="addDiscountDate" required>
+          <option value="">Chọn hạn</option>
+          <option value="1">1 ngày</option>
+          <option value="3">3 ngày</option>
+          <option value="5">5 ngày</option>
+          <option value="7">7 ngày</option>
+        </select>
+        <button type="button" onclick="addDiscount()">Lưu</button>
+      </form>
+
+      <!-- Nút Sửa thông tin -->
+      <button class="btn-edit" onclick="toggleEditForm()">Sửa thông tin</button>
+      <form id="editDiscountForm" class="hidden">
+        <input type="text" id="editDiscountId" placeholder="Nhập mã giảm để sửa" required>
+        <button type="button" onclick="loadDiscountInfo()">Tìm kiếm</button>
+      </form>
+      <div id="editDiscountDetails" class="hidden">
+        <table style="margin-bottom: 10px">
+          <tr>
+            <td>Số lượng:</td>
+            <td><input type="number" id="editDiscountNum" required></td>
+          </tr>
+        </table>
+        <button onclick="saveDiscount()">Lưu</button>
+        <button onclick="deleteDiscount()">Xóa</button>
+      </div>
+
+      <!-- Bảng thông tin -->
+      <table>
+        <thead>
+        <tr>
+          <th>Mã</th>
+          <th>Số lượng còn lại</th>
+          <th>Nội dung</th>
+          <th>Ngày tạo</th>
+          <th>Ngày hạn</th>
+          <th>Tình trạng</th>
+        </tr>
+        </thead>
+        <tbody id="discountTable">
+        <!-- Các mã giảm được thêm vào ở đây -->
+        <tr>
+          <td>CODE01</td>
+          <td>27</td>
+          <td>Giảm 20%</td>
+          <td>13:00 21/10/2024</td>
+          <td>13:00 22/10/2024</td>
+          <td class="green font-600">Còn mã</td>
+        </tr>
+        <tr>
+          <td>CODE02</td>
+          <td>50</td>
+          <td>Giảm 10%</td>
+          <td>10:00 19/10/2024</td>
+          <td>10:00 21/10/2024</td>
+          <td class="green font-600">Còn mã</td>
+        </tr>
+        <tr>
+          <td>CODE03</td>
+          <td>0</td>
+          <td>Giảm 50%</td>
+          <td>10:00 19/10/2024</td>
+          <td>10:00 21/10/2024</td>
+          <td class="red font-600">Hết</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>
+<script src="../JS/discount_manage_script.js"></script>
+<script src="../JS/sidebar_script.js"></script>
+</body>
+</html>

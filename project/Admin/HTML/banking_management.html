@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý thông tin chuyển khoản</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../CSS/banking_manage_style.css">
+</head>
+<body>
+<div class="admin-container">
+    <div id="sidebar-placeholder"></div>
+
+    <div class="content">
+        <header>
+            <h2>Quản lý thông tin chuyển khoản</h2>
+        </header>
+        <section>
+            <!-- Nút Thêm ngân hàng -->
+            <button class="btn-add" onclick="toggleAddForm()">+ Thêm ngân hàng</button>
+            <form id="addBankForm" class="hidden">
+                <input type="text" id="addBankId" placeholder="Mã ngân hàng" required>
+                <input type="text" id="addBankName" placeholder="Tên ngân hàng" required>
+                <input type="text" id="addBankNum" placeholder="Số tài khoản" required>
+                <input type="text" id="addBankOwn" placeholder="Chủ tài khoản" required>
+                <input type="text" id="addBankImage" placeholder="Link mã qr (URL)" required>
+                <button type="button" onclick="addBank()">Lưu</button>
+            </form>
+
+            <!-- Nút Sửa thông tin -->
+            <button class="btn-edit" onclick="toggleEditForm()">Sửa thông tin</button>
+            <form id="editBankForm" class="hidden">
+                <input type="text" id="editBankId" placeholder="Nhập mã ngân hàng để sửa" required>
+                <button type="button" onclick="loadBankInfo()">Tìm kiếm</button>
+            </form>
+            <div id="editBankDetails" class="hidden">
+                <table style="margin-bottom: 10px">
+                    <tr>
+                        <td>Tên ngân hàng:</td>
+                        <td><input type="text" id="editBankName" required></td>
+                    </tr>
+                    <tr>
+                        <td>Số tài khoản:</td>
+                        <td><input type="text" id="editBankNum" required></td>
+                    </tr>
+                    <tr>
+                        <td>Chủ tài khoản:</td>
+                        <td><input type="text" id="editBankOwn" required></td>
+                    </tr>
+                    <tr>
+                        <td>Mã qr (URL):</td>
+                        <td><input type="text" id="editBankImage" required></td>
+                    </tr>
+                </table>
+                <button onclick="saveBank()">Lưu</button>
+                <button onclick="deleteBank()">Xóa</button>
+            </div>
+
+            <!-- Bảng thông tin -->
+            <table>
+                <thead>
+                <tr>
+                    <th>Mã ngân hàng</th>
+                    <th>Tên ngân hàng</th>
+                    <th>Số tài khoản</th>
+                    <th>Chủ tài khoản</th>
+                    <th>Mã qr</th>
+                </tr>
+                </thead>
+                <tbody id="bankTable">
+                <!-- Các ngân hàng cố định được thêm vào ở đây -->
+                <tr>
+                    <td>NH001</td>
+                    <td>Momo</td>
+                    <td>0123456789</td>
+                    <td>Nguyễn Phúc Thạnh</td>
+                    <td><img src="../../Images/QRCode.png"
+                             style="width: 50px; height: 50px;"></td>
+                </tr>
+                <tr>
+                    <td>NH002</td>
+                    <td>Bidv</td>
+                    <td>1237894560</td>
+                    <td>Lê Quốc Thái</td>
+                    <td><img src="../../Images/QRCode.png"
+                             style="width: 50px; height: 50px;"></td>
+                </tr>
+                <tr>
+                    <td>NH003</td>
+                    <td>Sacombank</td>
+                    <td>22130237111</td>
+                    <td>Nguyễn Thanh Sơn</td>
+                    <td><img src="../../Images/QRCode.png"
+                             style="width: 50px; height: 50px;"></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+<script src="../JS/banking_manage_script.js"></script>
+<script src="../JS/sidebar_script.js"></script>
+</body>
+</html>

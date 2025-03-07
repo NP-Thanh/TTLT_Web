@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"
+    integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="../CSS/home.css">
+  <link rel="stylesheet" href="../CSS/product.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="header">
+    <iframe class="iframe-header" src="./header.html" frameborder="0" scrolling="no"></iframe>
+  </div>
+  <div id="content">
+    <div id="container" class="row">
+      <div class="col-md-2">
+        <div id="list-categoty">
+          <p style="font-weight: bold; font-size: 16px;">Chọn Danh Mục</p>
+          <div class="mt-8">
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <a href="./product.html" class="ml-8 text-decoration-none t-black f-weight-600" style="color: #1b5bd7;">Tất Cả</a>
+                
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <!-- <a href="" class="ml-8 text-decoration-none t-black f-weight-600">Giải Trí</a> -->
+                <a href="./giai_tri.html" class="ml-8 text-decoration-none f-weight-600 t-black" data-category="giải_trí"
+                  >Giải Trí</a>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <!-- <a href="" class="ml-8 text-decoration-none t-black f-weight-600 t-black">Học Tập</a> -->
+                <a href="./hoc_tap.html" class="ml-8 text-decoration-none f-weight-600 t-black" data-category="hoc_tap"
+                  >Học Tập</a>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <!-- <a href="" class="ml-8 text-decoration-none t-black f-weight-600 t-black">Làm Việc</a> -->
+                <a href="./lam_viec.html" class="ml-8 text-decoration-none f-weight-600 t-black" data-category="lam_viec"
+                  >Làm Việc</a>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <!-- <a href="" class="ml-8 text-decoration-none t-black f-weight-600 t-black">Tiện Ích</a> -->
+                <a href="./tien_ich.html" class="ml-8 text-decoration-none f-weight-600 t-black" data-category="tien_ich"
+                  onclick="filterProducts(event)">Tiện Ích</a>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <!-- <a href="" class="ml-8 text-decoration-none t-black f-weight-600 t-black">Bảo Mật</a> -->
+                <a href="./bao_mat.html" class="ml-8 text-decoration-none f-weight-600 t-black" data-category="bao_mat"
+                  >Bảo Mật</a>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="mt-8 d-flex align-center cursor-pointer">
+                <i class="fa-solid fa-folder-closed icon-folder"></i>
+                <!-- <a href="" class="ml-8 text-decoration-none t-black f-weight-600 t-black">Lưu Trữ</a> -->
+                <a href="./luu_tru.html" class="ml-8 text-decoration-none f-weight-600 t-black" data-category="luu_tru"
+                  >Lưu Trữ</a>
+              </div>
+            </div>
+              
+          </div>
+          <hr style="border-color: rgba(0, 0, 0, .12);" class="mt-16">
+          <div class="mt-16">
+            <div class="">
+              <div class="d-flex align-center justify-space-between">
+                <p style="font-weight: bold; font-size: 16px;">Giá</p>
+
+              </div>
+              <div class="d-flex t-between align-center mt-8" style="justify-content: space-around;">
+                <div class="d-flex price">
+                  <input type="" name="" id="start-number" placeholder="0">
+                  <div class="d-flex align-center">đ</div>
+                </div>
+                <div class="">Đến</div>
+                <div class="d-flex price">
+                  <input type="" name="" id="end-number" placeholder="0">
+                  <div class="d-flex align-center">đ</div>
+                </div>
+              </div>
+              <button class="btn-confirm">Xác Nhận</button>
+            </div>
+          </div>
+          <hr style="border-color: rgba(0, 0, 0, .12);" class="mt-16">
+          <div class="mt-16">
+            <div class="">
+              <div class="d-flex align-center justify-space-between cursor-pointer title-sort" onclick="toggleSort()">
+                <p style="font-weight: bold; font-size: 16px;">Sắp Xếp Theo</p>
+                <i id="icon-down" class="fa-solid fa-caret-down "></i>
+                <i id="icon-up" class="fa-solid fa-caret-up " style="display: none;"></i>
+              </div>
+              <div id="sort-options" class="hide-list-category mt-16" style="display: none;">
+                <div class="mt-8">
+                  <div class="mt-8 d-flex align-center cursor-pointer">
+                    <div class="wrap-btn">
+                      <div class="radio-btn"></div>
+                    </div>
+                    <p class="ml-8" style="color: gray;">Bán Chạy Nhất</p class="ml-8">
+                  </div>
+                </div>
+                <div class="mt-8">
+                  <div class="mt-8 d-flex align-center cursor-pointer">
+                    <div class="wrap-btn">
+                      <div class="radio-btn"></div>
+                    </div>
+                    <p class="ml-8" style="color: gray;">Mới Cập Nhật</p>
+                  </div>
+                </div>
+                <div class="mt-8">
+                  <div class="mt-8 d-flex align-center cursor-pointer">
+                    <div class="wrap-btn">
+                      <div class="radio-btn"></div>
+                    </div>
+                    <p class="ml-8" style="color: gray;">Giá Thấp Đến Cao</p>
+                  </div>
+                </div>
+                <div class="mt-8">
+                  <div class="mt-8 d-flex align-center cursor-pointer">
+                    <div class="wrap-btn">
+                      <div class="radio-btn"></div>
+                    </div>
+                    <p class="ml-8" style="color: gray;">Giá Cao Đến Thấp</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="list-product">
+          <div class="ml-24">
+            <p class="title-list-product">
+              Danh Sách Sản Phẩm
+            </p>
+            <div class=""></div>
+            <div class="row justify-space-between">
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="giải_trí"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684141240816-Youtube premium.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">Youtube Premium: Không quảng cáo</span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 THÁNG</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">32,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="giải_trí"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684143271070-NCT.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Tài khoản Nhaccuatui Vip 12 Tháng
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">12 THÁNG</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">189,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">499,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-62%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="giải_trí"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684988905273-Galaxy Play GÃ³i Cao Cáº¥p.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Galaxy Play Gói Cao Cấp
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">12 THÁNG</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">320,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">840,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-62%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="giải_trí"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684147399024-VieON GÃ³i All Access 6 ThÃ¡ng.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    VieON Gói All Access 6 Tháng
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">6 THÁNG</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">725,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">1,494,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-51%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="giải_trí"
+              style="text-decoration: none; color: inherit;">
+              <div class="img">
+                <img src="../img/1684141240816-Youtube premium.jpg" alt="" class="img-p" style="width: 100%;">
+              </div>
+              <div class="infor-p" style="padding: 10px 16px;">
+                <span class="title-p t-none t-black d-block">
+                  Gia Hạn YouTube Premium: Không quảng cáo
+                </span>
+                <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 THÁNG</span>
+                <div class="price-p d-flex t-between">
+                  <div class="alpha col-2">
+                    <span class="t-none t-black" style="font-weight: 550;">32,000₫</span>
+                    <span class="t-line-through t-gray" style="font-weight: 550;">299,000₫</span>
+                  </div>
+                  <div class="omega d-flex t-center">
+                    <span class="t-none t-black">-89%</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+              
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="hoc_tap"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1680513347400-Quillbot.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Tài khoản Quillbot Premium 1 Năm
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 NĂM</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">439,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">1,299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="hoc_tap"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1691984617646-HelloChinese Premium 1 nÄ_m.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Nâng cấp HelloChinese Premium 1 Năm
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 NĂM</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">799,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">1,280,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="hoc_tap"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1682503852240-cOURSERA.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Tài khoản Coursera Plus 6 Tháng
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">6 THÁNG</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">725,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">3,299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-97%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="luu_tru"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684141081977-TÃ i khoáº£n Google Drive VÄ©nh viá»_n.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Tài khoản Google Drive Vĩnh viễn
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 TB</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">369,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">4,299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="luu_tru"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684140751422-google one.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">Nâng Cấp Google Drive One</span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">100GB</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">299,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">999,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="luu_tru"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684140979827-Dropbox Pro 3TB.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">Dropbox Pro 3TB</span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 NĂM</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">1,589,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">4,699,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="luu_tru"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1691984532855-NÃ¢ng cáº¥p dung lÆ°á»£ng Mega Lite.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Nâng cấp Mega ( Pro Lite) - 1 năm
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">PRO LITE - 400GB</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">32,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="tien_ich"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1680508711522-CClean.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    CCleaner Professional Plus 1 PC - Thời h...
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 THIẾT BỊ</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">332,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">799,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="tien_ich"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1682502297329-Glary Utilities.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Glary Utilities PRO 5
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 NĂM</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">132,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              
+
+              
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="tien_ich"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1679475083047-Notion Pro (1).jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">Tài Khoản Notion Pro</span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 NĂM</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">232,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">699,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="tien_ich"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684148943423-AdGuard Family 1 Thiáº¿t bá»_.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    AdGuard Family 1 Thiết bị
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 THIẾT BỊ</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">559,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">1,299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-82%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              
+
+              
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="tien_ich"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684148943936-AdGuard Family 9 Thiáº¿t bá»_.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">AdGuard Family 9 Thiết bị</span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">9 THIẾT BỊ</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">899,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">3,299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="lam_viec"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1680758710131-Office 366 FOREVER VN.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Tài khoản Microsoft OFFICE 365 5 Thiết b...
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">VĨNH VIỄN</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">332,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">2,300,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              
+
+              
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="lam_viec"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684146226502-Báº£n quyá»_n Office 2019.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">Bản Quyền Office 2019</span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">VĨNH VIỄN</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">332,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">2,699,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="lam_viec"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684146422356-Báº£n quyá»_n Microsoft Office 2021 cho Windows.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Bản quyền Microsoft Office 2021 cho Wind...
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">VĨNH VIỄN</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">432,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">3,299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="lam_viec"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1679472186569-Github.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Tài khoản Github Student Pack
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">VĨNH VIỄN</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">232,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">899,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              
+              
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="lam_viec"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684145038645-Báº£n quyá»_n Windows 11 Professional.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Bản quyền Windows 11 Professional
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">VĨNH VIỄN</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">199,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">499,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              
+              
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="lam_viec"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684145113365-Báº£n quyá»_n Windows 10 Professional.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Bản quyền Windows 10 Professional
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">VĨNH VIỄN</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">199,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">499,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="lam_viec"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1680496844626-ChatGPT Normal 1 montH VIETNAMESE.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Tài khoản ChatGPT thường có sẵn 18$ tro...
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 THÁNG</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">32,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="lam_viec"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684146005791-Slot Canva Pro 1 NÄ_m.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">Tài Khoản canva pro</span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">VĨNH VIỄN</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">199,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">3,299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="lam_viec"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/airserver.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Phần mềm phản chiếu ĐT AIRSERVER
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">VĨNH VIỄN</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">379,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">599,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="bao_mat"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1684140670674-HMA Pro VPN.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">HMA Pro VPN</span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 NĂM</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">99,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="bao_mat"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1691984536046-TÃ i khoáº£n Surfshark VPN.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Tài khoản Surfshark VPN
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 NĂM</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">132,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              
+              
+              
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="bao_mat"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1680510015387-Kaspersky VPN.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Kaspersky VPN Secure Connection
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 NĂM</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">299,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">999,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="bao_mat"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/922proxy.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">922 Proxy VPN giá rẻ</span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">800 IPS</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">899,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">1,299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a href="../HTML/chi_tiet_sp.html" class="product" data-category="bao_mat"
+                style="text-decoration: none; color: inherit;">
+                <div class="img">
+                  <img src="../img/1691984535594-TÃ i khoáº£n Express VPN Premium.jpg" alt="" class="img-p" style="width: 100%;">
+                </div>
+                <div class="infor-p" style="padding: 10px 16px;">
+                  <span class="title-p t-none t-black d-block">
+                    Key Express VPN Premium For PC
+                  </span>
+                  <span class="t-none t-black d-block" style="padding: 10px 0; font-size: 13px;">1 NĂM</span>
+                  <div class="price-p d-flex t-between">
+                    <div class="alpha col-2">
+                      <span class="t-none t-black" style="font-weight: 550;">332,000₫</span>
+                      <span class="t-line-through t-gray" style="font-weight: 550;">1,299,000₫</span>
+                    </div>
+                    <div class="omega d-flex t-center">
+                      <span class="t-none t-black">-89%</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              
+              
+              <!-- 4 -->
+
+            </div>
+            <!-- Nút phân trang -->
+            <div class="pagination">
+              <button id="page1" onclick="changePage(1)">1</button>
+              <button id="page2" onclick="changePage(2)">2</button>
+              <button id="page3" onclick="changePage(3)">3</button>
+              <!-- Thêm các nút trang nếu cần -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div id="section6">
+        <i class="fa-solid fa-comment-dots" style="color: white;font-size: 40px;"></i>
+      </div> -->
+    </div>
+  </div>
+  <div id="footer" style="margin-top: 20px;">
+    
+    <iframe class="iframe-footer" src="./footer.html" frameborder="0" scrolling="no"></iframe>
+ 
+</div>
+  <script src="../JS/product.js"></script>
+</body>
+
+</html>

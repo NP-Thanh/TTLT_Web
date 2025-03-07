@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="../CSS/login.css">
+</head>
+<body>
+<div id="login" class="login">
+    <div class="container">
+        <form id="loginForm">
+            <h1 class="title">Đăng nhập</h1>
+            <label for="email" class="label">Email</label>
+            <input type="email" id="email" class="input" placeholder="Nhập email của bạn">
+            <label for="password" class="label">Mật khẩu</label>
+            <input type="password" id="password" class="input" placeholder="Nhập mật khẩu của bạn">
+            <a href="../HTML/forgetpassword.html" class="forgot-password" target="_blank">Quên mật khẩu?</a>
+            <input type="submit" class="submit" value="Đăng nhập">
+            <div class="signup">
+                <label class="signup-label">Bạn chưa có tài khoản?</label>
+                <a href="../HTML/signup.html" class="signup-link">Đăng ký ngay</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="notification" class="notification"></div>
+<script src="../JS/login.js"></script>
+</body>
+</html>

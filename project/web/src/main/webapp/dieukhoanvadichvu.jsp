@@ -1,0 +1,51 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điều Khoản Dịch Vụ</title>
+    <link rel="stylesheet" type="text/css" href="CSS_JSP/dieukhoanvadichvu.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="main-title">Điều Khoản Dịch Vụ</h1>
+    <p class="welcome-message">Chào mừng quý khách hàng đến với trang web của chúng tôi</p>
+
+    <h2 class="section-title">Các điều khoản chung</h2>
+    <p class="general-term">Bạn phải đủ 18 tuổi và có khả năng pháp lý để ký kết hợp đồng để sử dụng dịch vụ của chúng tôi. Nếu bạn đang sử dụng nền tảng của chúng tôi thay cho một công ty hoặc tổ chức, bạn phải có quyền đại diện cho thực thể đó để ký kết các điều khoản này.</p>
+    <p class="general-term">Bạn chịu trách nhiệm giữ bí mật tài khoản và mật khẩu của mình. Nếu bạn nghi ngờ bất kỳ việc sử dụng trái phép nào trên tài khoản của mình, vui lòng thông báo cho chúng tôi ngay lập tức.</p>
+    <p class="general-term">Trong trường hợp tài khoản của bạn vi phạm các quy định được nêu trong điều khoản và dịch vụ này, chúng tôi có quyền chấm dứt hoặc tạm ngừng tài khoản của bạn bất cứ lúc nào mà không cần thông báo trước.</p>
+    <p class="general-term">TopKey có thể thay đổi các điều khoản và điều kiện này bất kỳ lúc nào mà không cần thông báo trước. Bằng cách tiếp tục sử dụng nền tảng của chúng tôi sau bất kỳ thay đổi nào, bạn đồng ý bị ràng buộc bởi các điều khoản sửa đổi.</p>
+
+    <h2 class="section-title">1. Hướng dẫn sử dụng website</h2>
+    <p class="usage-guidelines">Chúng tôi sẽ cấp một tài khoản (Account) để khách hàng có thể mua sắm trên website trong khuôn khổ Điều khoản và Điều kiện sử dụng đã đề ra.</p>
+    <p class="usage-guidelines">Quý khách hàng sẽ phải đăng ký tài khoản với thông tin xác thực và phải cập nhật nếu có bất kỳ thay đổi nào. Mỗi người truy cập phải có trách nhiệm với mật khẩu, tài khoản và hoạt động của mình trên web.</p>
+    <p class="usage-guidelines">Nghiêm cấm sử dụng bất kỳ phần nào của trang web này với mục đích thương mại hoặc nhân danh bất kỳ đối tác thứ ba nào nếu không được chúng tôi cho phép bằng văn bản.</p>
+
+    <h2 class="section-title">2. Chấp nhận đơn hàng và giá cả</h2>
+    <p class="order-acceptance">Chúng tôi có quyền từ chối hoặc hủy đơn hàng của quý khách vì bất kỳ lý do gì liên quan đến lỗi kỹ thuật hoặc hệ thống.</p>
+    <p class="order-acceptance">Các đơn hàng đã thanh toán nhưng không nhận được sẽ được hoàn tiền theo chính sách của chúng tôi.</p>
+
+    <h2 class="section-title">3. Giải quyết hậu quả do lỗi nhập sai thông tin</h2>
+    <p class="error-resolution">Khách hàng có trách nhiệm cung cấp thông tin đầy đủ và chính xác khi tham gia giao dịch tại lịch sử giao dịch. Chúng tôi có quyền hủy đơn hàng nếu thông tin không đủ.</p>
+
+    <h2 class="section-title">4. Thanh toán an toàn</h2>
+    <p class="payment-safety">Người mua có thể tham khảo các phương thức thanh toán như thanh toán online qua thẻ tín dụng, chuyển khoản.</p>
+
+    <h2 class="section-title">5. Đảm bảo an toàn giao dịch</h2>
+    <p class="transaction-safety">Chúng tôi sử dụng các dịch vụ để bảo vệ thông tin về nội dung mà người bán đăng sản phẩm.</p>
+
+    <h3 class="important-info-title">NHỮNG THÔNG TIN QUAN TRỌNG</h3>
+    <ul class="important-info-list">
+        <li>Đổi mã hàng mới đối với các sản phẩm lỗi.</li>
+        <li>Bảo hành đến 3 tháng cho các sản phẩm.</li>
+        <li>Hoàn tiền đơn hàng đã mua nếu sản phẩm lỗi.</li>
+        <li>Xu chỉ có tác dụng duy nhất là mua hàng tại website.</li>
+        <li>Mọi hành vi dùng sai mục đích đều được xem là vi phạm.</li>
+        <li>Chúng tôi có quyền từ chối phục vụ cho bất kỳ ai mà chúng tôi thấy rằng họ không phải là một khách hàng lịch sự.</li>
+        <li>Quyết định của chúng tôi là quyết định cuối cùng.</li>
+    </ul>
+</div>
+</body>
+</html>

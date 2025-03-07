@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>vn.edu.hcmuaf.fit</groupId>
+    <artifactId>web-th</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>web-th</name>
+    <packaging>war</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>23</maven.compiler.target>
+        <maven.compiler.source>23</maven.compiler.source>
+        <junit.version>5.11.0</junit.version>
+    </properties>
+
+    <dependencies>
+        <!-- Dependency for Servlet API -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Dependency for JSTL -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+
+        <!-- Dependency for JSTL standard taglib -->
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+
+        <!-- Dependency for MySQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20210307</version> <!-- Phiên bản mới nhất tính đến hiện tại -->
+        </dependency>
+
+<!--        &lt;!&ndash;         https://mvnrepository.com/artifact/com.sun.mail/javax.mail &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.sun.mail</groupId>-->
+<!--            <artifactId>javax.mail</artifactId>-->
+<!--            <version>1.6.2</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash;        <dependency>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <groupId>javax.activation</groupId>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <artifactId>activation</artifactId>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <version>1.1.1</version> &lt;!&ndash; Hoặc phiên bản tương thích &ndash;&gt;&ndash;&gt;-->
+<!--        &lt;!&ndash;        </dependency>&ndash;&gt;-->
+        <dependency>
+            <groupId>jakarta.mail</groupId>
+            <artifactId>jakarta.mail-api</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.activation</groupId>
+            <artifactId>jakarta.activation-api</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
+
+
+        <!-- Dependency for JDBI -->
+
+        <dependency>
+            <groupId>org.jdbi</groupId>
+            <artifactId>jdbi3-core</artifactId>
+            <version>3.41.0</version>
+        </dependency>
+
+        <!-- Dependency for JUnit -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Dependency for Gson (commented out) -->
+        <!-- Uncomment if needed -->
+        <!--
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.8</version>
+        </dependency>
+        -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Plugin for WAR packaging -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>23</source>
+                    <target>23</target>
+                    <compilerArgs>--enable-preview</compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

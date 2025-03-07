@@ -1,0 +1,73 @@
+/* Cơ bản */
+html, body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f7f9fc;
+    color: #404040;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Tiêu đề chính */
+.main-title {
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Thông điệp chào mừng */
+.welcome-message {
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Tiêu đề phần */
+.section-title {
+    font-weight: 600;
+    color: black;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Nội dung chung */
+.general-term,
+.usage-guidelines,
+.order-acceptance,
+.error-resolution,
+.payment-safety,
+.transaction-safety {
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Danh sách thông tin quan trọng */
+.important-info-title {
+
+    font-weight: 600;
+    color: black;
+    margin-top: 30px;
+}
+
+.important-info-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.important-info-list li {
+    color: #444;
+    margin-bottom: 8px;
+}
