@@ -95,5 +95,9 @@ public class OrderServiece {
         return ordersWithUser;
     }
 
+    public void deleteOrder(int id) {
+        orderDao.deleteOrder(id);
+    }
+
 
 }
