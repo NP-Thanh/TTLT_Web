@@ -164,7 +164,10 @@
                 <tbody  id="productTable">
                 <!-- Các sản phẩm cố định được thêm vào ở đây -->
                 <c:forEach var="product" items="${products}">
-                    <tr>
+                    <tr data-description="${product.description}"
+                        data-introduction="${product.introduction}"
+                        data-manufacturer="${product.manufacturer}"
+                        data-support="${product.support}">
                         <td>${product.id}</td>
                         <td>${product.type_name}</td>
                         <td>${product.name}</td>
@@ -175,7 +178,6 @@
                         <td class="status in-stock">${product.status}</td>
                         <td class="icon-trash">
                             <a href="deleteProduct?pid=${product.id}" class="delete" style="color: black"><i class="fa-solid fa-trash"></i></a>
-
                         </td>
 
                     </tr>

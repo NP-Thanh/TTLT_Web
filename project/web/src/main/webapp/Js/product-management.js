@@ -23,22 +23,25 @@ function loadProductInfo() {
         const cells = rows[i].getElementsByTagName('td');
         if (cells[0] && cells[0].innerText === productId) {
             document.getElementById('editProductDetails').classList.remove('hidden'); // Hiện form sửa sản phẩm
-
             // Điền giá trị vào form
             document.getElementById('editIDProduct').value = productId; // Tên sản phẩm
-            document.getElementById('editProductName').value = cells[2].innerText; // Tên sản phẩm
             document.getElementById('editProductType').value = cells[1].innerText; // Loại sản phẩm
+            document.getElementById('editProductName').value = cells[2].innerText; // Tên sản phẩm
             document.getElementById('editProductPrice').value = cells[3].innerText; // Giá sản phẩm
             document.getElementById('editProductDuration').value = cells[4].innerText; // Thời hạn
-            document.getElementById('editProductImage').value = cells[6].querySelector('img').src; // Hình ảnh (URL của ảnh)
-
-
+            document.getElementById('editProductImage').value = cells[6].querySelector('img').src; // Hình ảnh (URL của ảnh
+            // Lấy dữ liệu từ data-* attributes
+            CKEDITOR.instances['editProDes'].setData(rows[i].dataset.description); // Mô tả
+            document.getElementById('editProIntro').value = rows[i].dataset.introduction; // Giới thiệu
+            document.getElementById('editProManu').value = rows[i].dataset.manufacturer; // Sản xuất
+            document.getElementById('editProSupport').value = rows[i].dataset.support; // Hỗ trợ
             return;
         }
     }
 
     alert('Không tìm thấy sản phẩm với mã này!');
 }
+
 function loadProductKeyInfo() {
     const productId = document.getElementById('addProductId').value; // ID của sản phẩm cần chỉnh sửa
     const rows = document.querySelectorAll('#productTable tr');
@@ -50,9 +53,6 @@ function loadProductKeyInfo() {
 
             // Điền giá trị vào form
             document.getElementById('idProductKey').value = productId; // Tên sản phẩm
-
-
-
             return;
         }
     }
