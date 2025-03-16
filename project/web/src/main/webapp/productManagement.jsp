@@ -77,17 +77,7 @@
             <%--                <button type="button" onclick="loadProductInfo()">Tìm kiếm</button>--%>
             <%--            </form>--%>
 
-
-            <%--thêm key--%>
-            <button class="btn-key" style="background: #ffe250; font-weight: bold" onclick="toggleAddKeyForm()">Thêm key
-                cho sản phẩm
-            </button>
-            <form id="editKeyForm" class="hidden">
-                <input type="text" id="addProductId" placeholder="Nhập mã sản phẩm để thêm key" required>
-                <button type="button" onclick="loadProductKeyInfo()">Tìm kiếm</button>
-            </form>
-
-
+            <%--form nhập key--%>
             <div id="addKey" class="hidden">
                 <form action="addKey" method="post">
                     <table style="margin-bottom: 10px">
@@ -97,13 +87,22 @@
                         </tr>
                         <tr>
                             <td>Mã key:</td>
-                            <td><input type="text" id="key" name="key" required></td>
+                            <td>
+                                <textarea class="keylist" id="keys" name="keys" required
+                                          placeholder="Nhập mỗi key trên một dòng"></textarea>
+                            </td>
                         </tr>
                     </table>
-                    <button type="submit">Lưu</button>
+                    <div class="d-flex">
+                        <button style="width: 100px !important;" type="submit">Lưu</button>
+                        <button style="width: 70px !important; background: #f12323" type="button" onclick="cancelledKey()">
+                            Hủy
+                        </button>
+                    </div>
                 </form>
             </div>
 
+            <%--                Form chỉnh sửa chi tiết sản phẩm--%>
             <div id="editProductDetails" class="hidden">
                 <form action="editProduct" method="post">
                     <table style="margin-bottom: 10px">
@@ -205,11 +204,18 @@
                         <td>
                             <div class="d-flex align-items-center">
                                 <button class="d-flex align-items-center"
-                                        style="width: 60px; height: 30px; padding-left: 10px"
+                                        style="width: 60px; height: 30px; padding-left: 8px; font-weight: bold"
                                         onclick="editProduct(this)">Update
                                 </button>
-                                <a class="icon-trash" href="deleteProduct?pid=${product.id}" class="delete"
-                                   style="color: black"><i class="fa-solid fa-trash"></i></a>
+                                <button class="d-flex align-items-center"
+                                        style="width: 40px; height: 30px; padding-left: 8px;
+                                         background: #ffe250; font-weight: bold" onclick="loadProductKeyInfo(this)"
+                                        data-id="${product.id}">Key
+                                </button>
+                                <a class="icon-trash d-flex align-items-center" href="deleteProduct?pid=${product.id}"
+                                   class="delete"
+                                   style="color: #fbfbfb;width: 20px; height: 30px; background: #ff3d3d; border-radius: 4px; padding-left: 8px"><i
+                                        class="fa-solid fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>
