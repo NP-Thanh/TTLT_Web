@@ -1,19 +1,18 @@
 package vn.edu.hcmuaf.fit.web.servieces;
 
+import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.web.dao.UserDao;
 import vn.edu.hcmuaf.fit.web.model.User;
 import org.mindrot.jbcrypt.BCrypt;
 
-import java.time.LocalDateTime;
-
 public class SignUpService {
-    private UserDao userDao;
+    private final UserDao userDao;
 
-    public SignUpService() {
-        userDao = new UserDao(); // Khởi tạo UserDao
+    public SignUpService(UserDao userDao) {
+        this.userDao = userDao; // Khởi tạo UserDao
     }
 
-    public String registerUser(String name, String email, String password, String phone, String passwordConfirm) {
+    public String registerUser(String name, String email, String password, String phone, String passwordConfirm, HttpSession session) {
         // Kiểm tra xem mật khẩu có khớp không
         if (!password.equals(passwordConfirm)) {
             return "Mật khẩu không khớp!";
@@ -34,12 +33,25 @@ public class SignUpService {
         newUser.setRegis_date();
         newUser.setStatus("Hoạt động"); // Trạng thái mặc định
 
-        // Thêm người dùng mới vào DB
-        if (userDao.addUser(newUser)) {
-            return "Đăng ký thành công!";
-        } else {
-            return "Đăng ký thất bại, vui lòng thử lại.";
+
+        session.setAttribute("pendingUser", newUser);
+        return "Đăng ký thành công, vui lòng xác thực OTP!";
+    }
+
+    // Xác nhận OTP và lưu user vào DB
+    public boolean confirmOtpAndSaveUser(String email, HttpSession session) {
+        User pendingUser = (User) session.getAttribute("pendingUser");
+
+        // Kiểm tra nếu session đã mất user
+        if (pendingUser == null || !pendingUser.getEmail().equals(email)) {
+            return false;
         }
+        boolean isSaved = userDao.addUser(pendingUser);
+        if (isSaved) {// Lưu vào DB
+            session.removeAttribute("pendingUser"); // Xóa khỏi session
+            return true;
+            }
+        return false;
     }
 
     private String hashPassword(String password) {
