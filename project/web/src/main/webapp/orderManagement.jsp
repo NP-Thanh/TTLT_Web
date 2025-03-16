@@ -226,7 +226,7 @@
                     <td style="color: #2fa50c; font-weight: 600"><%=order.getStatus()%>
                     </td>
                     <td class="icon-trash">
-                        <a href="deleteServlet?Bid=${bank.id}" class="delete" style="color: black"><i
+                        <a href="DeleteOrder?oid=<%=order.getId()%>" class="delete" style="color: black"><i
                                 class="fa-solid fa-trash"></i></a>
                     </td>
                     <%

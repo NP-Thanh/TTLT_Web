@@ -4,10 +4,12 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.web.model.Bank;
+import vn.edu.hcmuaf.fit.web.model.OrderWithUser;
 import vn.edu.hcmuaf.fit.web.model.Product;
 import vn.edu.hcmuaf.fit.web.model.ProductManage;
 import vn.edu.hcmuaf.fit.web.servieces.AdminService;
 import vn.edu.hcmuaf.fit.web.servieces.ListProduct;
+import vn.edu.hcmuaf.fit.web.servieces.OrderServiece;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,5 +28,16 @@ public class ProductManagement extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Integer productId = request.getParameter("productID") != null && !request.getParameter("productID").isEmpty()
+                ? Integer.parseInt(request.getParameter("productID"))
+                : null;
+        String productName = request.getParameter("productName");
+        String status = request.getParameter("status");
+
+        AdminService adminService = new AdminService();
+        List<ProductManage> filteredProducts = adminService.filterProducts(productId, productName, status);
+
+        request.setAttribute("products", filteredProducts);
+        request.getRequestDispatcher("/productManagement.jsp").forward(request, response);
     }
 }

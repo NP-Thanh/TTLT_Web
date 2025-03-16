@@ -124,5 +124,19 @@ public class OrderDao {
         return orders;
     }
 
+    public void deleteOrder(int id) {
+        JDBIConnector.getJdbi().useTransaction(handle -> {
+            // Xóa chi tiết đơn hàng trước
+            handle.createUpdate("DELETE FROM order_detail WHERE order_id = :id")
+                    .bind("id", id)
+                    .execute();
+
+            // Xóa đơn hàng
+            handle.createUpdate("DELETE FROM orders WHERE id = :id")
+                    .bind("id", id)
+                    .execute();
+        });
+    }
+
 
 }

@@ -18,8 +18,18 @@ html, body, p {
     background: #409f5b;
 }
 
-.btn-edit:hover{
+.btn-find:hover{
     background: #0063d1;
+}
+
+.keylist {
+    width: 600px;
+    height: 120px;
+    resize: none;
+    font-family: Arial;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 /* Content */

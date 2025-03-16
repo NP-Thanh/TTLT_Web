@@ -26,7 +26,6 @@ public class editProduct extends HttpServlet {
         String introduction = request.getParameter("pIntroduction");
         String manufacturer = request.getParameter("pManufacturer");
         String support = request.getParameter("pSupport");
-        System.out.println(introduction);
 
         AdminService adminService = new AdminService();
         adminService.editProduct(id,name,type,price,duration,image,description,introduction,manufacturer,support);
