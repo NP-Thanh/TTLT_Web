@@ -1,15 +1,30 @@
 <%@ page import="vn.edu.hcmuaf.fit.web.model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%--<%--%>
+<%--    HttpSession sessionUser = request.getSession();--%>
+<%--    User pendingUser = (User) sessionUser.getAttribute("pendingUser");--%>
+<%--    if (pendingUser == null){--%>
+<%--        System.out.println("Session không có email! Chuyển về signup.jsp");--%>
+<%--        response.sendRedirect("signup.jsp");--%>
+<%--        return;--%>
+<%--    }--%>
+<%--    String email = pendingUser.getEmail();--%>
+<%--%>--%>
+
 <%
     HttpSession sessionUser = request.getSession();
-    User pendingUser = (User) sessionUser.getAttribute("pendingUser");
-    if (pendingUser == null){
-        System.out.println("Session không có email! Chuyển về signup.jsp");
-        response.sendRedirect("signup.jsp");
+    String email = (String) sessionUser.getAttribute("email");
+    String action = (String) sessionUser.getAttribute("action");
+
+    if (email == null || action == null) {
+        if ("resetPassword".equals(action)) {
+            response.sendRedirect("forgetpassword.jsp"); // Quên mật khẩu -> về trang nhập email
+        } else {
+            response.sendRedirect("signup.jsp"); // Đăng ký -> về trang đăng ký
+        }
         return;
     }
-    String email = pendingUser.getEmail();
 %>
 
 <html>
