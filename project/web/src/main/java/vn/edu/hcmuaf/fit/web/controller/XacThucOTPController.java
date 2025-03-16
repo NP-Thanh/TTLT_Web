@@ -34,8 +34,9 @@ public class XacThucOTPController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
+        String action = (String) session.getAttribute("action");
 
-        if (email == null || email.isEmpty()) {
+        if (email == null || action == null) {
             session.setAttribute("notification", "Phiên đăng nhập không hợp lệ, vui lòng đăng ký lại.");
             response.sendRedirect("signup.jsp");
             return;
@@ -50,18 +51,36 @@ public class XacThucOTPController extends HttpServlet {
 
         boolean isValid = xacThucOtpService.verifyOtp(session, otp);
 
-        if (isValid) {
-            if (signUpService.confirmOtpAndSaveUser(email, session)) {
-                session.removeAttribute("otpCode");  // Xóa OTP khỏi session sau khi xác thực thành công
-                session.removeAttribute("otpExpiry");
+        if (!isValid) {
+            session.setAttribute("notification", "OTP không đúng hoặc đã hết hạn!");
+            response.sendRedirect(request.getHeader("referer"));;
+            return;
+        }
+
+        if ("signup".equals(action)) {
+            if (signUpService.confirmOtpAndSaveUser(email,session)) {
                 response.sendRedirect("login.jsp");
-            }else {
-                session.setAttribute("notification", "Xác thực thất bại! Vui lòng thử lại.");
+            } else {
+                session.setAttribute("notification", "Lỗi khi lưu thông tin đăng ký.");
                 response.sendRedirect("xacThucOTP.jsp");
             }
-        } else {
-            session.setAttribute("notification", "OTP không đúng hoặc đã hết hạn!");
-            response.sendRedirect("xacThucOTP.jsp");
+        } else if ("resetPassword".equals(action)) {
+            session.removeAttribute("otpCode"); // Xóa OTP sau khi xác thực thành công
+            session.removeAttribute("otpExpiry");
+            response.sendRedirect("changePassword.jsp");
         }
+//        if (isValid) {
+//            if (signUpService.confirmOtpAndSaveUser(email, session)) {
+//                session.removeAttribute("otpCode");  // Xóa OTP khỏi session sau khi xác thực thành công
+//                session.removeAttribute("otpExpiry");
+//                response.sendRedirect("login.jsp");
+//            }else {
+//                session.setAttribute("notification", "Xác thực thất bại! Vui lòng thử lại.");
+//                response.sendRedirect("xacThucOTP.jsp");
+//            }
+//        } else {
+//            session.setAttribute("notification", "OTP không đúng hoặc đã hết hạn!");
+//            response.sendRedirect("xacThucOTP.jsp");
+//        }
     }
 }

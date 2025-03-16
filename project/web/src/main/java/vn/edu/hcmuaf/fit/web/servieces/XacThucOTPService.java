@@ -35,10 +35,12 @@ public class XacThucOTPService {
     public boolean verifyOtp(HttpSession session, String otp) {
         String storedOtp = (String)  session.getAttribute("otpCode");
         Long expiry = (Long) session.getAttribute("otpExpiry");
+        String action = (String) session.getAttribute("action"); // Kiểm tra loại OTP
 
-        if (storedOtp == null || expiry == null || System.currentTimeMillis() > expiry) {
+        if (storedOtp == null || expiry == null || System.currentTimeMillis() > expiry || action == null) {
             session.removeAttribute("otpCode");
             session.removeAttribute("otpExpiry");
+            session.removeAttribute("action"); // Xóa action nếu OTP hết hạn
             return false;
         }
 
@@ -92,15 +94,5 @@ public class XacThucOTPService {
             e.printStackTrace();
         }
 
-    }
-
-    private static class OtpEntry {
-        String otpCode;
-        long expiryTime;
-
-        public OtpEntry(String otpCode, long expiryTime) {
-            this.otpCode = otpCode;
-            this.expiryTime = expiryTime;
-        }
     }
 }

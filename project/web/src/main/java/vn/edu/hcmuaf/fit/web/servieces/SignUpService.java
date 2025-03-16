@@ -35,6 +35,7 @@ public class SignUpService {
 
 
         session.setAttribute("pendingUser", newUser);
+        session.setAttribute("action", "signup"); // Đánh dấu đây là OTP cho đăng ký
         return "Đăng ký thành công, vui lòng xác thực OTP!";
     }
 
@@ -49,6 +50,7 @@ public class SignUpService {
         boolean isSaved = userDao.addUser(pendingUser);
         if (isSaved) {// Lưu vào DB
             session.removeAttribute("pendingUser"); // Xóa khỏi session
+            session.removeAttribute("action");
             return true;
             }
         return false;
