@@ -34,4 +34,8 @@ public class AdminService {
         productManageDao.addProductKey(pid,key);
     }
 
+    public List<ProductManage> filterProducts(Integer productId, String productName, String status) {
+        return productManageDao.filterProducts(productId, productName, status);
+    }
+
 }

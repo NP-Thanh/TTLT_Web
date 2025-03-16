@@ -3,7 +3,9 @@ package vn.edu.hcmuaf.fit.web.dao;
 import vn.edu.hcmuaf.fit.web.db.JDBIConnector;
 import vn.edu.hcmuaf.fit.web.model.ProductManage;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductManageDao {
     public List<ProductManage> getProductList() {
@@ -16,7 +18,7 @@ public class ProductManageDao {
                             "p.duration, " +
                             "(SELECT COUNT(*) FROM storage s WHERE s.product_id = p.id AND s.order_id IS NULL) AS quantity, " +
                             "p.image, " +
-                            "CASE WHEN (SELECT COUNT(*) FROM storage s WHERE s.product_id = p.id AND s.order_id IS NULL) = 0 THEN 'Hết hàng' ELSE p.status END AS status_display, " +
+                            "CASE WHEN (SELECT COUNT(*) FROM storage s WHERE s.product_id = p.id AND s.order_id IS NULL) = 0 THEN 'hết hàng' ELSE p.status END AS status_display, " +
                             "pd.description, " +
                             "pd.introduction, " +
                             "pd.manufacturer, " +
@@ -106,4 +108,72 @@ public class ProductManageDao {
                     .execute();
         });
     }
+
+    public List<ProductManage> filterProducts(Integer productId, String productName, String status) {
+        StringBuilder query = new StringBuilder("SELECT DISTINCT " +
+                "p.id, " +
+                "pt.type AS type_name, " +
+                "p.name, " +
+                "p.price, " +
+                "p.duration, " +
+                "(SELECT COUNT(*) FROM storage s WHERE s.product_id = p.id AND s.order_id IS NULL) AS quantity, " +
+                "p.image, " +
+                "pd.description, " +
+                "pd.introduction, " +
+                "pd.manufacturer, " +
+                "pd.support " +
+                "FROM products p " +
+                "JOIN product_types pt ON p.type_id = pt.id " +
+                "JOIN product_detail pd ON p.id = pd.product_id " +
+                "LEFT JOIN storage s ON p.id = s.product_id " +
+                "WHERE 1=1 ");
+
+        Map<String, Object> params = new HashMap<>();
+
+        // Kiểm tra và thêm điều kiện nếu có
+        if (productId != null) {
+            query.append("AND p.id = :productId ");
+            params.put("productId", productId);
+        }
+        if (productName != null && !productName.trim().isEmpty()) {
+            query.append("AND p.name LIKE :productName ");
+            params.put("productName", "%" + productName + "%");
+        }
+        if (status != null && !status.trim().isEmpty()) {
+            if (status.equals("Còn hàng")) {
+                query.append("AND (SELECT COUNT(*) FROM storage s2 WHERE s2.product_id = p.id AND s2.order_id IS NULL) > 0 ");
+            } else if (status.equals("Hết hàng")) {
+                query.append("AND (SELECT COUNT(*) FROM storage s2 WHERE s2.product_id = p.id AND s2.order_id IS NULL) = 0 ");
+            }
+        }
+
+        return JDBIConnector.getJdbi().withHandle(h -> {
+            var q = h.createQuery(query.toString());
+
+            // 🔥 Fix lỗi bind tham số
+            params.forEach((key, value) -> q.bind(key, value));
+
+            return q.map((rs, ctx) -> {
+                int quantity = rs.getInt("quantity");
+                return new ProductManage(
+                        rs.getInt("id"),
+                        rs.getString("type_name"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getString("duration"),
+                        quantity,
+                        rs.getString("image"),
+                        quantity > 0 ? "còn hàng" : "hết hàng", // Xác định trạng thái trong Java
+                        rs.getString("description"),
+                        rs.getString("introduction"),
+                        rs.getString("manufacturer"),
+                        rs.getString("support")
+                );
+            }).list();
+        });
+    }
+
+
+
+
 }
