@@ -11,6 +11,11 @@
     <div class="container">
         <form id="signupForm" action="signup" method="post">
             <h1 class="title">Đăng ký</h1>
+            <%-- Sửa cách hiển thị thông báo --%>
+            <% if (session.getAttribute("notification") != null) { %>
+            <h6 style="color: red;"><%= session.getAttribute("notification") %></h6>
+            <% session.removeAttribute("notification"); %>
+            <% } %>
             <label for="email" class="label">Email</label>
             <input type="email" id="email" name="email" class="input" placeholder="Nhập email của bạn" required>
             <label for="password" class="label">Mật khẩu</label>
@@ -25,11 +30,11 @@
         </form>
     </div>
 </div>
-<div id="notification" class="notification">
-    <c:if test="${not empty errorMessage}">
-        <div class="error">${errorMessage}</div>
-    </c:if>
-</div>
+<%--<div id="notification" class="notification">--%>
+<%--    <c:if test="${not empty errorMessage}">--%>
+<%--        <div class="error">${errorMessage}</div>--%>
+<%--    </c:if>--%>
+<%--</div>--%>
 <script src="../JS/signup.js"></script>
 </body>
 </html>
