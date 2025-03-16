@@ -20,6 +20,16 @@ public class ResetPasswordService {
         return false; // Mật khẩu cũ không đúng
     }
 
+    public boolean setNewPassword(String email, String newPassword) {
+        User user = userDao.findUserByEmail(email);
+        if (user != null) {
+            String hashedNewPassword = hashPassword(newPassword);
+            return userDao.setPassword(hashedNewPassword, email);
+        }
+        return false;
+    }
+
+
     private String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }

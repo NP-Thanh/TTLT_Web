@@ -212,6 +212,12 @@
             <form action="resetPassword" method="post" id="resetPasswordForm">
                 <div id="password-change-card" class="password-change-card card">
                     <h2>Đổi mật khẩu</h2>
+                    <% if (session.getAttribute("error") != null) { %>
+                    <div id="error-message" style="color: red; font-weight: bold; padding-bottom: 5px">
+                        <%= session.getAttribute("error") %>
+                    </div>
+                    <% session.removeAttribute("error"); %> <%-- Xóa lỗi sau khi hiển thị --%>
+                    <% } %>
                     <div class="form-group">
                         <label for="email2" class="form-label">Email</label>
                         <input type="email" id="email2" name="email" class="form-input personal-input" value="<%= request.getSession().getAttribute("email") != null ? request.getSession().getAttribute("email") : "" %>" readonly>
