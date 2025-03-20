@@ -113,3 +113,23 @@ body {
     opacity: 0.05; /* Change this value for more or less noise */
     z-index: 1;
 }
+.social-login {
+    margin-top: 20px;
+    text-align: center;
+}
+h2 {
+    font-size: 24px;
+}
+.facebook-login-btn {
+    background-color: #3b5998; /* Màu nền Facebook */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.facebook-login-btn:hover {
+    background-color: #365e8a; /* Màu khi hover */
+}
