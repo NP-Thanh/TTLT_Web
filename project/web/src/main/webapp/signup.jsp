@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="CSS_JSP/signup.css">
 </head>
 <body>
-<div id="signup" class="signup">
+<div id="signup" class="otp">
     <div class="container">
         <form id="signupForm" action="signup" method="post">
             <h1 class="title">Đăng ký</h1>
@@ -30,11 +30,11 @@
         </form>
     </div>
 </div>
-<%--<div id="notification" class="notification">--%>
-<%--    <c:if test="${not empty errorMessage}">--%>
-<%--        <div class="error">${errorMessage}</div>--%>
-<%--    </c:if>--%>
-<%--</div>--%>
+<div id="notification" class="notification">
+    <c:if test="${not empty errorMessage}">
+        <div class="error">${errorMessage}</div>
+    </c:if>
+</div>
 <script src="../JS/signup.js"></script>
 </body>
 </html>
