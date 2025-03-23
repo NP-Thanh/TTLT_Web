@@ -1,102 +1,115 @@
-html, body {
-    font-family: Arial,Helvetica, sans-serif;
-    background-color: #f4f4f9;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     display: flex;
-    font-size: 14px;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    padding: 0;
 }
-
-#login .title {
+.login {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+.title {
+    text-align: center;
     margin-bottom: 20px;
-    color: #333;
     font-size: 24px;
+    color: #333;
 }
-
-#login .label {
-    display: block;
-    margin-top: 20px;
-    color: #555;
-    text-align: left;
+.label {
+    margin-bottom: 5px;
     font-weight: bold;
+    display: block;
 }
-
-#login .input {
+.input {
     width: 100%;
     padding: 12px;
+    margin: 10px 0;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
     box-sizing: border-box;
 }
-
-#login .submit {
+.captcha-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    position: relative;
+    overflow: hidden;
+}
+.captcha {
+    font-weight: bold;
+    font-size: 24px;
+    letter-spacing: 2px;
+    color: #333;
+    text-transform: uppercase;
+    font-family: 'Courier New', Courier, monospace;
+    position: relative;
+    z-index: 2;
+}
+.refresh-btn {
+    cursor: pointer;
+    color: #007bff;
+    z-index: 2;
+}
+.forgot-password {
+    text-align: right;
+    margin: 10px 0;
+    color: #007bff;
+    text-decoration: none;
+    display: block;
+}
+.forgot-password:hover {
+    text-decoration: underline;
+}
+.submit {
+    width: 100%;
+    padding: 12px;
     background-color: #007bff;
     color: white;
-    padding: 12px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
-    margin-top: 20px;
-    width: 100%;
     font-size: 16px;
 }
-
-#login .submit:hover {
+.submit:hover {
     background-color: #0056b3;
 }
-
-#login .forgot-password {
-    color: #007bff;
-    text-decoration: none;
-    margin-top: 15px;
-    display: inline-block;
-    float: right;
-    font-size: 14px;
-}
-
-#login .forgot-password:hover {
-    text-decoration: underline;
-}
-
-#login .signup {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #555;
-}
-
-#login .signup-label,
-#login .signup-link {
-    display: inline;
-    margin: 0;
-}
-
-#login .signup-link {
-    color: #007bff;
-    text-decoration: none;
-}
-
-#login .signup-link:hover {
-    text-decoration: underline;
-}
-.container {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 320px;
+.signup {
     text-align: center;
+    margin-top: 15px;
+}
+.signup-label {
+    display: inline;
+}
+.signup-link {
+    color: #007bff;
+    text-decoration: none;
+}
+.signup-link:hover {
+    text-decoration: underline;
 }
 .notification {
-    position: fixed;
-    bottom: 40px; /* Di chuyển xuống dưới */
-    right: 40px; /* Di chuyển sang bên phải */
-    background-color: #b62424; /* Green background */
-    color: white;
-    padding: 20px 20px;
-    border-radius: 5px;
-    display: none; /* Hidden by default */
-    z-index: 1000; /* Ensure it appears above other content */
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+/* Add noise effect */
+.noise {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect x="0" y="0" width="1" height="1" fill="rgba(0,0,0,0.1)"/><rect x="1" y="1" width="1" height="1" fill="rgba(0,0,0,0.1)"/><rect x="2" y="0" width="1" height="1" fill="rgba(0,0,0,0.1)"/><rect x="3" y="1" width="1" height="1" fill="rgba(0,0,0,0.1)"/><rect x="4" y="0" width="1" height="1" fill="rgba(0,0,0,0.1)"/><rect x="5" y="1" width="1" height="1" fill="rgba(0,0,0,0.1)"/><rect x="6" y="0" width="1" height="1" fill="rgba(0,0,0,0.1)"/><rect x="7" y="1" width="1" height="1" fill="rgba(0,0,0,0.1)"/><rect x="8" y="0" width="1" height="1" fill="rgba(0,0,0,0.1)"/><rect x="9" y="1" width="1" height="1" fill="rgba(0,0,0,0.1)"/></svg>');
+    opacity: 0.05; /* Change this value for more or less noise */
+    z-index: 1;
 }
