@@ -2,7 +2,9 @@ package vn.edu.hcmuaf.fit.web.servieces;
 
 import vn.edu.hcmuaf.fit.web.dao.ProductDao;
 import vn.edu.hcmuaf.fit.web.dao.ProductManageDao;
+import vn.edu.hcmuaf.fit.web.dao.StorageDao;
 import vn.edu.hcmuaf.fit.web.model.Bank;
+import vn.edu.hcmuaf.fit.web.model.KeyManage;
 import vn.edu.hcmuaf.fit.web.model.Product;
 import vn.edu.hcmuaf.fit.web.model.ProductManage;
 
@@ -11,6 +13,7 @@ import java.util.List;
 public class AdminService {
     static ProductDao productDao = new ProductDao();
     static ProductManageDao productManageDao = new ProductManageDao();
+    static StorageDao storageDao = new StorageDao();
 
     public List<Bank> getAllBanks() {
         return productDao.getBanks();
@@ -38,4 +41,7 @@ public class AdminService {
         return productManageDao.filterProducts(productId, productName, status);
     }
 
+    public List<KeyManage> getKeyManageList() {
+        return storageDao.getAllKeys();
+    }
 }
