@@ -44,4 +44,10 @@ public class AdminService {
     public List<KeyManage> getKeyManageList() {
         return storageDao.getAllKeys();
     }
+    public void deleteKeyManage(int id) {
+        storageDao.deleteKey(id);
+    }
+    public void editKey(int id, String key, String productName, String productType, String image){
+        storageDao.editKey(id,key,productName,productType,image);
+    }
 }

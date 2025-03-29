@@ -51,4 +51,24 @@ public class StorageDao {
         });
         return keys;
     }
+
+    public void deleteKey(int keyId) {
+        JDBIConnector.getJdbi().useHandle(handle ->
+                handle.createUpdate("DELETE FROM storage WHERE id = :id")
+                        .bind("id", keyId)
+                        .execute()
+        );
+    }
+
+    public void editKey(int id, String key, String productName, String productType, String image){
+        JDBIConnector.getJdbi().useHandle(handle -> {
+            handle.createUpdate("UPDATE storage SET `key` = :key WHERE id = :id")
+                    .bind("id", id)
+                    .bind("key", key)
+                    .bind("productName", productName)
+                    .bind("productType", productType)
+                    .bind("image", image)
+                    .execute();
+        });
+    }
 }
