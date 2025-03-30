@@ -71,4 +71,51 @@ public class StorageDao {
                     .execute();
         });
     }
+
+    public List<KeyManage> filterKey(Integer keyId) {
+        StringBuilder query = new StringBuilder("SELECT DISTINCT " +
+                "s.id, s.key, " +
+                "p.name AS productName, pt.type AS productType, s.status, " +
+                "p.image " +
+                "FROM storage s " +
+                "JOIN products p ON s.product_id = p.id " +
+                "JOIN product_types pt ON p.type_id = pt.id "+
+                "WHERE 1=1 ");
+
+        Map<String, Object> params = new HashMap<>();
+
+        // Kiểm tra và thêm điều kiện nếu có
+        if (keyId != null) {
+            query.append("AND s.id = :keyId ");
+            params.put("keyId", keyId);
+        }
+
+        return JDBIConnector.getJdbi().withHandle(h -> {
+            var q = h.createQuery(query.toString());
+
+            params.forEach((key, value) -> q.bind(key, value));
+
+            return q.map((rs, ctx) -> {
+                return new KeyManage(
+                        rs.getInt("id"),
+                        rs.getString("key"),
+                        rs.getString("productName"),
+                        rs.getString("productType"),
+                        rs.getString("status"),
+                        rs.getString("image")
+                );
+            }).list();
+        });
+    }
+
+    public boolean existByProductId(int pid){
+        Integer count = JDBIConnector.getJdbi().withHandle(handle ->
+                handle.createQuery("SELECT COUNT(*) FROM products WHERE id = :id")
+                        .bind("id", pid)
+                        .mapTo(Integer.class)
+                        .one()
+        );
+        return count > 0;
+    }
+
 }

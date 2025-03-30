@@ -137,6 +137,24 @@
         </section>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#pid").on("input", function () {
+            var pid = $(this).val().trim();
+            if (pid === "") {
+                $("#statusMessage").text("Vui lòng nhập Mã sản phẩm!").css("color", "red");
+                $("#saveBtn").prop("disabled", true);
+                return;
+            }
+
+            $.get("KeyManagement", { pid: pid }, function (response) {
+                $("#statusMessage").text(response.message).css("color", response.valid ? "green" : "red");
+                $("#saveBtn").prop("disabled", !response.valid);
+            });
+        });
+    });
+</script>
 
 <script src="${pageContext.request.contextPath}/Js/keyManagement.js"></script>
 </body>
