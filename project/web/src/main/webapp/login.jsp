@@ -31,6 +31,14 @@
                 <a href="signup.jsp" class="signup-link">Đăng ký ngay</a>
             </div>
         </form>
+
+        <!-- Nút Đăng nhập bằng Facebook -->
+        <div class="social-login">
+            <h2>Hoặc</h2>
+            <a href="login?action=facebook" class="facebook-login-btn">Đăng nhập bằng Facebook</a>
+            <!-- Nút Đăng nhập bằng Google -->
+            <a href="login?action=google" class="google-login-btn">Đăng nhập bằng Google</a>
+        </div>
     </div>
 </div>
 
