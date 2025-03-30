@@ -191,6 +191,7 @@
                     <th>Admin</th>
                     <th>Dữ liệu trước</th>
                     <th>Dữ liệu sau</th>
+                    <th>Hành động</th>
                 </tr>
                 </thead>
                 <tbody id="bankTable">
@@ -213,6 +214,10 @@
                     <td><%=log.getBeforeData()%>
                     </td>
                     <td><%=log.getAfterData()%>
+                    </td>
+                    <td class="icon-trash">
+                        <a href="deleteLog?lid=<%=log.getId()%>" class="delete" style="color: black"><i
+                                class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
                 <%

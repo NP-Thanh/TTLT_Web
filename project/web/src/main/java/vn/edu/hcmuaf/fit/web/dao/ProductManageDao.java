@@ -6,6 +6,7 @@ import vn.edu.hcmuaf.fit.web.model.ProductManage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.json.JSONObject;
 
 public class ProductManageDao {
     public List<ProductManage> getProductList() {
@@ -48,6 +49,20 @@ public class ProductManageDao {
                             String img, String des, String introduction, String manufacturer, String support) {
         JDBIConnector.getJdbi().useHandle(handle -> {
 
+            // Lấy dữ liệu trước khi cập nhật
+            String beforeData = handle.createQuery("SELECT p.name, t.type AS type_name, p.price, p.duration, p.image, " +
+                            "d.description, d.introduction, d.manufacturer, d.support " +
+                            "FROM products p " +
+                            "JOIN product_types t ON p.type_id = t.id " +
+                            "JOIN product_detail d ON p.id = d.product_id " +
+                            "WHERE p.id = :id")
+                    .bind("id", id)
+                    .mapToMap()
+                    .findOne()
+                    .map(JSONObject::new)
+                    .map(JSONObject::toString)
+                    .orElse("{}");
+
             handle.createUpdate("UPDATE products SET name = :name, type_id = (SELECT id FROM product_types WHERE type like :type_name LIMIT 1), price = :price, " +
                             "duration = :duration, image = :img WHERE id = :id")
                     .bind("id", id)
@@ -65,6 +80,29 @@ public class ProductManageDao {
                     .bind("introduction", introduction)
                     .bind("manufacturer", manufacturer)
                     .bind("support", support)
+                    .execute();
+
+            // 4️⃣ Lấy dữ liệu sau khi cập nhật
+            String afterData = handle.createQuery("SELECT p.name, t.type AS type_name, p.price, p.duration, p.image, " +
+                            "d.description, d.introduction, d.manufacturer, d.support " +
+                            "FROM products p " +
+                            "JOIN product_types t ON p.type_id = t.id " +
+                            "JOIN product_detail d ON p.id = d.product_id " +
+                            "WHERE p.id = :id")
+                    .bind("id", id)
+                    .mapToMap()
+                    .findOne()
+                    .map(JSONObject::new)
+                    .map(JSONObject::toString)
+                    .orElse("{}");
+
+            // 5️⃣ Lưu log vào bảng `log_entry`
+            handle.createUpdate("INSERT INTO log_entry (level, action, who, before_data, after_data) VALUES ( :level, :action, :who, :before_data, :after_data)")
+                    .bind("level", "Info")
+                    .bind("action", "update product")
+                    .bind("who", 7)
+                    .bind("before_data", beforeData)
+                    .bind("after_data", afterData)
                     .execute();
         });
     }
