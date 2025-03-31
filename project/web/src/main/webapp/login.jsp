@@ -30,6 +30,12 @@
                 <label class="signup-label">Bạn chưa có tài khoản?</label>
                 <a href="signup.jsp" class="signup-link">Đăng ký ngay</a>
             </div>
+            <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+            <% if (errorMessage != null) { %>
+            <div class="error-message">
+                <%= errorMessage %>
+            </div>
+            <% } %>
         </form>
 
         <!-- Nút Đăng nhập bằng Facebook -->
