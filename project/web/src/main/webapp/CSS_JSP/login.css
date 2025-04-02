@@ -113,3 +113,44 @@ body {
     opacity: 0.05; /* Change this value for more or less noise */
     z-index: 1;
 }
+.social-login {
+    margin-top: 20px;
+    text-align: center;
+}
+h2 {
+    font-size: 24px;
+}
+.facebook-login-btn {
+    background-color: #3b5998; /* Màu nền Facebook */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.facebook-login-btn:hover {
+    background-color: #365e8a; /* Màu khi hover */
+}
+.google-login-btn {
+    background-color: #f44242; /* Màu của Google */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.google-login-btn:hover {
+    background-color: #e83535; /* Màu khi hover */
+}
+.error-message {
+    color: red;
+    background: #ffe6e6;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+}

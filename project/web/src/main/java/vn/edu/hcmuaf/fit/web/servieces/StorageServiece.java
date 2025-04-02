@@ -15,4 +15,8 @@ public class StorageServiece {
     public void updateKeyStatus(int keyId, int oid, String status) {
         storageDao.updateKeyStatus(keyId, oid, status);
     }
+
+    public boolean existPId(int pid) {
+        return storageDao.existByProductId(pid);
+    }
 }

@@ -1,9 +1,13 @@
 package vn.edu.hcmuaf.fit.web.dao;
 
 import vn.edu.hcmuaf.fit.web.db.JDBIConnector;
+import vn.edu.hcmuaf.fit.web.model.KeyManage;
+import vn.edu.hcmuaf.fit.web.model.ProductManage;
 import vn.edu.hcmuaf.fit.web.model.Storage;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StorageDao {
     public List<Storage> getAvailableKeys(int pid, int quantity) {
@@ -27,4 +31,91 @@ public class StorageDao {
                     .execute();
         });
     }
+    public List<KeyManage> getAllKeys() {
+        List<KeyManage> keys = JDBIConnector.getJdbi().withHandle(handle -> {
+            return handle.createQuery("SELECT s.id, s.key, " +
+                                "p.name AS productName, pt.type AS productType, s.status, " +
+                                "p.image " +
+                                "FROM storage s " +
+                                "JOIN products p ON s.product_id = p.id " +
+                                "JOIN product_types pt ON p.type_id = pt.id")
+                    .map((rs, ctx) -> new KeyManage(
+                            rs.getInt("id"),
+                            rs.getString("key"),
+                            rs.getString("productName"),
+                            rs.getString("productType"),
+                            rs.getString("status"),
+                            rs.getString("image")
+
+                    )).list();
+        });
+        return keys;
+    }
+
+    public void deleteKey(int keyId) {
+        JDBIConnector.getJdbi().useHandle(handle ->
+                handle.createUpdate("DELETE FROM storage WHERE id = :id")
+                        .bind("id", keyId)
+                        .execute()
+        );
+    }
+
+    public void editKey(int id, String key, String productName, String productType, String image){
+        JDBIConnector.getJdbi().useHandle(handle -> {
+            handle.createUpdate("UPDATE storage SET `key` = :key WHERE id = :id")
+                    .bind("id", id)
+                    .bind("key", key)
+                    .bind("productName", productName)
+                    .bind("productType", productType)
+                    .bind("image", image)
+                    .execute();
+        });
+    }
+
+    public List<KeyManage> filterKey(Integer keyId) {
+        StringBuilder query = new StringBuilder("SELECT DISTINCT " +
+                "s.id, s.key, " +
+                "p.name AS productName, pt.type AS productType, s.status, " +
+                "p.image " +
+                "FROM storage s " +
+                "JOIN products p ON s.product_id = p.id " +
+                "JOIN product_types pt ON p.type_id = pt.id "+
+                "WHERE 1=1 ");
+
+        Map<String, Object> params = new HashMap<>();
+
+        // Kiểm tra và thêm điều kiện nếu có
+        if (keyId != null) {
+            query.append("AND s.id = :keyId ");
+            params.put("keyId", keyId);
+        }
+
+        return JDBIConnector.getJdbi().withHandle(h -> {
+            var q = h.createQuery(query.toString());
+
+            params.forEach((key, value) -> q.bind(key, value));
+
+            return q.map((rs, ctx) -> {
+                return new KeyManage(
+                        rs.getInt("id"),
+                        rs.getString("key"),
+                        rs.getString("productName"),
+                        rs.getString("productType"),
+                        rs.getString("status"),
+                        rs.getString("image")
+                );
+            }).list();
+        });
+    }
+
+    public boolean existByProductId(int pid){
+        Integer count = JDBIConnector.getJdbi().withHandle(handle ->
+                handle.createQuery("SELECT COUNT(*) FROM products WHERE id = :id")
+                        .bind("id", pid)
+                        .mapTo(Integer.class)
+                        .one()
+        );
+        return count > 0;
+    }
+
 }
