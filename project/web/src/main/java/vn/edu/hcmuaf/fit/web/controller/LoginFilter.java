@@ -9,7 +9,7 @@ import vn.edu.hcmuaf.fit.web.servieces.UserServiece;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "LoginFilter", urlPatterns = {"/ProductManagement", "/bank", "/discounts", "/user", "/dashboard"})
+@WebFilter(filterName = "LoginFilter", urlPatterns = {"/ProductManagement", "/bank", "/discounts", "/user", "/dashboard", "/logs"})
 public class LoginFilter implements Filter {
 
     public void init(FilterConfig config) throws ServletException {

@@ -1,7 +1,9 @@
 package vn.edu.hcmuaf.fit.web.controller;
 
+import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.web.model.User;
 import vn.edu.hcmuaf.fit.web.model.UserAdmin;
+import vn.edu.hcmuaf.fit.web.servieces.LogEntryService;
 import vn.edu.hcmuaf.fit.web.servieces.UserServiece;
 
 import jakarta.servlet.ServletException;
@@ -19,6 +21,10 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<UserAdmin> users = userService.getAllUserWithRole();
+        HttpSession session = request.getSession(true);
+        int uid = (int) session.getAttribute("uid");
+        LogEntryService logService = new LogEntryService();
+        logService.logAction("Info", "Xem quản lý user", uid, "list users", "list users");
         request.setAttribute("users", users);
         request.getRequestDispatcher("user.jsp").forward(request, response);
     }
