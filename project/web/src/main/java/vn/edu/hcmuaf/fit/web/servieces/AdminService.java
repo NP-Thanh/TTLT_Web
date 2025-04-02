@@ -25,9 +25,9 @@ public class AdminService {
                             String img, String des, String introduction, String manufacturer, String support) {
         productManageDao.editProduct(id,name,type_name,price,duration,img,des,introduction,manufacturer,support);
     }
-    public void addProduct(String name, String type_name, double price, String duration,
+    public int addProduct(String name, String type_name, double price, String duration,
                            String img, String des, String introduction, String manufacturer, String support, String banner) {
-        productManageDao.addProduct(name, type_name, price, duration, img, des, introduction, manufacturer, support, banner);
+        return productManageDao.addProduct(name, type_name, price, duration, img, des, introduction, manufacturer, support, banner);
 
     }
     public void addProductKey(int pid,String key){

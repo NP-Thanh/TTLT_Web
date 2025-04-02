@@ -106,9 +106,9 @@ public class ProductManageDao {
                     .execute();
         });
     }
-    public void addProduct(String name, String type_name, double price, String duration,
+    public int addProduct(String name, String type_name, double price, String duration,
                            String img, String des, String introduction, String manufacturer, String support, String banner) {
-        JDBIConnector.getJdbi().useHandle(handle -> {
+        return JDBIConnector.getJdbi().withHandle(handle -> {
 
             // Insert into products table
             handle.createUpdate("INSERT INTO products (name, type_id, price, duration, image) " +
@@ -136,6 +136,8 @@ public class ProductManageDao {
                     .bind("support", support)
                     .bind("banner", banner)
                     .execute();
+
+            return generatedId;
         });
     }
     public void addProductKey(int pid,String key){

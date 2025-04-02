@@ -24,4 +24,8 @@ public class LogEntryService {
     public void deleteLog(int id) {
         logEntryDao.deleteLog(id);
     }
+
+    public List<LogEntry> filterLogs(String adminId, String level) {
+        return logEntryDao.filterLogs(adminId, level);
+    }
 }

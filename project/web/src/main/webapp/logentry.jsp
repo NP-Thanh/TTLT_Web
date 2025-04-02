@@ -166,8 +166,8 @@
         <section>
             <!-- Nút tìm kiếm -->
             <button class="btn-find" onclick="toggleEditForm()">Tìm kiếm</button>
-            <form class="hidden" id="findOrderForm" action="#" method="post">
-                <input type="text" name="productName" placeholder="Tên admin">
+            <form class="hidden" id="findLog" action="logs" method="post">
+                <input type="text" name="productName" placeholder="ID admin">
                 <select name="level">
                     <option value="">Tất cả</option>
                     <option value="Info">Info</option>
@@ -177,7 +177,7 @@
                 <button type="submit">Tìm kiếm</button>
             </form>
             <!-- Nút reset -->
-            <a href="orderManagement">
+            <a href="logs">
                 <button class="btn-reset">Reset</button>
             </a>
             <!-- Bảng thông tin -->
@@ -231,7 +231,7 @@
 </div>
 <script>
     function toggleEditForm() {
-        const form = document.getElementById("findOrderForm");
+        const form = document.getElementById("findLog");
         form.classList.toggle("hidden");
     }
 

@@ -22,5 +22,13 @@ public class LogController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String adminId = request.getParameter("productName"); // Lấy ID admin
+        String level = request.getParameter("level"); // Lấy level
+
+        LogEntryService service = new LogEntryService();
+        List<LogEntry> logs = service.filterLogs(adminId, level);
+
+        request.setAttribute("logs", logs);
+        request.getRequestDispatcher("logentry.jsp").forward(request, response);
     }
 }

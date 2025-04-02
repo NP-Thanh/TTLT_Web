@@ -23,7 +23,7 @@ public class LogEntryDao {
     }
 
     public void insertLog(LogEntry log) {
-        String sql = "INSERT INTO log_entry (level, time, action, who, beforeData, afterData) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO log_entry (level, time, action, who, before_data, after_data) VALUES (?, ?, ?, ?, ?, ?)";
         JDBIConnector.getJdbi().useHandle(h ->
                 h.createUpdate(sql)
                         .bind(0, log.getLevel())
@@ -41,6 +41,17 @@ public class LogEntryDao {
                 h.createUpdate("DELETE FROM log_entry WHERE id = ?")
                         .bind(0, id)
                         .execute()
+        );
+    }
+
+    public List<LogEntry> filterLogs(String adminId, String level) {
+        return JDBIConnector.getJdbi().withHandle(handle ->
+                handle.createQuery("SELECT * FROM log_entry WHERE (:adminId IS NULL OR who = :adminId) " +
+                                "AND (:level IS NULL OR level = :level)")
+                        .bind("adminId", (adminId.isEmpty()) ? null : adminId)
+                        .bind("level", (level.isEmpty()) ? null : level)
+                        .mapToBean(LogEntry.class)
+                        .list()
         );
     }
 }
