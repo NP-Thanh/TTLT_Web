@@ -77,6 +77,7 @@
         <li><a href="bank">Quản lý thông tin chuyển khoản</a></li>
         <li><a href="discounts">Quản lý mã giảm giá</a></li>
         <li><a href="KeyManagement">Quản lý kho Key</a></li>
+        <li><a href="CartManagement">Quản lý giỏ hàng</a></li>
         <li><a href="logout" style="color: #ff2c2c">Đăng xuất</a></li>
     </ul>
 </div>

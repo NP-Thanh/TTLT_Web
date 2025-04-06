@@ -275,9 +275,9 @@
                 <a href="products?category=Tiện ích" class="htext" target="_top">Tiện ích</a>
                 <a href="products?category=Bảo mật" class="htext" target="_top">Bảo mật</a>
                 <a href="products?category=Lưu trữ" class="htext" target="_top">Lưu trữ</a>
-<%--                <% for (ProductType p : productTypes) {%>--%>
-<%--                <a href="products?category='<%=p.getType()%>'" class="htext" target="_top"><%=p.getType()%></a>--%>
-<%--                <% } %>--%>
+                <%--                <% for (ProductType p : productTypes) {%>--%>
+                <%--                <a href="products?category='<%=p.getType()%>'" class="htext" target="_top"><%=p.getType()%></a>--%>
+                <%--                <% } %>--%>
             </div>
         </div>
     </div>
