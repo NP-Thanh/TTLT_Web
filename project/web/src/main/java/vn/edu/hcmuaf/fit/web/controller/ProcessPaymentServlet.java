@@ -7,6 +7,7 @@ import vn.edu.hcmuaf.fit.web.dao.UserDao;
 import vn.edu.hcmuaf.fit.web.dao.cart.Cart;
 import vn.edu.hcmuaf.fit.web.dao.cart.CartProduct;
 import vn.edu.hcmuaf.fit.web.model.User;
+import vn.edu.hcmuaf.fit.web.servieces.CartService;
 import vn.edu.hcmuaf.fit.web.servieces.DiscountService;
 import vn.edu.hcmuaf.fit.web.servieces.OrderServiece;
 import vn.edu.hcmuaf.fit.web.servieces.UserServiece;
@@ -26,7 +27,8 @@ public class ProcessPaymentServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         UserServiece userServiece = new UserServiece();
         DiscountService discountServiece = new DiscountService();
-        Cart cart = (Cart) session.getAttribute("cart"); // Giả định bạn có class xử lý giỏ hàng
+        CartService cartServiece = new CartService();
+
         // Kiểm tra nếu người dùng đã đăng nhập
         Integer userId = (Integer) session.getAttribute("uid");
         if (userId == null) {
@@ -34,11 +36,17 @@ public class ProcessPaymentServlet extends HttpServlet {
             return;
         }
 
-        // Lấy thông tin giỏ hàng từ session hoặc database
-        List<CartProduct> cartItems = cart.getList();
+        // Lấy thông tin giỏ hàng từ  database
+        Cart cart = cartServiece.getCartByUserId(userId);
+        if (cart == null) {
+            response.getWriter().write("Không tìm thấy giỏ hàng.");
+            return;
+        }
+
+        List<CartProduct> cartItems = cartServiece.getCartProducts(cart.getId());
 
         // Kiểm tra giỏ hàng có sản phẩm không
-        if (cartItems.size() == 0) {
+        if (cartItems == null || cartItems.isEmpty()) {
             response.getWriter().write("Giỏ hàng không có sản phẩm.");
             return;
         }
@@ -51,7 +59,7 @@ public class ProcessPaymentServlet extends HttpServlet {
         }
 
         // Lấy tổng tiền từ giỏ hàng
-        double totalAmount = cart.getTotal();
+        double totalAmount = cartServiece.getTotalPrice(cart.getId());
 
         // Lấy user từ database
         User user = userServiece.getUserById(userId);
@@ -62,10 +70,9 @@ public class ProcessPaymentServlet extends HttpServlet {
 
         // Insert vào bảng order_detail
         for (CartProduct item : cartItems) {
-            ordersServiece.insertOrderDetail(orderId, item.getId(), item.getQuantity(), item.getPrice());
+            ordersServiece.insertOrderDetail(orderId, item.getProduct_id(), item.getQuantity(), item.getPrice());
         }
-        cart= new Cart();
-        session.setAttribute("cart", cart);
+        cartServiece.deleteCart(cart.getId());
         // Trả về thông báo hoặc chuyển hướng đến trang xác nhận thanh toán
         response.sendRedirect("payment?oid=" + orderId + "&bid=1");
     }

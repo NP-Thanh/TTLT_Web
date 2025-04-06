@@ -7,13 +7,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.web.dao.UserDao;
+import vn.edu.hcmuaf.fit.web.dao.cart.Cart;
+import vn.edu.hcmuaf.fit.web.dao.cart.CartDao;
+import vn.edu.hcmuaf.fit.web.dao.cart.CartProduct;
 import vn.edu.hcmuaf.fit.web.model.Discount;
 import vn.edu.hcmuaf.fit.web.model.ProductType;
 import vn.edu.hcmuaf.fit.web.model.User;
+import vn.edu.hcmuaf.fit.web.servieces.CartService;
 import vn.edu.hcmuaf.fit.web.servieces.DiscountService;
 import vn.edu.hcmuaf.fit.web.servieces.ProductServiece;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "Show", value = "/Cart")
@@ -24,10 +29,25 @@ public class Show extends HttpServlet {
         ProductServiece productServiece = new ProductServiece();
         DiscountService discountServiece = new DiscountService();
         UserDao userDao = new UserDao();
+        CartService cartServiece = new CartService();
+
         HttpSession session = request.getSession(true);
-        if (session.getAttribute("uid")!=null){
-            User user = userDao.getUserById((Integer) session.getAttribute("uid"));
+        Integer userId = (Integer) session.getAttribute("uid");
+
+
+        if (userId != null) {
+            User user = userDao.getUserById(userId);
             request.setAttribute("user", user);
+
+            Cart cart = cartServiece.getCartByUserId(userId);
+            if (cart != null) {
+                List<CartProduct> cartItems = cartServiece.getCartProducts(cart.getId());
+                request.setAttribute("cartItems", cartItems);
+            }else {
+                request.setAttribute("cartItems", new ArrayList<CartProduct>());
+            }
+        }else {
+            request.setAttribute("cartItems", new ArrayList<CartProduct>());
         }
         List<ProductType> types=productServiece.getAllProductTypes();
         request.setAttribute("productTypes", types);
