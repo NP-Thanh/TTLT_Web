@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.web.model.OrderWithUser;
+import vn.edu.hcmuaf.fit.web.servieces.LogEntryService;
 import vn.edu.hcmuaf.fit.web.servieces.OrderServiece;
 
 import java.io.IOException;
@@ -16,6 +17,10 @@ public class OrderManagement extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OrderServiece orderServiece = new OrderServiece();
         List<OrderWithUser> list= orderServiece.getAllOrders();
+        HttpSession session = request.getSession(true);
+        int uid = (int) session.getAttribute("uid");
+        LogEntryService logService = new LogEntryService();
+        logService.logAction("Info", "Xem quản lý đơn hàng", uid, "list orders", "list orders");
         request.setAttribute("list", list);
         request.getRequestDispatcher("/orderManagement.jsp").forward(request, response);
     }

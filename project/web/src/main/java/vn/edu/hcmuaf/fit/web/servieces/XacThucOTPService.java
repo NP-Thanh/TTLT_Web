@@ -92,18 +92,20 @@ public class XacThucOTPService {
     }
 
     public boolean isLocked(String email) {
-        // Kiểm tra tài khoản có đang bị khóa hay không
         Optional<OtpAttempt> otpAttempt = otpAttemptDao.getOtpAttempt(email);
-        if (otpAttempt.isPresent() && otpAttempt.get().getLockTime() != null) {
-            long lockTime = otpAttempt.get().getLockTime().getTime();
-            if (System.currentTimeMillis() - lockTime < LOCK_TIME) {
-                return true;
-            } else {
-                otpAttemptDao.resetOtpAttempt(email); // Mở khóa nếu quá 5 phút
-                return false;
+        if (otpAttempt.isPresent()) {
+            Date lockTime = otpAttempt.get().getLockTime();
+            if (lockTime != null) {
+                long lockDuration = System.currentTimeMillis() - lockTime.getTime();
+                if (lockDuration < LOCK_TIME) {
+                    return true; // Tài khoản đang bị khóa
+                } else {
+                    otpAttemptDao.resetOtpAttempt(email); // Mở khóa nếu quá thời gian
+                    return false; // Tài khoản không bị khóa
+                }
             }
         }
-        return false;
+        return false; // Tài khoản không tìm thấy, không bị khóa
     }
 
     public String getRandomOTP(){
@@ -147,5 +149,21 @@ public class XacThucOTPService {
             e.printStackTrace();
         }
 
+    }
+
+    public void resetOtpAttempt(String email) {
+        otpAttemptDao.resetOtpAttempt(email);
+    }
+
+    public void insertOtpAttempt(String email) {
+        otpAttemptDao.insertOtpAttempt(email);
+    }
+
+    public Optional<OtpAttempt> getOtpAttempt(String email) {
+        return otpAttemptDao.getOtpAttempt(email);
+    }
+
+    public void lockOtp(String email) {
+        otpAttemptDao.lockOtp(email);
     }
 }

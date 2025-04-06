@@ -12,9 +12,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.web.model.GoogleUser;
+import vn.edu.hcmuaf.fit.web.model.OtpAttempt;
 import vn.edu.hcmuaf.fit.web.model.User;
 import vn.edu.hcmuaf.fit.web.servieces.LoginService;
 import vn.edu.hcmuaf.fit.web.servieces.UserServiece;
+import vn.edu.hcmuaf.fit.web.servieces.XacThucOTPService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,11 +24,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Optional;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
     private LoginService loginService;
-
+    private XacThucOTPService xacThucOTPService;
+    private static final int MAX_ATTEMPTS = 5;
     // Facebook API
     private static final String FACEBOOK_APP_ID = "608397805533371";
     private static final String FACEBOOK_APP_SECRET = "f245e640a95d0e7cbdb122f9e41deac9";
@@ -40,6 +44,7 @@ public class LoginController extends HttpServlet {
     @Override
     public void init() {
         loginService = new LoginService();
+        xacThucOTPService = new XacThucOTPService();
     }
 
     // Xử lý yêu cầu GET
@@ -67,22 +72,42 @@ public class LoginController extends HttpServlet {
     }
 
     // Xử lý yêu cầu POST
+    // LoginController.java
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        UserServiece userServiece = new UserServiece();
 
+        // Kiểm tra nếu tài khoản bị khóa
+        if (xacThucOTPService.isLocked(email)) {
+            request.setAttribute("errorMessage", "Tài khoản của bạn đã bị khóa. Vui lòng thử lại sau 5 phút.");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            return; // Dừng tại đây để không tiếp tục xác thực
+        }
+
+        // Kiểm tra thông tin người dùng
         if (loginService.validateUser(email, password)) {
+            // Đăng nhập thành công
+            xacThucOTPService.resetOtpAttempt(email); // Reset số lần đăng nhập sai
             HttpSession session = request.getSession(true);
             session.setAttribute("uid", loginService.getID(email));
-            User user = userServiece.getUserById((Integer) session.getAttribute("uid"));
-            boolean admin = user.getRole_id() == 1;
-            session.setAttribute("admin", admin);
             session.setAttribute("email", email);
             response.sendRedirect("/web/home");
         } else {
-            response.getWriter().println("<h2>Đăng Nhập Thất Bại. Vui lòng kiểm tra lại email và mật khẩu.</h2>");
-            response.sendRedirect("/web/login");
+            // Xử lý đăng nhập thất bại
+            xacThucOTPService.insertOtpAttempt(email); // Cập nhật số lần đăng nhập sai
+
+            // Kiểm tra số lần đăng nhập sai
+            Optional<OtpAttempt> otpAttempt = xacThucOTPService.getOtpAttempt(email);
+            if (otpAttempt.isPresent() && otpAttempt.get().getFailedAttempts() >= MAX_ATTEMPTS) {
+                xacThucOTPService.lockOtp(email); // Khóa tài khoản trong DB
+                request.setAttribute("errorMessage", "Tài khoản của bạn đã bị khóa. Vui lòng thử lại sau 5 phút.");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+                return; // Dừng tại đây để không gửi phản hồi sau
+            } else {
+                request.setAttribute("errorMessage", "Đăng Nhập Thất Bại. Vui lòng kiểm tra lại email và mật khẩu.");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }
         }
     }
 

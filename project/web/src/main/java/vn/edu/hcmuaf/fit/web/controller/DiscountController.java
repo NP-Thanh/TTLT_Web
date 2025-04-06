@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.web.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.web.db.JDBIConnector;
 import vn.edu.hcmuaf.fit.web.model.Discount;
@@ -10,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import vn.edu.hcmuaf.fit.web.servieces.LogEntryService;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -26,6 +28,10 @@ public class DiscountController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Discount> discounts = discountService.getAllDiscounts();
+        HttpSession session = request.getSession(true);
+        int uid = (int) session.getAttribute("uid");
+        LogEntryService logService = new LogEntryService();
+        logService.logAction("Info", "Xem quản lý vouchers", uid, "list vouchers", "list vouchers");
         request.setAttribute("discounts", discounts);
         request.getRequestDispatcher("/discount.jsp").forward(request, response);
     }
