@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.web.dao.UserDao;
 import vn.edu.hcmuaf.fit.web.dao.cart.Cart;
-import vn.edu.hcmuaf.fit.web.dao.cart.CartDao;
 import vn.edu.hcmuaf.fit.web.dao.cart.CartProduct;
 import vn.edu.hcmuaf.fit.web.model.Discount;
 import vn.edu.hcmuaf.fit.web.model.ProductType;

@@ -4,10 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.web.dao.cart.Cart;
-import vn.edu.hcmuaf.fit.web.model.Product;
 import vn.edu.hcmuaf.fit.web.servieces.CartService;
-import vn.edu.hcmuaf.fit.web.servieces.ProductServiece;
-
 import java.io.IOException;
 
 @WebServlet(name = "Remove", value = "/remove-cart")
