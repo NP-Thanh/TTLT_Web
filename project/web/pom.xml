@@ -64,7 +64,15 @@
             <version>20210307</version> <!-- Phiên bản mới nhất tính đến hiện tại -->
         </dependency>
 
-<!--        &lt;!&ndash;         https://mvnrepository.com/artifact/com.sun.mail/javax.mail &ndash;&gt;-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!--        &lt;!&ndash;         https://mvnrepository.com/artifact/com.sun.mail/javax.mail &ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>com.sun.mail</groupId>-->
 <!--            <artifactId>javax.mail</artifactId>-->

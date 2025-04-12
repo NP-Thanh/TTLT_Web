@@ -137,6 +137,7 @@ public class XacThucOTPService {
 
     private void sendEmail(String to, String subject, String content) throws MessagingException {
         try{
+
             Session session = getEmailSession();
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(System.getenv("EMAIL_USERNAME"))); // Sử dụng cùng email với username
