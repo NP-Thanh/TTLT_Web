@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @WebServlet(name = "VNPayServlet", value = "/VNPay")
@@ -30,24 +28,20 @@ public class VNPayServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
-//        String vnp_OrderInfo = request.getParameter("vnp_OrderInfo");
-        String vnp_OrderInfo = "Thanh toan don hang 23131";
-//        String orderType = request.getParameter("ordertype");
-        String orderType = "billpayment";
-        String vnp_TxnRef = String.valueOf(System.currentTimeMillis());
+        String vnp_OrderInfo = "Nap tien cho thue bao 0123456789";
+        String orderType = "other";
+        String vnp_TxnRef = VNPayUtils.getRandomNumber(8);
         String vnp_IpAddr = VNPayUtils.getIpAddress(request);
-        String vnp_TmnCode = VNP_TMN_CODE;
+        String vnp_TmnCode = VNPayUtils.vnp_TmnCode;
 
-//        int amount = Integer.parseInt(request.getParameter("amount")) * 100;
-        int amount = 1000000;
+        int amount = 10000 * 100;
         Map vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
-//        String bank_code = request.getParameter("bankcode");
-        String bank_code = "NCB";
+        String bank_code = "VNBANK";
         if (bank_code != null && !bank_code.isEmpty()) {
             vnp_Params.put("vnp_BankCode", bank_code);
         }
@@ -61,7 +55,7 @@ public class VNPayServlet extends HttpServlet {
         } else {
             vnp_Params.put("vnp_Locale", "vn");
         }
-        vnp_Params.put("vnp_ReturnUrl", VNP_RETURN_URL);
+        vnp_Params.put("vnp_ReturnUrl", VNPayUtils.vnp_Returnurl);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
 
@@ -74,9 +68,8 @@ public class VNPayServlet extends HttpServlet {
         //Add Params of 2.1.0 Version
         vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
         //Billing
-//        vnp_Params.put("vnp_Bill_Mobile", request.getParameter("txt_billing_mobile"));
-//        vnp_Params.put("vnp_Bill_Email", request.getParameter("txt_billing_email"));
-//        String fullName = (request.getParameter("txt_billing_fullname")).trim();
+        vnp_Params.put("vnp_Bill_Mobile", "0826661039");
+        vnp_Params.put("vnp_Bill_Email", "bi2004npt@gmail.com");
         String fullName = "Nguyen Le";
         if (fullName != null && !fullName.isEmpty()) {
             int idx = fullName.indexOf(' ');
@@ -101,45 +94,33 @@ public class VNPayServlet extends HttpServlet {
 //        vnp_Params.put("vnp_Inv_Taxcode", request.getParameter("txt_inv_taxcode"));
 //        vnp_Params.put("vnp_Inv_Type", request.getParameter("cbo_inv_type"));
         //Build data to hash and querystring
-        List<String> fieldNames = new ArrayList(vnp_Params.keySet());
+        List fieldNames = new ArrayList(vnp_Params.keySet());
         Collections.sort(fieldNames);
         StringBuilder hashData = new StringBuilder();
-        for (String fieldName : fieldNames) {
-            String fieldValue = (String) vnp_Params.get(fieldName);
-            if ((fieldValue != null) && (fieldValue.length() > 0)) {
-                hashData.append(fieldName).append('=').append(fieldValue);
-                hashData.append('&');
-            }
-        }
-        // Xoá dấu `&` cuối
-        if (hashData.length() > 0) {
-            hashData.setLength(hashData.length() - 1);
-        }
         StringBuilder query = new StringBuilder();
-        for (String fieldName : fieldNames) {
+        Iterator itr = fieldNames.iterator();
+        while (itr.hasNext()) {
+            String fieldName = (String) itr.next();
             String fieldValue = (String) vnp_Params.get(fieldName);
             if ((fieldValue != null) && (fieldValue.length() > 0)) {
-                query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII));
+                //Build hash data
+                hashData.append(fieldName);
+                hashData.append('=');
+                hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                //Build query
+                query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
                 query.append('=');
-                query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
-                query.append('&');
+                query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                if (itr.hasNext()) {
+                    query.append('&');
+                    hashData.append('&');
+                }
             }
-        }
-        // Xoá dấu `&` cuối
-        if (query.length() > 0) {
-            query.setLength(query.length() - 1);
         }
         String queryUrl = query.toString();
-        String vnp_SecureHash = null;
-        try {
-            vnp_SecureHash = VNPayUtils.hmacSHA512(VNP_HASH_SECRET, String.valueOf(hashData));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("HashData = " + hashData.toString());
-        System.out.println("SecureHash = " + vnp_SecureHash);
+        String vnp_SecureHash = VNPayUtils.hmacSHA512(VNPayUtils.vnp_hashSecret, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
-        String paymentUrl = VNP_URL + "?" + queryUrl;
+        String paymentUrl = VNPayUtils.vnp_PayUrl + "?" + queryUrl;
         com.google.gson.JsonObject job = new JsonObject();
         job.addProperty("code", "00");
         job.addProperty("message", "success");
