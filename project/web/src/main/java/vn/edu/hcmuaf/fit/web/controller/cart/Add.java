@@ -17,7 +17,6 @@ import java.util.List;
 
 @WebServlet(name = "Add", value = "/add-cart")
 public class Add extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ProductServiece productServiece = new ProductServiece();
@@ -25,27 +24,25 @@ public class Add extends HttpServlet {
 
         String idParam = request.getParameter("id");
         if (idParam == null || idParam.isEmpty()) {
-            response.sendRedirect("ProductDetail?addCart=false");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
         int id = Integer.parseInt(idParam);
         Product pid = productServiece.getProductById(id);
-        // Nếu sản phẩm không tồn tại → redirect sớm
         if (pid == null) {
-            response.sendRedirect("ProductDetail?addCart=false");
-            return; // DỪNG xử lý
-        }
-
-        HttpSession session = request.getSession();
-        Integer userId = (Integer)session.getAttribute("uid");
-
-        if (userId == null) {
-            response.sendRedirect("Home.jsp");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-//        Kiểm tra user đã có cart chưa
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("uid");
+
+        if (userId == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
         Cart cart = cartService.getCartByUserId(userId);
         int cartId;
         if (cart == null) {
@@ -54,7 +51,6 @@ public class Add extends HttpServlet {
             cartId = cart.getId();
         }
 
-//        Kiểm tra sản phẩm đã tồn tại trong giỏ chưa
         List<CartProduct> items = cartService.getCartProducts(cartId);
         CartProduct existing = items.stream()
                 .filter(p -> p.getProduct_id() == id)
@@ -64,7 +60,7 @@ public class Add extends HttpServlet {
             existing.setQuantity(existing.getQuantity() + 1);
             existing.setPrice(pid.getPrice());
             cartService.updateProductQuantity(existing);
-        }else {
+        } else {
             CartProduct newItem = new CartProduct();
             newItem.setCartId(cartId);
             newItem.setProduct_id(pid.getId());
@@ -72,16 +68,10 @@ public class Add extends HttpServlet {
             newItem.setPrice(pid.getPrice());
             cartService.addProductToCart(newItem);
         }
-
-        String referer = request.getHeader("referer"); // Lấy URL trước đó
-        if (referer != null) {
-            response.sendRedirect(referer); // Quay lại trang trước
-        } else {
-            response.sendRedirect("ProductDetail?addCart=true"); // Phòng trường hợp không có URL trước đó
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int productId = Integer.parseInt(idParam);
+        response.sendRedirect("ProductDetail?id=" + productId);
+        // Sau khi cập nhật giỏ hàng
+        request.setAttribute("cartItems", cartService.getCartProducts(cartId));
+        request.getRequestDispatcher("/cartFragment.jsp").include(request, response);
     }
 }
