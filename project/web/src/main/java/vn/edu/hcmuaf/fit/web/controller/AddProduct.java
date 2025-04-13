@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.web.servieces.AdminService;
+import vn.edu.hcmuaf.fit.web.servieces.LogEntryService;
 
 import java.io.IOException;
 
@@ -28,7 +29,11 @@ public class AddProduct extends HttpServlet {
         String banner = request.getParameter("banner");
 
         AdminService adminService = new AdminService();
-        adminService.addProduct(name,type,price,duration,img,des,intro,manu,support,banner);
+        HttpSession session = request.getSession(true);
+        int uid = (int) session.getAttribute("uid");
+        int pid = adminService.addProduct(name,type,price,duration,img,des,intro,manu,support,banner);
+        LogEntryService logService = new LogEntryService();
+        logService.logAction("Info", "Thêm sản phẩm", uid, "Empty", "id product: "+pid);
         response.sendRedirect("ProductManagement");
 
     }

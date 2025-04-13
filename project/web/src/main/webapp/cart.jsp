@@ -3,22 +3,23 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="vn.edu.hcmuaf.fit.web.model.Discount" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="vi">
 <%
-    Cart shoppingCart = (Cart) session.getAttribute("cart");
-    if (shoppingCart == null) {
-        shoppingCart = new Cart();
+    List<CartProduct> cartItems = (List<CartProduct>) request.getAttribute("cartItems");
+    if (cartItems == null )
+        cartItems = new ArrayList<>();
+
+    double total = 0;
+    for (CartProduct cp : cartItems){
+        total += cp.getPrice() * cp.getQuantity();
     }
-    double total = shoppingCart.getTotal();
-    List<CartProduct> cartItems = shoppingCart.getList();
-    String paymentURL = "#";
-    if (cartItems.size() > 0) {
-        paymentURL = "payment";
-    }
+
     Discount discount = (Discount) request.getAttribute("discount");
     String e = request.getAttribute("error") == null ? "" : (String) request.getAttribute("error");
+    String paymentURL = cartItems.size() > 0 ? "payment" : "#";
 %>
 %>
 <head>
@@ -372,20 +373,20 @@
                         <div class="w-full wrapper justify-between" style="margin-top: 8px; height: auto">
                             <span class="duration-round-border">Thời hạn: <%=c.getDuration()%></span>
                             <div class="d-flex btn-add-sub">
-                                <a href="sub-cart?id=<%=c.getId()%>" style="text-decoration: none">
+                                <a href="sub-cart?id=<%=c.getProduct_id()%>" style="text-decoration: none">
                                     <span class="d-flex items-center justify-center btn">-</span>
                                 </a>
                                 <div class="d-flex items-center justify-center count">
                                     <span><%=c.getQuantity()%></span>
                                 </div>
-                                <a href="add-cart?id=<%=c.getId()%>" style="text-decoration: none">
+                                <a href="add-cart?id=<%=c.getProduct_id()%>" style="text-decoration: none">
                                     <span class="d-flex items-center justify-center btn">+</span>
                                 </a>
                             </div>
                             <span class="cost checkbox-cost"><%=formattedPrice%>đ</span>
                         </div>
                         <hr class="w-full" style="height: auto">
-                        <a href="remove-cart?id=<%=c.getId()%>" style="text-decoration: none">
+                        <a href="remove-cart?id=<%=c.getProduct_id()%>" style="text-decoration: none">
                             <div class="f-right">
                                 <div class="d-flex items-center justify-center btn-delete">
                                     <i class="fas fa-trash-alt fa-lg" style="color: #ed5252;"></i>

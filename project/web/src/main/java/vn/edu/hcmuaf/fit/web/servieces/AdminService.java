@@ -1,8 +1,10 @@
 package vn.edu.hcmuaf.fit.web.servieces;
 
+import vn.edu.hcmuaf.fit.web.dao.CartDao;
 import vn.edu.hcmuaf.fit.web.dao.ProductDao;
 import vn.edu.hcmuaf.fit.web.dao.ProductManageDao;
 import vn.edu.hcmuaf.fit.web.dao.StorageDao;
+import vn.edu.hcmuaf.fit.web.dao.cart.CartProduct;
 import vn.edu.hcmuaf.fit.web.model.Bank;
 import vn.edu.hcmuaf.fit.web.model.KeyManage;
 import vn.edu.hcmuaf.fit.web.model.Product;
@@ -14,6 +16,7 @@ public class AdminService {
     static ProductDao productDao = new ProductDao();
     static ProductManageDao productManageDao = new ProductManageDao();
     static StorageDao storageDao = new StorageDao();
+    static CartDao cartDao = new CartDao();
 
     public List<Bank> getAllBanks() {
         return productDao.getBanks();
@@ -28,9 +31,9 @@ public class AdminService {
                             String img, String des, String introduction, String manufacturer, String support) {
         productManageDao.editProduct(id,name,type_name,price,duration,img,des,introduction,manufacturer,support);
     }
-    public void addProduct(String name, String type_name, double price, String duration,
+    public int addProduct(String name, String type_name, double price, String duration,
                            String img, String des, String introduction, String manufacturer, String support, String banner) {
-        productManageDao.addProduct(name, type_name, price, duration, img, des, introduction, manufacturer, support, banner);
+        return productManageDao.addProduct(name, type_name, price, duration, img, des, introduction, manufacturer, support, banner);
 
     }
     public void addProductKey(int pid,String key){
@@ -53,5 +56,9 @@ public class AdminService {
     }
     public List<KeyManage> filterKeyManages(Integer keyId) {
         return storageDao.filterKey(keyId);
+    }
+
+    public List<CartProduct> getAllListCartDetails (){
+        return cartDao.getAllListCartDetails();
     }
 }

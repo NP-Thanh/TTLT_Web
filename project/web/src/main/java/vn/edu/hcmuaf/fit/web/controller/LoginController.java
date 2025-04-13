@@ -77,6 +77,7 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        UserServiece userServiece = new UserServiece();
 
         // Kiểm tra nếu tài khoản bị khóa
         if (xacThucOTPService.isLocked(email)) {
@@ -90,7 +91,13 @@ public class LoginController extends HttpServlet {
             // Đăng nhập thành công
             xacThucOTPService.resetOtpAttempt(email); // Reset số lần đăng nhập sai
             HttpSession session = request.getSession(true);
-            session.setAttribute("uid", loginService.getID(email));
+            session.setAttribute("uid",loginService.getID(email));
+            User user= userServiece.getUserById((Integer) session.getAttribute("uid"));
+            boolean admin= false;
+            if (user.getRole_id()==1){
+                admin=true;
+            }
+            session.setAttribute("admin",admin);
             session.setAttribute("email", email);
             response.sendRedirect("/web/home");
         } else {
