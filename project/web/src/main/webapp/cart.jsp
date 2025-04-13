@@ -21,7 +21,6 @@
     String e = request.getAttribute("error") == null ? "" : (String) request.getAttribute("error");
     String paymentURL = cartItems.size() > 0 ? "payment" : "#";
 %>
-%>
 <head>
     <meta charset="UTF-8">
     <title>Trang giỏ hàng</title>
@@ -91,7 +90,7 @@
 
         #body_page .item {
             width: 100%;
-            height: 140px;
+            height: 155px;
             border-radius: 5px;
             border: 1px solid #e5e7eb;
             margin-top: 20px;
@@ -338,6 +337,36 @@
             margin-left: 35px;
             margin-right: 35px;
         }
+        .btn-add-sub {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e5e7eb;
+            border-radius: 5px;
+            width: 120px;
+            height: 40px; /* Increased height */
+            margin-top: 5px; /* Add some spacing above */
+            background-color: #f6f8f9; /* Light background to differentiate */
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-add-sub:hover {
+            background-color: #e0e7ff; /* Lighter color on hover */
+        }
+
+        .btn-add-product, .btn-sub-product {
+            width: 40px;
+            height: 40px;
+            border: none; /* Remove border */
+
+
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center the content */
+        }
+
     </style>
 </head>
 <body>
@@ -374,19 +403,19 @@
                             <span class="duration-round-border">Thời hạn: <%=c.getDuration()%></span>
                             <div class="d-flex btn-add-sub">
                                 <a href="sub-cart?id=<%=c.getProduct_id()%>" style="text-decoration: none">
-                                    <span class="d-flex items-center justify-center btn">-</span>
+                                    <a href="#" class="btn-sub-product" data-id="<%=c.getProduct_id()%>">-</a>
                                 </a>
                                 <div class="d-flex items-center justify-center count">
                                     <span><%=c.getQuantity()%></span>
                                 </div>
                                 <a href="add-cart?id=<%=c.getProduct_id()%>" style="text-decoration: none">
-                                    <span class="d-flex items-center justify-center btn">+</span>
+                                    <a href="#" class="btn-add-product" data-id="<%=c.getProduct_id()%>">+</a>
                                 </a>
                             </div>
                             <span class="cost checkbox-cost"><%=formattedPrice%>đ</span>
                         </div>
                         <hr class="w-full" style="height: auto">
-                        <a href="remove-cart?id=<%=c.getProduct_id()%>" style="text-decoration: none">
+                        <a href="#" class="btn-delete" data-id="<%=c.getProduct_id()%>">
                             <div class="f-right">
                                 <div class="d-flex items-center justify-center btn-delete">
                                     <i class="fas fa-trash-alt fa-lg" style="color: #ed5252;"></i>
@@ -512,6 +541,40 @@
             } else {
                 alert("Không có sản phẩm trong giỏ hàng!");
             }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function updateCart() {
+                $.get('Cart', function (response) {
+                    $('#body_page').html(response);
+                });
+            }
+
+            $('.btn-add-product').on('click', function (e) {
+                e.preventDefault();
+                const productId = $(this).data('id');
+                $.get('add-cart', { id: productId }, function () {
+                    updateCart();
+                });
+            });
+
+            $('.btn-sub-product').on('click', function (e) {
+                e.preventDefault();
+                const productId = $(this).data('id');
+                $.get('sub-cart', { id: productId }, function () {
+                    updateCart();
+                });
+            });
+
+            $('.btn-delete').on('click', function (e) {
+                e.preventDefault();
+                const productId = $(this).data('id');
+                $.get('remove-cart', { id: productId }, function () {
+                    updateCart();
+                });
+            });
         });
     </script>
 </div>
