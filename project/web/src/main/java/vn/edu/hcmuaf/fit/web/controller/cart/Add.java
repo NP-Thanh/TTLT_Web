@@ -39,7 +39,6 @@ public class Add extends HttpServlet {
         Integer userId = (Integer) session.getAttribute("uid");
 
         if (userId == null) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.sendRedirect("/web/login");
             return;
         }
@@ -70,7 +69,7 @@ public class Add extends HttpServlet {
             cartService.addProductToCart(newItem);
         }
 
-        response.sendRedirect("ProductDetail?id=" + id);
+        request.getRequestDispatcher("ProductDetail?id=" + id).forward(request, response);
         // Sau khi cập nhật giỏ hàng
         request.setAttribute("cartItems", cartService.getCartProducts(cartId));
         request.getRequestDispatcher("/cartFragment.jsp").include(request, response);

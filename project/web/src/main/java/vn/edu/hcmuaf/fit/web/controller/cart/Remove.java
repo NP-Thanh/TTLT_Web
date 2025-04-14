@@ -26,7 +26,6 @@ public class Remove extends HttpServlet {
         Integer userId = (Integer) session.getAttribute("uid");
 
         if (userId == null) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.sendRedirect("/web/login");
             return;
         }
