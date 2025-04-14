@@ -30,6 +30,7 @@ public class Sub extends HttpServlet {
 
         if (userId == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.sendRedirect("/web/login");
             return;
         }
 
@@ -47,7 +48,6 @@ public class Sub extends HttpServlet {
         if (existing != null) {
             if (existing.getQuantity() > 1) {
                 existing.setQuantity(existing.getQuantity() - 1);
-                existing.setPrice(productServiece.getProductById(id).getPrice());
                 cartService.updateProductQuantity(existing);
             } else {
                 cartService.removeProductFromCart(cart.getId(), id);

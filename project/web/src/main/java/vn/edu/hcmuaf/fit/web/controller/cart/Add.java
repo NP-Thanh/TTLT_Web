@@ -40,6 +40,7 @@ public class Add extends HttpServlet {
 
         if (userId == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.sendRedirect("/web/login");
             return;
         }
 
@@ -68,8 +69,8 @@ public class Add extends HttpServlet {
             newItem.setPrice(pid.getPrice());
             cartService.addProductToCart(newItem);
         }
-        int productId = Integer.parseInt(idParam);
-        response.sendRedirect("ProductDetail?id=" + productId);
+
+        response.sendRedirect("ProductDetail?id=" + id);
         // Sau khi cập nhật giỏ hàng
         request.setAttribute("cartItems", cartService.getCartProducts(cartId));
         request.getRequestDispatcher("/cartFragment.jsp").include(request, response);

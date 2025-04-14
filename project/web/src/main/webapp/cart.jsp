@@ -402,15 +402,15 @@
                         <div class="w-full wrapper justify-between" style="margin-top: 8px; height: auto">
                             <span class="duration-round-border">Thời hạn: <%=c.getDuration()%></span>
                             <div class="d-flex btn-add-sub">
-                                <a href="sub-cart?id=<%=c.getProduct_id()%>" style="text-decoration: none">
+
                                     <a href="#" class="btn-sub-product" data-id="<%=c.getProduct_id()%>">-</a>
-                                </a>
+
                                 <div class="d-flex items-center justify-center count">
                                     <span><%=c.getQuantity()%></span>
                                 </div>
-                                <a href="add-cart?id=<%=c.getProduct_id()%>" style="text-decoration: none">
+
                                     <a href="#" class="btn-add-product" data-id="<%=c.getProduct_id()%>">+</a>
-                                </a>
+
                             </div>
                             <span class="cost checkbox-cost"><%=formattedPrice%>đ</span>
                         </div>
