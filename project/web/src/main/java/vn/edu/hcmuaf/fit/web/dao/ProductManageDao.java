@@ -213,7 +213,90 @@ public class ProductManageDao {
         });
     }
 
+    //    Quản lý sản phẩm phân quyền admin
+    // Lấy danh sách product_type mà admin (user_id) có quyền
+    public List<Integer> getPermittedTypeIdsByUserId(int userId){
+        String query = "SELECT DISTINCT pt.id " +
+                "FROM users u " +
+                "JOIN role_permission rp ON u.role_id = rp.role_id " +
+                "JOIN permission p ON rp.permission_id = p.id "+
+                "JOIN product_types pt ON LOWER(p.permit) LIKE CONCAT('Manage ', LOWER(pt.type), ' Product') " +
+                "WHERE u.id = :userId";
+        return JDBIConnector.getJdbi().withHandle(handle ->
+                handle.createQuery(query)
+                        .bind("userId", userId)
+                        .mapTo(Integer.class)
+                        .list());
+    }
 
+    // Lấy danh sách sản phẩm theo danh sách type_id được phép
+    public List<ProductManage> getProductListByTypeIds(List<Integer> typeIds){
+        if (typeIds == null || typeIds.isEmpty())
+            return List.of();
 
+        return JDBIConnector.getJdbi().withHandle(handle ->
+                handle.createQuery("SELECT " +
+                                "p.id, " +
+                                "pt.type AS type_name, " +
+                                "p.name, " +
+                                "p.price, " +
+                                "p.duration, " +
+                                "(SELECT COUNT(*) FROM storage s WHERE s.product_id = p.id AND s.order_id IS NULL) AS quantity, " +
+                                "p.image, " +
+                                "CASE WHEN (SELECT COUNT(*) FROM storage s WHERE s.product_id = p.id AND s.order_id IS NULL) = 0 THEN 'hết hàng' ELSE p.status END AS status_display, " +
+                                "pd.description, " +
+                                "pd.introduction, " +
+                                "pd.manufacturer, " +
+                                "pd.support " +
+                                "FROM products p " +
+                                "JOIN product_types pt ON p.type_id = pt.id " +
+                                "JOIN product_detail pd ON p.id = pd.product_id " +
+                                "WHERE p.type_id IN (<typeIds>)")
+                        .bindList("typeIds", typeIds)
+                        .map((rs, ctx) -> new ProductManage(
+                                rs.getInt("id"),
+                                rs.getString("type_name"),
+                                rs.getString("name"),
+                                rs.getDouble("price"),
+                                rs.getString("duration"),
+                                rs.getInt("quantity"),
+                                rs.getString("image"),
+                                rs.getString("status_display"),
+                                rs.getString("description"),
+                                rs.getString("introduction"),
+                                rs.getString("manufacturer"),
+                                rs.getString("support")
+                        ))
+                        .list()
+        );
+    }
+
+    public List<ProductManage> getProductListForUser(int userId){
+        List<Integer> typeIds = getPermittedTypeIdsByUserId(userId);
+        return getProductListByTypeIds(typeIds);
+    }
+
+    public List<ProductManage> getProductListByRole(int userId, boolean isSuperAdmin){
+        return isSuperAdmin ? getProductList() : getProductListForUser(userId);
+    }
+
+    //Cho admin chỉ lấy ra lựa chọn type theo phân quyền của mình
+    public String getProductTypeByUserId(int uid) {
+        return JDBIConnector.getJdbi().withHandle(handle ->
+                handle.createQuery("SELECT pt.type " +
+                                    "FROM users u " +
+                                    "JOIN role r ON u.role_id = r.id " +
+                                    "JOIN role_permission rp ON rp.role_id = r.id " +
+                                    "JOIN permission p ON rp.permission_id = p.id " +
+                                    "JOIN product_types pt ON p.permit LIKE CONCAT('Manage ', LOWER(pt.type), ' Product' ) " +
+                                    "WHERE u.id = :uid " +
+                                    "LIMIT 1"
+        )
+                        .bind("uid", uid)
+                        .mapTo(String.class)
+                        .findOne()
+                        .orElse(null)
+        );
+    }
 
 }

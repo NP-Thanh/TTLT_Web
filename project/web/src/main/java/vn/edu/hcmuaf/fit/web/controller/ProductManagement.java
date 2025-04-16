@@ -21,14 +21,28 @@ public class ProductManagement extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AdminService adminService = new AdminService();
-        List<ProductManage> products = adminService.getProductManageList();
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(false); // false để không tự tạo mới session
+        if (session == null) {
+            response.sendRedirect("/web/login.jsp");
+            return;
+        }
+
         int uid = (int) session.getAttribute("uid");
+        boolean isSuperAdmin = (boolean) session.getAttribute("isSuperAdmin");
+
+        // Chỉ cho phép thêm sp loại sp mà admin đc phân
+        String allowedType = null;
+        if (!isSuperAdmin) {
+            allowedType = adminService.getProductTypeByUserId(uid);
+            request.setAttribute("allowedType", allowedType);
+        }
+
+        List<ProductManage> products = adminService.getProductListByRole(uid, isSuperAdmin);
+
         LogEntryService logService = new LogEntryService();
         logService.logAction("Info", "Xem quản lý sản phẩm", uid, "list products", "list products");
         request.setAttribute("products", products);
         request.getRequestDispatcher("/productManagement.jsp").forward(request, response);
-
     }
 
     @Override

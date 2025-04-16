@@ -61,4 +61,12 @@ public class AdminService {
     public List<CartProduct> getAllListCartDetails (){
         return cartDao.getAllListCartDetails();
     }
+
+    public List<ProductManage> getProductListByRole(int userId, boolean isAdmin) {
+        return productManageDao.getProductListByRole(userId, isAdmin);
+    }
+
+    public String getProductTypeByUserId(int userId) {
+        return productManageDao.getProductTypeByUserId(userId);
+    }
 }
