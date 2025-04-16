@@ -23,16 +23,21 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        HttpSession session = req.getSession();
-        boolean admin = (boolean) session.getAttribute("admin");
+        HttpSession session = req.getSession(false);
+
         String path = req.getServletPath();
+        boolean isAdmin = false;
+        if (session != null) {
+            Object adminAttr = session.getAttribute("admin");
+            isAdmin = (adminAttr instanceof Boolean) && (Boolean) adminAttr;
+        }
+
         if (path.equals("/ProductManagement") || path.equals("/bank") || path.equals("/dashboard") || path.equals("/user") || path.equals("/discounts")) {
-            if (!admin) {
+            if (!isAdmin) {
                 res.sendRedirect("home");
                 return;
             }
         }
-
         chain.doFilter(request, response);
     }
 }
