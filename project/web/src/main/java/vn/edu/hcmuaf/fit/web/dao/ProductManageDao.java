@@ -281,7 +281,7 @@ public class ProductManageDao {
     }
 
     //Cho admin chỉ lấy ra lựa chọn type theo phân quyền của mình
-    public String getProductTypeByUserId(int uid) {
+    public List<String> getProductTypeByUserId(int uid) {
         return JDBIConnector.getJdbi().withHandle(handle ->
                 handle.createQuery("SELECT pt.type " +
                                     "FROM users u " +
@@ -289,13 +289,11 @@ public class ProductManageDao {
                                     "JOIN role_permission rp ON rp.role_id = r.id " +
                                     "JOIN permission p ON rp.permission_id = p.id " +
                                     "JOIN product_types pt ON p.permit LIKE CONCAT('Manage ', LOWER(pt.type), ' Product' ) " +
-                                    "WHERE u.id = :uid " +
-                                    "LIMIT 1"
+                                    "WHERE u.id = :uid "
         )
                         .bind("uid", uid)
                         .mapTo(String.class)
-                        .findOne()
-                        .orElse(null)
+                        .list()
         );
     }
 

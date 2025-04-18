@@ -66,7 +66,7 @@ public class AdminService {
         return productManageDao.getProductListByRole(userId, isAdmin);
     }
 
-    public String getProductTypeByUserId(int userId) {
+    public List<String> getProductTypeByUserId(int userId) {
         return productManageDao.getProductTypeByUserId(userId);
     }
 }

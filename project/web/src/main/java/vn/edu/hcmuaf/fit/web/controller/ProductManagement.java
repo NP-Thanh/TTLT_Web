@@ -23,7 +23,7 @@ public class ProductManagement extends HttpServlet {
         AdminService adminService = new AdminService();
         HttpSession session = request.getSession(false); // false để không tự tạo mới session
         if (session == null) {
-            response.sendRedirect("/web/login.jsp");
+            response.sendRedirect("/login");
             return;
         }
 
@@ -31,7 +31,7 @@ public class ProductManagement extends HttpServlet {
         boolean isSuperAdmin = (boolean) session.getAttribute("isSuperAdmin");
 
         // Chỉ cho phép thêm sp loại sp mà admin đc phân
-        String allowedType = null;
+        List<String> allowedType = null;
         if (!isSuperAdmin) {
             allowedType = adminService.getProductTypeByUserId(uid);
             request.setAttribute("allowedType", allowedType);
