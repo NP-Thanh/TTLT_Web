@@ -129,7 +129,7 @@ public class XacThucOTPService {
         return Session.getInstance(properties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(
-                       emailUsername, emailPassword
+                        emailUsername, emailPassword
                 );
             }
         });
@@ -166,5 +166,33 @@ public class XacThucOTPService {
 
     public void lockOtp(String email) {
         otpAttemptDao.lockOtp(email);
+    }
+
+    public boolean isIpLocked(String ip) {
+        Optional<OtpAttempt> otpAttempt = otpAttemptDao.getOtpAttemptByIP(ip);
+        if (otpAttempt.isPresent()) {
+            Date lockTime = otpAttempt.get().getLockTime();
+            if (lockTime != null) {
+                long lockDuration = System.currentTimeMillis() - lockTime.getTime();
+                if (lockDuration < LOCK_TIME) {
+                    return true; // IP đang bị khóa
+                } else {
+                    otpAttemptDao.resetOtpAttemptByIP(ip); // Mở khóa nếu quá thời gian
+                    return false; // IP không còn bị khóa
+                }
+            }
+        }
+        return false; // IP chưa bị khóa
+    }
+    public void insertOtpAttemptByIP(String email,String ip) {
+        otpAttemptDao.insertOtpAttemptByIP(email,ip);
+    }
+
+    public Optional<OtpAttempt> getOtpAttemptByIP(String ip) {
+        return otpAttemptDao.getOtpAttemptByIP(ip);
+    }
+
+    public void lockOtpByIP(String ip) {
+        otpAttemptDao.lockOtp(ip);
     }
 }
