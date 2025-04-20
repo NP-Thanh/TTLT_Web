@@ -23,7 +23,7 @@ public class ProductManagement extends HttpServlet {
         AdminService adminService = new AdminService();
         HttpSession session = request.getSession(false); // false để không tự tạo mới session
         if (session == null) {
-            response.sendRedirect("/login");
+            response.sendRedirect("login");
             return;
         }
 
