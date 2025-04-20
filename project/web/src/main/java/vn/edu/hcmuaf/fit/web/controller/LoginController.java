@@ -93,11 +93,11 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("uid",loginService.getID(email));
             User user= userServiece.getUserById((Integer) session.getAttribute("uid"));
-            boolean admin= false;
-            if (user.getRole_id()==1){
-                admin=true;
-            }
-            session.setAttribute("admin",admin);
+            boolean isSuperAdmin = user.getRole_id() == 1;
+            boolean isAdmin = isSuperAdmin || user.getRole_id() >= 3;
+
+            session.setAttribute("admin", isAdmin);   // ← để LoginFilter dùng
+            session.setAttribute("isSuperAdmin", isSuperAdmin);   // ← để ProductManagement dùng
             session.setAttribute("email", email);
             response.sendRedirect("/web/home");
         } else {
