@@ -7,11 +7,12 @@ public class OtpAttempt {
     private String email;
     private int failedAttempts;
     private Timestamp lockTime;
-
-    public OtpAttempt( String email, int failedAttempts, Timestamp lockTime ) {
+    private String ip;
+    public OtpAttempt( String email, int failedAttempts, Timestamp lockTime , String ip) {
         this.email = email;
         this.failedAttempts = failedAttempts;
         this.lockTime = lockTime;
+        this.ip = ip;
     }
     public OtpAttempt() {}
     public int getId() {
@@ -38,5 +39,13 @@ public class OtpAttempt {
     public void setLockTime(Timestamp lockTime) {
         this.lockTime = lockTime;
     }
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
 
 }

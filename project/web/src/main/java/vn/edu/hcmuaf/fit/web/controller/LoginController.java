@@ -78,9 +78,11 @@ public class LoginController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         UserServiece userServiece = new UserServiece();
+        String ip = request.getRemoteAddr();
+
 
         // Kiểm tra nếu tài khoản bị khóa
-        if (xacThucOTPService.isLocked(email)) {
+        if (xacThucOTPService.isIpLocked(ip)) {
             request.setAttribute("errorMessage", "Tài khoản của bạn đã bị khóa. Vui lòng thử lại sau 5 phút.");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return; // Dừng tại đây để không tiếp tục xác thực
@@ -102,15 +104,14 @@ public class LoginController extends HttpServlet {
             response.sendRedirect("/web/home");
         } else {
             // Xử lý đăng nhập thất bại
-            xacThucOTPService.insertOtpAttempt(email); // Cập nhật số lần đăng nhập sai
+            xacThucOTPService.insertOtpAttemptByIP(email, ip); // Cập nhật số lần đăng nhập sai // Cập nhật số lần đăng nhập sai
 
             // Kiểm tra số lần đăng nhập sai
-            Optional<OtpAttempt> otpAttempt = xacThucOTPService.getOtpAttempt(email);
+            Optional<OtpAttempt> otpAttempt = xacThucOTPService.getOtpAttemptByIP(ip);
             if (otpAttempt.isPresent() && otpAttempt.get().getFailedAttempts() >= MAX_ATTEMPTS) {
-                xacThucOTPService.lockOtp(email); // Khóa tài khoản trong DB
+                xacThucOTPService.lockOtpByIP(ip); // Khóa tài khoản trong DB
                 request.setAttribute("errorMessage", "Tài khoản của bạn đã bị khóa. Vui lòng thử lại sau 5 phút.");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
-                return; // Dừng tại đây để không gửi phản hồi sau
             } else {
                 request.setAttribute("errorMessage", "Đăng Nhập Thất Bại. Vui lòng kiểm tra lại email và mật khẩu.");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);

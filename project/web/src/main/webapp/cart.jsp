@@ -225,7 +225,6 @@
         .btn-delete {
             width: 35px;
             height: 30px;
-            border: 1px solid #ed5252;
             border-radius: 5px;
             margin-top: 5px;
             margin-bottom: 5px;
@@ -548,7 +547,7 @@
         $(document).ready(function () {
             function updateCart() {
                 $.get('Cart', function (response) {
-                    $('#body_page').html(response);
+                    $('#page').html(response);
                 });
             }
 
