@@ -11,7 +11,7 @@ import vn.edu.hcmuaf.fit.web.redis.RedisManager;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "AdminPermissionFilter", urlPatterns = {"/ProductManagement", "/bank", "/discounts", "/user", "/dashboard", "/logs"})
+@WebFilter(filterName = "AdminPermissionFilter", urlPatterns = {"/ProductManagement", "/bank", "/discounts", "/user", "/dashboard", "/logs", "/orderManagement", "/KeyManagement"})
 public class AdminPermissionFilter implements Filter {
 
     public void init(FilterConfig config) throws ServletException {
@@ -25,17 +25,16 @@ public class AdminPermissionFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRes = (HttpServletResponse) response;
-        HttpSession session = httpReq.getSession();
+        HttpSession session = httpReq.getSession(false);
 
         if (session != null) {
-            Integer adminId = (Integer) session.getAttribute("adminId");
-
+            Integer adminId = (Integer) session.getAttribute("uid");
             if (adminId != null && isRevoked(adminId)) {
                 // Xoá khỏi Redis để tránh kiểm lại nhiều lần (tuỳ bạn)
                 RedisManager.getJedis().srem("revoked_admins", String.valueOf(adminId));
 
                 session.invalidate();
-                httpRes.sendRedirect("/login");
+                httpRes.sendRedirect("logout");
                 return;
             }
         }

@@ -548,7 +548,7 @@
         $(document).ready(function () {
             function updateCart() {
                 $.get('Cart', function (response) {
-                    $('#body_page').html(response);
+                    $('#page').html(response);
                 });
             }
 

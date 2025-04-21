@@ -25,10 +25,10 @@ public class RevokeAdminServlet extends HttpServlet {
         }
 
         int revokeAdminId = Integer.parseInt(targetIdParam);
-        System.out.println(revokeAdminId);
         // Cập nhật vào Redis (đánh dấu bị hạ quyền)
         try (Jedis jedis = RedisManager.getJedis()) {
             jedis.sadd("revoked_admins", String.valueOf(revokeAdminId));
         }
+        response.sendRedirect("user");
     }
 }
