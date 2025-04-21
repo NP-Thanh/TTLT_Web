@@ -9,7 +9,7 @@ import vn.edu.hcmuaf.fit.web.servieces.UserServiece;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "LoginFilter", urlPatterns = {"/ProductManagement", "/bank", "/discounts", "/user", "/dashboard", "/logs", "/orderManagement", "/KeyManagement"})
+@WebFilter(filterName = "LoginFilter", urlPatterns = {"/ProductManagement", "/bank", "/discounts", "/user", "/dashboard", "/logs"})
 public class LoginFilter implements Filter {
 
     public void init(FilterConfig config) throws ServletException {
@@ -23,14 +23,19 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        HttpSession session = req.getSession();
-        boolean admin = (boolean) session.getAttribute("admin");
+        HttpSession session = req.getSession(false);
 
-        if (!admin) {
+        String path = req.getServletPath();
+        boolean isAdmin = false;
+        if (session != null) {
+            Object adminAttr = session.getAttribute("admin");
+            isAdmin = (adminAttr instanceof Boolean) && (Boolean) adminAttr;
+        }
+
+        if (!isAdmin) {
             res.sendRedirect("home");
             return;
         }
-
 
         chain.doFilter(request, response);
     }

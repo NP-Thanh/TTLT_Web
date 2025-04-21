@@ -55,13 +55,21 @@
                 <input name="name" type="text" id="addProductName" placeholder="Tên sản phẩm" required>
                 <%--                <input name="type" type="text" id="addProductType" placeholder="Loại" required>--%>
                 <select name="type" id="addProductType" required>
-                    <option value="Giải trí">Giải trí</option>
-                    <option value="Học tập">Học tập</option>
-                    <option value="Làm việc">Làm việc</option>
-                    <option value="Tiện ích">Tiện ích</option>
-                    <option value="Bảo mật">Bảo mật</option>
-                    <option value="Lưu trữ">Lưu trữ</option>
+                    <c:choose>
+                        <c:when test="${not empty allowedType}">
+                            <option value="${allowedType}">${allowedType}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="Giải trí">Giải trí</option>
+                            <option value="Học tập">Học tập</option>
+                            <option value="Làm việc">Làm việc</option>
+                            <option value="Tiện ích">Tiện ích</option>
+                            <option value="Bảo mật">Bảo mật</option>
+                            <option value="Lưu trữ">Lưu trữ</option>
+                        </c:otherwise>
+                    </c:choose>
                 </select>
+
 
                 <input name="price" type="number" id="addProductPrice" placeholder="Giá (VNĐ)" required>
                 <input name="duration" type="text" id="addProductDuration" placeholder="Thời hạn" required>
