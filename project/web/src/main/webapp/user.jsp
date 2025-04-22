@@ -260,6 +260,10 @@
                                 <input type="hidden" name="user_id" value="<%=u.getId()%>">
                                 <button type="submit" class="btn btn-danger">Hạn chế</button>
                             </form>
+                            <form action="revoke" method="post" style="display:inline;">
+                                <input type="hidden" name="revokeAdminId" value="<%=u.getId()%>">
+                                <button type="submit" class="btn btn-success">Revoke</button>
+                            </form>
                         </td>
                     </tr>
                     <%

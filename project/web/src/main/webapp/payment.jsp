@@ -422,7 +422,7 @@
                 </div>
                 <hr class="w-full" style="height: auto; margin-top: 5px">
                 <div class="wrapper justify-between">
-                    <form action="VNPay" method="post">
+                    <form action="payment?oid=<%=order.getId()%>" method="post">
                         <input type="hidden" name="oid" value="<%=order.getId()%>"/>
                         <button type="submit" class="button-pay">
                             <span class="font-sz18 font-600" id="confirmText" style="color: white">Xác nhận</span>
