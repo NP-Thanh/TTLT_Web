@@ -34,7 +34,7 @@ public class LoginController extends HttpServlet {
     // Facebook API
     private static final String FACEBOOK_APP_ID = "608397805533371";
     private static final String FACEBOOK_APP_SECRET = "f245e640a95d0e7cbdb122f9e41deac9";
-    private static final String FACEBOOK_REDIRECT_URI = "http://localhost:8080/web/home"; // Địa chỉ callback
+    private static final String FACEBOOK_REDIRECT_URI = "http://localhost:8080/web/login?action=facebook";
 
     // Google API
     private static final String GOOGLE_CLIENT_ID = "720220286630-t5bd3utvmrbm8omsfkjajh2prod7ecgl.apps.googleusercontent.com";
@@ -50,22 +50,35 @@ public class LoginController extends HttpServlet {
     // Xử lý yêu cầu GET
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+
         if ("facebook".equals(action)) {
-            String facebookLoginUrl = "https://www.facebook.com/v10.0/dialog/oauth?client_id=" + FACEBOOK_APP_ID
-                    + "&redirect_uri=" + FACEBOOK_REDIRECT_URI
-                    + "&scope=email,public_profile";
-            response.sendRedirect(facebookLoginUrl);
-        } else if ("callback".equals(action)) {
             String code = request.getParameter("code");
-            handleFacebookLogin(code, request, response);
+            if (code == null || code.isEmpty()) {
+                String facebookLoginUrl = "https://www.facebook.com/v10.0/dialog/oauth?client_id=" + FACEBOOK_APP_ID
+                        + "&redirect_uri=" + FACEBOOK_REDIRECT_URI
+                        + "&scope=email,public_profile";
+                response.sendRedirect(facebookLoginUrl);
+                return;
+            } else {
+                handleFacebookLogin(code, request, response);
+                return;
+            }
         } else if ("google".equals(action)) {
             String googleLoginUrl = "https://accounts.google.com/o/oauth2/auth?client_id=" + GOOGLE_CLIENT_ID +
                     "&redirect_uri=" + GOOGLE_REDIRECT_URI +
                     "&response_type=code&scope=email profile";
             response.sendRedirect(googleLoginUrl);
+            return;
         } else if ("google/callback".equals(action)) {
             String code = request.getParameter("code");
-            handleGoogleLogin(code, request, response);
+            if (code != null && !code.isEmpty()) {
+                handleGoogleLogin(code, request, response);
+                return;
+            } else {
+                request.setAttribute("errorMessage", "Google login failed: no code returned.");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+                return;
+            }
         } else {
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
@@ -122,26 +135,43 @@ public class LoginController extends HttpServlet {
     private void handleFacebookLogin(String code, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String accessToken = getFacebookAccessToken(code);
         FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
-        User user = fbClient.fetchObject("me", User.class); // Lấy thông tin người dùng từ Facebook
+        com.restfb.types.User fbUser = fbClient.fetchObject("me?fields=id,name,email", com.restfb.types.User.class);
+
+        UserServiece userService = new UserServiece();
+        User user = new User();
+        user.setEmail(fbUser.getEmail());
+        user.setName(fbUser.getName());
+        user.setPassword("");
+        user.setPhone("");
+        user.setStatus("Hoạt động");
+        user.setRole_id(2);
+
+        userService.createIfNotExists(user);
+        user = userService.findUserByEmail(user.getEmail());
 
         HttpSession session = request.getSession(true);
-        session.setAttribute("email", user.getEmail());  // Lưu email vào session
-        session.setAttribute("name", user.getName());
+        session.setAttribute("email", fbUser.getEmail());
+        session.setAttribute("name", fbUser.getName());
+        session.setAttribute("uid", user.getId());
 
-        response.sendRedirect("/web/home");
+        boolean isSuperAdmin = user.getRole_id() == 1;
+        boolean isAdmin = isSuperAdmin || user.getRole_id() >= 3;
+        session.setAttribute("admin", isAdmin);
+        session.setAttribute("isSuperAdmin", isSuperAdmin);
+
+        response.sendRedirect(request.getContextPath() + "/home");
     }
 
     private String getFacebookAccessToken(String code) {
-        String accessToken = ""; // Biến để lưu access token
         try {
             String tokenUrl = "https://graph.facebook.com/v10.0/oauth/access_token?client_id=" + FACEBOOK_APP_ID +
                     "&redirect_uri=" + FACEBOOK_REDIRECT_URI +
                     "&client_secret=" + FACEBOOK_APP_SECRET +
                     "&code=" + code;
 
-            // Thực hiện HTTP GET request để lấy access token
             HttpURLConnection conn = (HttpURLConnection) new URL(tokenUrl).openConnection();
             conn.setRequestMethod("GET");
+
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder response = new StringBuilder();
             String line;
@@ -150,20 +180,12 @@ public class LoginController extends HttpServlet {
             }
             br.close();
 
-            // Phân tích JSON để lấy access token
             JsonObject jsonObject = JsonParser.parseString(response.toString()).getAsJsonObject();
-            accessToken = jsonObject.get("access_token").getAsString();
-
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Malformed URL", e);
-        } catch (IOException e) {
-            throw new RuntimeException("IO Exception", e);
-        } catch (com.google.gson.JsonSyntaxException e) {
-            throw new RuntimeException("Json Syntax Exception", e);
+            return jsonObject.get("access_token").getAsString();
+        } catch (Exception e) {
+            throw new RuntimeException("Lỗi khi lấy access token Facebook", e);
         }
-        return accessToken;
     }
-
     private void handleGoogleLogin(String code, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String accessToken = getGoogleAccessToken(code);
         GoogleUser user = getGoogleUserInfo(accessToken);

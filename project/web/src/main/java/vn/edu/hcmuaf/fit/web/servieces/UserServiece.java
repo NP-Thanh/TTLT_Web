@@ -38,4 +38,14 @@ public class UserServiece {
     public boolean deleteUser(int userId) {
         return userDao.deleteUser(userId, "restricted");
     }
+    public User findUserByEmail(String email) {
+        return userDao.findUserByEmail(email);
+    }
+
+    public void createIfNotExists(User user) {
+        User existing = userDao.findUserByEmail(user.getEmail());
+        if (existing == null) {
+            userDao.addUser(user);
+        }
+    }
 }
