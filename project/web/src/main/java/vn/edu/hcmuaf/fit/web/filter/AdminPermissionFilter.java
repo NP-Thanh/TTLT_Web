@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import redis.clients.jedis.Jedis;
 import vn.edu.hcmuaf.fit.web.redis.RedisManager;
+import vn.edu.hcmuaf.fit.web.servieces.LogEntryService;
 
 
 import java.io.IOException;
@@ -30,11 +31,16 @@ public class AdminPermissionFilter implements Filter {
         if (session != null) {
             Integer adminId = (Integer) session.getAttribute("uid");
             if (adminId != null && isRevoked(adminId)) {
-                // Xoá khỏi Redis để tránh kiểm lại nhiều lần (tuỳ bạn)
-                RedisManager.getJedis().srem("revoked_admins", String.valueOf(adminId));
 
-                session.invalidate();
-                httpRes.sendRedirect("logout");
+                //Ghi lại log khi admin bị chặn
+                LogEntryService logService = new LogEntryService();
+                String before = "Admin ID: " + adminId + " truy cập trang admin";
+                String after = "Chặn truy cập do tài khoản đã bị hạ quyền";
+                logService.logAction("Warning", "Chặn truy cập admin", adminId, before, after);
+
+                request.setAttribute("error", "Tài khoản của bạn đã bị thu hồi quyền admin");
+                RequestDispatcher dispatcher  = request.getRequestDispatcher("/400.jsp");
+                dispatcher.forward(request, response);
                 return;
             }
         }

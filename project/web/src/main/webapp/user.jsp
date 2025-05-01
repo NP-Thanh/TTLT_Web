@@ -252,8 +252,9 @@
                             style="color: ${user.status == 'Hoạt động' ? 'green' : 'red'}"><%=u.getStatus()%></td>
                         <td>
                             <button class="btn btn-primary btn-edit" data-id="<%=u.getId()%>">Sửa</button>
-                            <form action="active-user" method="post" style="display:inline;">
-                                <input type="hidden" name="user_id" value="<%=u.getId()%>">
+                            <form action="revoke" method="post" style="display:inline;">
+                                <input type="hidden" name="revokeAdminId" value="<%=u.getId()%>">
+                                <input type="hidden" name="action" value="unrevoke">
                                 <button type="submit" class="btn btn-success">Hoạt động</button>
                             </form>
                             <form action="delete-user" method="post" style="display:inline;">
@@ -262,6 +263,7 @@
                             </form>
                             <form action="revoke" method="post" style="display:inline;">
                                 <input type="hidden" name="revokeAdminId" value="<%=u.getId()%>">
+                                <input type="hidden" name="action" value="revoke">
                                 <button type="submit" class="btn btn-success">Revoke</button>
                             </form>
                         </td>
