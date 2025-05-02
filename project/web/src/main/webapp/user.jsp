@@ -257,14 +257,10 @@
                                 <input type="hidden" name="action" value="unrevoke">
                                 <button type="submit" class="btn btn-success">Hoạt động</button>
                             </form>
-                            <form action="delete-user" method="post" style="display:inline;">
-                                <input type="hidden" name="user_id" value="<%=u.getId()%>">
-                                <button type="submit" class="btn btn-danger">Hạn chế</button>
-                            </form>
                             <form action="revoke" method="post" style="display:inline;">
                                 <input type="hidden" name="revokeAdminId" value="<%=u.getId()%>">
                                 <input type="hidden" name="action" value="revoke">
-                                <button type="submit" class="btn btn-success">Revoke</button>
+                                <button type="submit" class="btn btn-success" style="background-color: red">Revoke</button>
                             </form>
                         </td>
                     </tr>

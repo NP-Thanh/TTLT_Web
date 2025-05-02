@@ -4,6 +4,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import redis.clients.jedis.Jedis;
+import vn.edu.hcmuaf.fit.web.dao.UserDao;
+import vn.edu.hcmuaf.fit.web.model.User;
 import vn.edu.hcmuaf.fit.web.redis.RedisManager;
 import vn.edu.hcmuaf.fit.web.servieces.LogEntryService;
 
@@ -11,6 +13,8 @@ import java.io.IOException;
 
 @WebServlet(name = "RevokeAdminServlet", value = "/revoke")
 public class RevokeAdminServlet extends HttpServlet {
+
+    private final UserDao userDAO = new UserDao();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,8 +51,12 @@ public class RevokeAdminServlet extends HttpServlet {
         try (Jedis jedis = RedisManager.getJedis()) {
             if("revoke".equals(actionParam)) {
                 jedis.sadd("revoked_admins", String.valueOf(revokeAdminId));
+                jedis.sadd("revoked_users", String.valueOf(revokeAdminId));
+                userDAO.deleteUser(revokeAdminId, "Hạn chế");
             } else if("unrevoke".equals(actionParam)) {
                 jedis.srem("revoked_admins", String.valueOf(revokeAdminId));
+                jedis.srem("revoked_users", String.valueOf(revokeAdminId));
+                userDAO.deleteUser(revokeAdminId, "Hoạt động");
             } else{
                 request.setAttribute("error", "Hành động không hợp lệ");
                 request.getRequestDispatcher("/400.jsp").forward(request, response);
@@ -58,11 +66,11 @@ public class RevokeAdminServlet extends HttpServlet {
 
         int uid = (int) session.getAttribute("uid");
         LogEntryService logService = new LogEntryService();
-        String beforre = "Admin ID: " + revokeAdminId + (actionParam.equals("revoke") ? " còn quyền admin" : " thu hồi quyền admin");
-        String after = "Admin ID: " + revokeAdminId + (actionParam.equals("revoke") ? " thu hồi quyền admin" : " khôi phục quyền admin");
-        String logAction = actionParam.equals("revoke") ? "Hạ quyền admin" : "Khôi phục quyền admin";
+        String before = "ID: " + revokeAdminId + (actionParam.equals("revoke") ? " còn quyền truy cập" : " thu hồi quyền truy cập");
+        String after = "ID: " + revokeAdminId + (actionParam.equals("revoke") ? " thu hồi quyền truy cập" : " khôi phục quyền truy cập");
+        String logAction = actionParam.equals("revoke") ? "Hạ quyền " : "Khôi phục quyền ";
 
-        logService.logAction("Warning", logAction, uid, beforre, after );
+        logService.logAction("Warning", logAction, uid, before, after );
         response.sendRedirect("user");
     }
 }
