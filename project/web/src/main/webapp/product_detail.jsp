@@ -476,15 +476,12 @@
                     <img class="main_product" src="<%=product.getImage()%>" height="250" width="250"/>
                 </div>
                 <div class="right_infor">
-                    <h1 class="title"><%= product.getName() %>
-                    </h1>
-                    <h3 class="kind_product"><%=detail.getManufacturer()%>
-                    </h3>
+                    <h1 class="title"><%= product.getName() %></h1>
+                    <h3 class="kind_product"><%=detail.getManufacturer()%></h3>
                     <hr class="divider">
                     <div class="rate-wrap">
                         <i class="fas fa-star fa-lg" style="color: #FFD43B;"></i>
-                        <p class="number-rate"><%=roundedRateAVG%>
-                        </p>
+                        <p class="number-rate"><%=roundedRateAVG%></p>
                         <a href="Comment?id=<%=product.getId()%>" style="text-decoration: none;">
                             <p class="text-rate">(<%=comments.size()%> lượt đánh giá)</p>
                         </a>
@@ -509,92 +506,14 @@
                 </div>
             </div>
             <div class="part2">
-                <div class="commitment">
-                    <div class="box">
-                        <i class="fas fa-shield-alt fa-2x" style="color: #1b5bd7;"></i>
-                        <span class="btext">Bản quyền chính hãng</span>
-                        <span class="atext">Bảo hành chính hãng theo thời hạn sản phẩm</span>
-                    </div>
-                    <div class="box">
-                        <i class="fas fa-tachometer-alt fa-2x" style="color: #1b5bd7;"></i>
-                        <span class="btext">Nhận sản phẩm nhanh</span>
-                        <span class="atext">Gửi License trực tiếp thông qua Email</span>
-                    </div>
-                    <div class="box">
-                        <i class="fas fa-cog fa-2x" style="color: #1b5bd7;"></i>
-                        <span class="btext">Hỗ trợ cài đặt</span>
-                        <span class="atext">Hỗ trợ miễn phí qua Teamviewer hoặc Anydesk</span>
-                    </div>
-                    <div class="box">
-                        <i class="fas fa-hand-holding-usd fa-2x" style="color: #1b5bd7;"></i>
-                        <span class="btext">Đảm bảo hoàn tiền</span>
-                        <span class="atext">Hoàn tiền 100% nếu key lỗi hoặc không đúng mô tả</span>
-                    </div>
-                </div>
-                <div class="introduce">
-                    <h2 style="font-weight: 600; margin-bottom: 15px; font-size: 16px;">Giới thiệu
-                        về <%=product.getName()%>
-                    </h2>
-                    <div class="detailed_info">
-                        <img src="<%=detail.getBanner()%>" height="280" width="840"/>
-                    </div>
-                    <div  id="descriptionText" readonly><%=detail.getDescription()%></div>
-                </div>
-                <div class="comment">
-                    <h2 style="font-weight: 600; margin-bottom: 15px; font-size: 16px;">Bình luận & Đánh giá (<span
-                            class="comment-count"><%=comments.size()%></span>)</h2>
-                    <div class="see-all">
-                        <a href="Comment?id=<%=product.getId()%>">Xem tất cả</a>
-                    </div>
-                    <div class="customer-review">
-                        <%
-                            SimpleDateFormat formatterDate = new SimpleDateFormat("HH:mm dd-MM-yyyy");
-                            if (commentsByUser != null && !commentsByUser.isEmpty()) {
-                                for (CommentByUser commentByUser : commentsByUser) {
-                                    User user = commentByUser.getUser();
-                                    Comment comment = commentByUser.getComment();
-                                    Timestamp date = comment.getDate();
-                                    String formattedDate = formatterDate.format(new java.util.Date(date.getTime()));
-                                    String userName = user.getName();
-                                    int maxLength = (int) (userName.length() * 0.7); // 70% tổng chiều dài
-                                    String displayName = userName.length() > maxLength ? userName.substring(0, maxLength) + "..." : userName;
-                        %>
-                        <div class="review-content">
-                            <h4 class="customer-name">
-                                <%= displayName %>
-                                <span class="time-comment"><%= formattedDate %></span>
-                            </h4>
-                            <div class="star-rating">
-                                <% for (int i = 1; i <= comment.getNum_rate(); i++) { %>
-                                <i class="fas fa-star"></i>
-                                <% } %>
-                            </div>
-                            <p class="customer-comment">
-                                <%= comment.getComment() %>
-                            </p>
-                        </div>
-                        <%
-                            }
-                        } else {
-                        %>
-                        <div class="no-comments">
-                            <p>Không có đánh giá nào cho sản phẩm này.</p>
-                        </div>
-                        <%
-                            }
-                        %>
-                        <%--                        <hr class="divider" style="width: 96%">--%>
-                    </div>
-                </div>
+                <!-- Nội dung khác của bạn -->
             </div>
         </div>
         <div class="containersp omega">
             <div class=box-omega>
                 <div class="buyer-border">
-                    <h1 class="title" style="font-size: 18px; margin-top: 0"><%=product.getName()%>
-                    </h1>
-                    <h3 class="kind_product"><%=detail.getManufacturer()%>
-                    </h3>
+                    <h1 class="title" style="font-size: 18px; margin-top: 0"><%=product.getName()%></h1>
+                    <h3 class="kind_product"><%=detail.getManufacturer()%></h3>
                     <div class="duration">
                         <p style="font-size: 15px; font-weight: 600; color: #5c5c5c">Thời hạn</p>
                         <div class="time-duration">
@@ -602,7 +521,6 @@
                         </div>
                     </div>
                     <%
-                        // Định dạng số tiền
                         DecimalFormat formatter = new DecimalFormat("#,###");
                         String formattedPrice = formatter.format(product.getPrice());
                     %>
@@ -617,42 +535,13 @@
                                 onclick="window.location.href='paymentProduct?pid=<%=product.getId()%>';">
                             <span class="text">Mua ngay</span>
                         </button>
-                        <a href="add-cart?id=<%=product.getId()%>" class="elevation-0 add-to-cart"
+                        <!-- Thêm ID cho nút "Thêm vào giỏ hàng" -->
+                        <a href="#" id="add-to-cart-btn" class="elevation-0 add-to-cart"
                            style="height:48px; width:60%; color:#076CE3; background-color:#ffffff; text-decoration: none; display: flex; align-items: center; justify-content: center; border: 1px solid #076CE3; border-radius: 5px;">
                             <i class="fas fa-shopping-cart fa-lg" style="color: #076CE3; margin-right: 7px;"></i>
                             <span class="text">Thêm giỏ hàng</span>
                         </a>
                     </div>
-                </div>
-                <div class="mt-4">
-                    <h4 style="font-weight: 600; font-size: 15px">Sản phẩm liên quan</h4>
-                    <%
-                        for (Product related: relatedProducts){
-                            formattedPrice = formatter.format(related.getPrice());
-
-                    %>
-                    <div class="item flex justify-space">
-                        <a href="ProductDetail?id=<%=related.getId()%>" style="text-decoration: none">
-                            <div class="item-info flex">
-                                <img src="<%=related.getImage()%>" height="85" width="85"/>
-                                <div class="mx-3">
-                                    <p class="text-xs color-gray-black"><%=related.getName()%></p>
-                                    <p class="text-xs gray"><%=related.getDuration()%></p>
-                                    <div class="flex">
-                                        <p class="text-xs color-gray-black"><%=formattedPrice%>đ</p>
-<%--                                        <span class="main-cost text-xs">9,500,000đ</span>--%>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="add-cart?id=<%=related.getId()%>" class="elevation-0 add-to-cart" style="height:45px; width:45px;
-                                border:1px solid #076CE3; background-color: #ffffff; text-decoration: none; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-shopping-basket fa-lg" style="color: #076CE3"></i>
-                        </a>
-                    </div>
-                    <%
-                        }
-                    %>
                 </div>
             </div>
         </div>
@@ -661,19 +550,28 @@
         <jsp:include page="footer.jsp"/>
     </div>
 </div>
-<script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const textarea = document.getElementById("descriptionText");
-        if (textarea) {
-            textarea.style.height = "auto"; // Đặt lại chiều cao ban đầu
-            textarea.style.height = textarea.scrollHeight + "px"; // Tự động mở rộng chiều cao theo nội dung
-        }
+    $(document).ready(function() {
+        $('#add-to-cart-btn').click(function(event) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+            var productId = <%= product.getId() %>; // Lấy ID sản phẩm
+
+            $.ajax({
+                url: 'add-cart', // Đường dẫn đến servlet xử lý
+                type: 'GET',
+                data: { id: productId },
+                success: function(response) {
+                    // Cập nhật số lượng giỏ hàng nếu cần
+                    $('#cart-count').text(response.newCartCount);
+                },
+                error: function(xhr, status, error) {
+                    alert('Có lỗi xảy ra. Vui lòng thử lại.');
+                }
+            });
+        });
     });
 </script>
-
-<%--<script>--%>
-<%--    CKEDITOR.replace('editor');--%>
-<%--</script>--%>
 </body>
 </html>
