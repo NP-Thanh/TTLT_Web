@@ -10,6 +10,7 @@
     <title>Quản lý mã giảm giá</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="CSS_JSP/discount.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div class="admin-container">
@@ -22,35 +23,31 @@
             <h2>Quản lý mã giảm giá</h2>
         </header>
         <section>
-            <!-- Nút Thêm mã -->
             <button class="btn-add" onclick="toggleAddForm()">+ Thêm mã giảm giá</button>
-            <form id="addDiscountForm" method="post" action="${pageContext.request.contextPath}/discounts" style="display: none;">
+            <form id="addDiscountForm" method="post" style="display: none;">
                 <input type="hidden" name="action" value="add">
                 <input type="text" name="id" placeholder="Mã" required>
                 <input type="number" name="quantity" placeholder="Số lượng" required>
                 <input type="text" name="value" placeholder="Nội dung" required>
                 <input type="date" name="create_date" required>
                 <input type="date" name="exp_date" required>
-                <button type="submit">Lưu</button>
+                <button type="button" onclick="addDiscount()">Lưu</button>
             </form>
 
-            <!-- Nút Sửa thông tin -->
             <button class="btn-edit" onclick="toggleEditForm()">Sửa thông tin</button>
-            <form id="editDiscountForm" method="post" action="${pageContext.request.contextPath}/discounts" style="display: none;">
+            <form id="editDiscountForm" method="post" style="display: none;">
                 <input type="hidden" name="action" value="update">
                 <input type="text" name="id" placeholder="Nhập mã giảm để sửa" required>
                 <input type="number" name="quantity" placeholder="Số lượng" required>
-                <button type="submit">Lưu</button>
+                <button type="button" onclick="updateDiscount()">Lưu</button>
             </form>
 
-            <!-- Nút Xóa mã -->
-            <form id="deleteDiscountForm" method="post" action="${pageContext.request.contextPath}/discounts" style="display: none;">
+            <form id="deleteDiscountForm" method="post" style="display: none;">
                 <input type="hidden" name="action" value="delete">
                 <input type="text" name="id" placeholder="Nhập mã giảm để xóa" required>
-                <button type="submit">Xóa</button>
+                <button type="button" onclick="deleteDiscount()">Xóa</button>
             </form>
 
-            <!-- Bảng thông tin -->
             <table>
                 <thead>
                 <tr>
@@ -62,32 +59,8 @@
                     <th>Tình trạng</th>
                 </tr>
                 </thead>
-                <tbody>
-                <%
-                    List<Discount> discounts = (List<Discount>) request.getAttribute("discounts");
-                    if (discounts != null) {
-                        for (Discount discount : discounts) {
-                %>
-                <tr>
-                    <td><%= discount.getId() %></td>
-                    <td><%= discount.getQuantity() %></td>
-                    <td><%= discount.getValue() %></td>
-                    <td><%= discount.getCreateDate() %></td>
-                    <td><%= discount.getExpDate() %></td>
-                    <td class="<%= discount.getQuantity() > 0 ? "green" : "red" %> font-600">
-                        <%= discount.getQuantity() > 0 ? "Còn mã" : "Hết" %>
-                    </td>
-                </tr>
-                <%
-                    }
-                } else {
-                %>
-                <tr>
-                    <td colspan="6">Không có mã giảm giá nào.</td>
-                </tr>
-                <%
-                    }
-                %>
+                <tbody id="discountTableBody">
+                <jsp:include page="discount_table.jsp" />
                 </tbody>
             </table>
         </section>
@@ -105,9 +78,38 @@
         form.style.display = form.style.display === 'none' ? 'block' : 'none';
     }
 
-    function toggleDeleteForm() {
-        const form = document.getElementById('deleteDiscountForm');
-        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    function addDiscount() {
+        const formData = $('#addDiscountForm').serialize();
+        $.post('${pageContext.request.contextPath}/discounts', formData, function(response) {
+            // Cập nhật bảng sau khi thêm
+            $('#discountTableBody').html(response);
+            $('#addDiscountForm')[0].reset();
+            toggleAddForm();
+        }).fail(function() {
+            alert('Lỗi khi thêm mã giảm giá.');
+        });
+    }
+
+    function updateDiscount() {
+        const formData = $('#editDiscountForm').serialize();
+        $.post('${pageContext.request.contextPath}/discounts', formData, function(response) {
+            // Cập nhật bảng sau khi sửa
+            $('#discountTableBody').html(response);
+            $('#editDiscountForm')[0].reset();
+            toggleEditForm();
+        }).fail(function() {
+            alert('Lỗi khi sửa mã giảm giá.');
+        });
+    }
+
+    function deleteDiscount() {
+        const formData = $('#deleteDiscountForm').serialize();
+        $.post('${pageContext.request.contextPath}/discounts', formData, function(response) {
+            // Cập nhật bảng sau khi xóa
+            $('#discountTableBody').html(response);
+        }).fail(function() {
+            alert('Lỗi khi xóa mã giảm giá.');
+        });
     }
 </script>
 </body>
