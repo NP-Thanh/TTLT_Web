@@ -117,7 +117,8 @@
 
         .info {
             width: 95%;
-            height: 200px;
+            min-height: 220px;
+            height: auto;
             border: 2px solid #e5e7eb;
             border-radius: 5px;
             margin-top: 20px;
@@ -321,6 +322,39 @@
                         <input class="text-gray editable" id="email" style="margin-left: 10px"
                                value="<%=user.getEmail()%>" readonly>
                     </div>
+                    <!-- Địa chỉ chi tiết (ẩn mặc định) -->
+                    <div id="address-info" style="display: none; margin-top: 15px; margin-left: 120px">
+                        <div class="d-flex info-item" style="margin-bottom: 10px">
+                            <label class="font-600 font-sz16">Tỉnh/Thành phố:</label>
+                            <select id="province" class="text-gray" style="margin-left: 10px">
+                                <option value="">-- Chọn tỉnh/thành phố --</option>
+                            </select>
+                        </div>
+                        <div class="d-flex info-item" style="margin-bottom: 10px">
+                            <label class="font-600 font-sz16">Quận/Huyện:</label>
+                            <select id="district" class="text-gray" style="margin-left: 10px" disabled>
+                                <option value="">-- Chọn quận/huyện --</option>
+                            </select>
+                        </div>
+                        <div class="d-flex info-item" style="margin-bottom: 10px">
+                            <label class="font-600 font-sz16">Phường/Xã:</label>
+                            <select id="ward" class="text-gray" style="margin-left: 10px" disabled>
+                                <option value="">-- Chọn phường/xã --</option>
+                            </select>
+                        </div>
+                        <div class="d-flex info-item">
+                            <label class="font-600 font-sz16">Địa chỉ cụ thể:</label>
+                            <input type="text" id="detailed-address" class="text-gray" placeholder="Số nhà, tên đường..." style="margin-left: 10px; width: 300px">
+                        </div>
+                    </div>
+                    <!-- Radio Buttons: Giao hàng qua email hoặc địa chỉ -->
+                    <div class="d-flex info-item" style="margin-top: 15px">
+                        <label class="font-600 font-sz16" style="margin-right: 10px">Phương thức nhận hàng:</label>
+                        <input type="radio" name="delivery-method" id="email-method" value="email" checked>
+                        <label for="email-method" style="margin-right: 20px; margin-left: 5px">Giao hàng email</label>
+                        <input type="radio" name="delivery-method" id="address-method" value="address">
+                        <label for="address-method" style="margin-left: 5px">Giao hàng địa chỉ</label>
+                    </div>
                 </div>
 
                 <div class="pd-12" style="background: #f6f8f9; margin-top: auto; color: #7a8c96; font-size: 13px">
@@ -461,6 +495,89 @@
             window.location.href = "payment?oid=" + <%=order.getId()%> + "&bid=" + bankId;
         }
     </script>
+
+    <script>
+        const emailRadio = document.getElementById("email-method");
+        const addressRadio = document.getElementById("address-method");
+        const addressInfo = document.getElementById("address-info");
+
+        emailRadio.addEventListener("change", () => {
+            if (emailRadio.checked) addressInfo.style.display = "none";
+        });
+
+        addressRadio.addEventListener("change", () => {
+            if (addressRadio.checked) addressInfo.style.display = "block";
+        });
+
+        async function fetchProvinces() {
+            const res = await fetch("https://provinces.open-api.vn/api/p/");
+            const data = await res.json();
+            const provinceSelect = document.getElementById("province");
+
+            data.forEach(province => {
+                const option = document.createElement("option");
+                option.value = province.code;
+                option.textContent = province.name;
+                provinceSelect.appendChild(option);
+            });
+        }
+
+        document.getElementById("province").addEventListener("change", async function () {
+            const provinceCode = this.value;
+            const districtSelect = document.getElementById("district");
+            const wardSelect = document.getElementById("ward");
+
+            districtSelect.innerHTML = `<option value="">-- Chọn quận/huyện --</option>`;
+            wardSelect.innerHTML = `<option value="">-- Chọn phường/xã --</option>`;
+            districtSelect.disabled = true;
+            wardSelect.disabled = true;
+
+            if (!provinceCode) return;
+
+            // Lấy tất cả quận huyện, sau đó lọc theo province_code
+            const res = await fetch("https://provinces.open-api.vn/api/d/");
+            const districts = await res.json();
+
+            const filteredDistricts = districts.filter(d => d.province_code == provinceCode);
+
+            filteredDistricts.forEach(d => {
+                const option = document.createElement("option");
+                option.value = d.code;
+                option.textContent = d.name;
+                districtSelect.appendChild(option);
+            });
+
+            districtSelect.disabled = false;
+        });
+
+        document.getElementById("district").addEventListener("change", async function () {
+            const districtCode = this.value;
+            const wardSelect = document.getElementById("ward");
+
+            wardSelect.innerHTML = `<option value="">-- Chọn phường/xã --</option>`;
+            wardSelect.disabled = true;
+
+            if (!districtCode) return;
+
+            // Lấy toàn bộ danh sách phường/xã rồi lọc theo district_code
+            const res = await fetch("https://provinces.open-api.vn/api/w/");
+            const wards = await res.json();
+
+            const filteredWards = wards.filter(w => w.district_code == districtCode);
+
+            filteredWards.forEach(w => {
+                const option = document.createElement("option");
+                option.value = w.code;
+                option.textContent = w.name;
+                wardSelect.appendChild(option);
+            });
+
+            wardSelect.disabled = false;
+        });
+        // Load tỉnh khi bắt đầu
+        fetchProvinces();
+    </script>
+
 </div>
 </body>
 </html>

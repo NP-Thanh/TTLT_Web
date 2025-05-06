@@ -30,6 +30,7 @@ public class PaymentServlet extends HttpServlet {
 
         OrderServiece orderServiece = new OrderServiece();
         BankServiece bankServiece = new BankServiece();
+        TransportService transportService = new TransportService();
         DiscountService discountServiece = new DiscountService();
 
         String order_id = (String) request.getParameter("oid");
@@ -46,6 +47,8 @@ public class PaymentServlet extends HttpServlet {
             request.setAttribute("discount", discount);
             User user = orderWithUser.getUser();
             request.setAttribute("user_order", user);
+            Transport transport = transportService.getTransportByOrderId(order.getId());
+            request.setAttribute("transport", transport);
 
             // Lấy thông tin danh sách product
             List<Product> products = orderWithUser.getProduct();
