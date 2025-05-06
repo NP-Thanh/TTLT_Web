@@ -506,7 +506,83 @@
                 </div>
             </div>
             <div class="part2">
-                <!-- Nội dung khác của bạn -->
+                <div class="commitment">
+                    <div class="box">
+                        <i class="fas fa-shield-alt fa-2x" style="color: #1b5bd7;"></i>
+                        <span class="btext">Bản quyền chính hãng</span>
+                        <span class="atext">Bảo hành chính hãng theo thời hạn sản phẩm</span>
+                    </div>
+                    <div class="box">
+                        <i class="fas fa-tachometer-alt fa-2x" style="color: #1b5bd7;"></i>
+                        <span class="btext">Nhận sản phẩm nhanh</span>
+                        <span class="atext">Gửi License trực tiếp thông qua Email</span>
+                    </div>
+                    <div class="box">
+                        <i class="fas fa-cog fa-2x" style="color: #1b5bd7;"></i>
+                        <span class="btext">Hỗ trợ cài đặt</span>
+                        <span class="atext">Hỗ trợ miễn phí qua Teamviewer hoặc Anydesk</span>
+                    </div>
+                    <div class="box">
+                        <i class="fas fa-hand-holding-usd fa-2x" style="color: #1b5bd7;"></i>
+                        <span class="btext">Đảm bảo hoàn tiền</span>
+                        <span class="atext">Hoàn tiền 100% nếu key lỗi hoặc không đúng mô tả</span>
+                    </div>
+                </div>
+                <div class="introduce">
+                    <h2 style="font-weight: 600; margin-bottom: 15px; font-size: 16px;">Giới thiệu
+                        về <%=product.getName()%>
+                    </h2>
+                    <div class="detailed_info">
+                        <img src="<%=detail.getBanner()%>" height="280" width="840"/>
+                    </div>
+                    <div  id="descriptionText" readonly><%=detail.getDescription()%></div>
+                </div>
+                <div class="comment">
+                    <h2 style="font-weight: 600; margin-bottom: 15px; font-size: 16px;">Bình luận & Đánh giá (<span
+                            class="comment-count"><%=comments.size()%></span>)</h2>
+                    <div class="see-all">
+                        <a href="Comment?id=<%=product.getId()%>">Xem tất cả</a>
+                    </div>
+                    <div class="customer-review">
+                        <%
+                            SimpleDateFormat formatterDate = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+                            if (commentsByUser != null && !commentsByUser.isEmpty()) {
+                                for (CommentByUser commentByUser : commentsByUser) {
+                                    User user = commentByUser.getUser();
+                                    Comment comment = commentByUser.getComment();
+                                    Timestamp date = comment.getDate();
+                                    String formattedDate = formatterDate.format(new java.util.Date(date.getTime()));
+                                    String userName = user.getName();
+                                    int maxLength = (int) (userName.length() * 0.7); // 70% tổng chiều dài
+                                    String displayName = userName.length() > maxLength ? userName.substring(0, maxLength) + "..." : userName;
+                        %>
+                        <div class="review-content">
+                            <h4 class="customer-name">
+                                <%= displayName %>
+                                <span class="time-comment"><%= formattedDate %></span>
+                            </h4>
+                            <div class="star-rating">
+                                <% for (int i = 1; i <= comment.getNum_rate(); i++) { %>
+                                <i class="fas fa-star"></i>
+                                <% } %>
+                            </div>
+                            <p class="customer-comment">
+                                <%= comment.getComment() %>
+                            </p>
+                        </div>
+                        <%
+                            }
+                        } else {
+                        %>
+                        <div class="no-comments">
+                            <p>Không có đánh giá nào cho sản phẩm này.</p>
+                        </div>
+                        <%
+                            }
+                        %>
+                        <%--                        <hr class="divider" style="width: 96%">--%>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="containersp omega">
@@ -542,6 +618,36 @@
                             <span class="text">Thêm giỏ hàng</span>
                         </a>
                     </div>
+                </div>
+                <div class="mt-4">
+                    <h4 style="font-weight: 600; font-size: 15px">Sản phẩm liên quan</h4>
+                    <%
+                        for (Product related: relatedProducts){
+                            formattedPrice = formatter.format(related.getPrice());
+
+                    %>
+                    <div class="item flex justify-space">
+                        <a href="ProductDetail?id=<%=related.getId()%>" style="text-decoration: none">
+                            <div class="item-info flex">
+                                <img src="<%=related.getImage()%>" height="85" width="85"/>
+                                <div class="mx-3">
+                                    <p class="text-xs color-gray-black"><%=related.getName()%></p>
+                                    <p class="text-xs gray"><%=related.getDuration()%></p>
+                                    <div class="flex">
+                                        <p class="text-xs color-gray-black"><%=formattedPrice%>đ</p>
+                                        <%--                                        <span class="main-cost text-xs">9,500,000đ</span>--%>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="add-cart?id=<%=related.getId()%>" class="elevation-0 add-to-cart" style="height:45px; width:45px;
+                                 border:1px solid #076CE3; background-color: #ffffff; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-shopping-basket fa-lg" style="color: #076CE3"></i>
+                        </a>
+                    </div>
+                    <%
+                        }
+                    %>
                 </div>
             </div>
         </div>
