@@ -346,7 +346,12 @@
                             <label class="font-600 font-sz16">Địa chỉ cụ thể:</label>
                             <input type="text" id="detailed-address" class="text-gray" placeholder="Số nhà, tên đường..." style="margin-left: 10px; width: 300px">
                         </div>
+                        <%--                    Nút xác nhận                    --%>
+                        <button id="confirm-address" style="margin-top: 15px; padding: 6px 12px; background-color: #d32f2f; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                            Xác nhận
+                        </button>
                     </div>
+
                     <!-- Radio Buttons: Giao hàng qua email hoặc địa chỉ -->
                     <div class="d-flex info-item" style="margin-top: 15px">
                         <label class="font-600 font-sz16" style="margin-right: 10px">Phương thức nhận hàng:</label>
@@ -574,6 +579,53 @@
 
             wardSelect.disabled = false;
         });
+
+        document.getElementById("confirm-address").addEventListener("click", async function () {
+            const province = document.getElementById("province").value;
+            const district = document.getElementById("district").value;
+            const ward = document.getElementById("ward").value;
+            const detailed = document.getElementById("detailed-address").value.trim();
+
+            let missing = [];
+
+            if (!province) missing.push("Tỉnh/Thành phố");
+            if (!district) missing.push("Quận/Huyện");
+            if (!ward) missing.push("Phường/Xã");
+            if (!detailed) missing.push("Địa chỉ cụ thể");
+
+            if (missing.length > 0) {
+                alert("Vui lòng nhập đầy đủ thông tin: " + missing.join(", "));
+                return;
+            }
+
+            // Gửi request cập nhật địa chỉ
+            try {
+                console.log({ province, district, ward, detailed, orderId: "<%=order.getId()%>" });
+                const res = await fetch("/web/update-transport", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        province,
+                        district,
+                        ward,
+                        detailed,
+                        orderId: "<%=order.getId()%>"
+                    })
+
+                });
+
+                const result = await res.json();
+                if (result.success) {
+                    alert("Cập nhật địa chỉ giao hàng thành công!");
+                } else {
+                    alert("Cập nhật thất bại: " + result.message);
+                }
+            } catch (err) {
+                alert("Đã xảy ra lỗi khi cập nhật địa chỉ.");
+            }
+        });
+
+
         // Load tỉnh khi bắt đầu
         fetchProvinces();
     </script>
