@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: THAI
-  Date: 1/4/2025
-  Time: 4:24 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "f" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -36,22 +29,18 @@
         <section>
             <!-- Nút Thêm ngân hàng -->
             <button class="btn-add" onclick="toggleAddForm()">+ Thêm ngân hàng</button>
-            <form action="insertBankServlet" method="post" id="addBankForm" class="hidden">
-                <input name="bankId" type="text" id="addBankId" placeholder="Mã ngân hàng" required>
+            <form class="hidden" id ="addBankForm" action="${pageContext.request.contextPath}/bank" method="post" >
+                <input type="hidden" name="action" value="add">
                 <input name="bankName" type="text" id="addBankName" placeholder="Tên ngân hàng" required>
                 <input name="bankNumber" type="text" id="addBankNum" placeholder="Số tài khoản" required>
                 <input name="bankOwner" type="text" id="addBankOwn" placeholder="Chủ tài khoản" required>
                 <input name="bankQr" type="text" id="addBankImage" placeholder="Link mã qr (URL)" required>
                 <button type="submit">Lưu</button>
             </form>
-            <!-- Nút Sửa thông tin -->
-            <button class="btn-edit" onclick="toggleEditForm()">Sửa thông tin</button>
-            <form id="editBankForm" class="hidden">
-                <input type="text" id="editBankId" placeholder="Nhập mã ngân hàng để sửa" required>
-                <button type="button" onclick="loadBankInfo()">Tìm kiếm</button>
-            </form>
+
             <div id="editBankDetails" class="hidden">
-                <form action="editBank" method="post">
+                <form action="${pageContext.request.contextPath}/bank" method="post">
+                    <input type="hidden" name="action" value="update">
                     <table style="margin-bottom: 10px">
                         <tr>
                             <td>Mã ngân hàng:</td>
@@ -74,7 +63,12 @@
                             <td><input name="qr" type="text" id="editBankImage" required></td>
                         </tr>
                     </table>
-                    <button type="submit">Lưu</button>
+                    <div class="d-flex">
+                        <button style="width: 100px !important;" type="submit">Lưu</button>
+                        <button style="width: 70px !important; background: #f12323" type="button" onclick="cancelled()">
+                            Hủy
+                        </button>
+                    </div>
                 </form>
             </div>
             <!-- Bảng thông tin -->
@@ -92,7 +86,12 @@
                 <tbody id="bankTable">
                 <!-- Các ngân hàng cố định được thêm vào ở đây -->
                 <c:forEach var="bank" items="${banks}">
-                    <tr>
+                    <tr data-id="${bank.id}"
+                        data-name="${bank.name}"
+                        data-num="${bank.number}"
+                        data-own="${bank.owner}"
+                        data-image="${bank.qr}">
+
                         <td>${bank.id}</td>
                         <td>${bank.name}</td>
                         <td>${bank.number}</td>
@@ -100,8 +99,22 @@
                         <td><img src="${bank.qr}"
                                  style="width: 50px; height: 50px;">
                         </td>
-                        <td class="icon-trash">
-                            <a href="deleteServlet?Bid=${bank.id}" class="delete" style="color: black"><i class="fa-solid fa-trash"></i></a>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <button class="d-flex align-items-center"
+                                        style="width: 60px; height: 30px; padding-left: 8px; font-weight: bold"
+                                        onclick="editBank(this)">Update
+                                </button>
+
+                                <form action="${pageContext.request.contextPath}/bank" method="post" style="margin: 0">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="id" value="${bank.id}">
+                                    <button type="submit"
+                                            style="color: #fbfbfb;width: 30px; height: 30px; background: #ff3d3d; border-radius: 4px; padding-left: 8px">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 </c:forEach>
@@ -111,6 +124,20 @@
         </section>
     </div>
 </div>
+<%--<script>--%>
+<%--    function editBank(button) {--%>
+<%--        const row = button.closest('tr'); 0--%>
+
+<%--        document.getElementById('editBankDetails').classList.remove('hidden'); // Hiển thị form sửa--%>
+
+<%--        // Gán dữ liệu vào các input--%>
+<%--        document.getElementById('editBID').value = row.getAttribute('data-id');--%>
+<%--        document.getElementById('editBankName').value = row.getAttribute('data-name');--%>
+<%--        document.getElementById('editBankNum').value = row.getAttribute('data-num')--%>
+<%--        document.getElementById('editBankOwn').value = row.getAttribute('data-own');--%>
+<%--        document.getElementById('editBankImage').value = row.getAttribute('data-image');--%>
+<%--    }--%>
+<%--</script>--%>
 <script src="${pageContext.request.contextPath}/Js/banking.js"></script>
 </body>
 </html>
