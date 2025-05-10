@@ -344,10 +344,18 @@
                         </div>
                         <div class="d-flex info-item">
                             <label class="font-600 font-sz16">Địa chỉ cụ thể:</label>
-                            <input type="text" id="detailed-address" class="text-gray" placeholder="Số nhà, tên đường..." style="margin-left: 10px; width: 300px">
+                            <input type="text" id="detailed-address" class="text-gray"
+                                   placeholder="Số nhà, tên đường..." style="margin-left: 10px; width: 300px">
+                        </div>
+                        <%--                        phí vận chuyển --%>
+                        <div class="d-flex info-item" style="margin-top: 10px">
+                            <label class="font-600 font-sz16">Phí vận chuyển (GHN):</label>
+                            <span id="shipping-fee"
+                                  style="margin-left: 10px; color: #d32f2f; font-weight: bold">--</span>
                         </div>
                         <%--                    Nút xác nhận                    --%>
-                        <button id="confirm-address" style="margin-top: 15px; padding: 6px 12px; background-color: #d32f2f; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                        <button id="confirm-address"
+                                style="margin-top: 15px; padding: 6px 12px; background-color: #d32f2f; color: white; border: none; border-radius: 4px; cursor: pointer;">
                             Xác nhận
                         </button>
                     </div>
@@ -497,7 +505,7 @@
             // Lấy giá trị ID của ngân hàng đã chọn
             var bankId = document.getElementById("bankSelect").value;
 
-            window.location.href = "payment?oid=" + <%=order.getId()%> + "&bid=" + bankId;
+            window.location.href = "payment?oid=" + <%=order.getId()%> +"&bid=" + bankId;
         }
     </script>
 
@@ -514,21 +522,80 @@
             if (addressRadio.checked) addressInfo.style.display = "block";
         });
 
-        async function fetchProvinces() {
-            const res = await fetch("https://provinces.open-api.vn/api/p/");
-            const data = await res.json();
-            const provinceSelect = document.getElementById("province");
+        const token = "2df6ab57-2d7f-11f0-a555-5269f44b06d2"; // GHN token
+        const shopId = "5770324"; // ID shop
 
-            data.forEach(province => {
-                const option = document.createElement("option");
-                option.value = province.code;
-                option.textContent = province.name;
-                provinceSelect.appendChild(option);
+        async function fetchProvinces() {
+            const provinceSelect = document.getElementById("province");
+            const response = await fetch("https://online-gateway.ghn.vn/shiip/public-api/master-data/province", {
+                method: "GET",
+                headers: {
+                    "Token": token
+                }
             });
+            const result = await response.json();
+            if (result.code === 200) {
+                result.data.forEach(p => {
+                    const option = document.createElement("option");
+                    option.value = p.ProvinceID; // ID province GHN
+                    option.textContent = p.ProvinceName;
+                    provinceSelect.appendChild(option);
+                });
+            }
         }
 
+        async function calculateShippingFee() {
+            const districtCode = document.getElementById("district").value;
+            const wardCode = document.getElementById("ward").value;
+            if (!districtCode || isNaN(parseInt(districtCode))) {
+                alert("Vui lòng chọn quận/huyện hợp lệ.");
+                return;
+            }
+            if (!wardCode) {
+                alert("Vui lòng chọn phường/xã hợp lệ.");
+                return;
+            }
+
+            if (!districtCode || !wardCode) return;
+
+            try {
+                const response = await fetch("https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Token": token,
+                        "ShopId": shopId
+                    },
+                    body: JSON.stringify({
+                        service_type_id: 2, // 2 = tiêu chuẩn
+                        insurance_value: <%=order.getTotal_amount()%>,
+                        coupon: null,
+                        from_district_id: 1542, // Quận gửi hàng (Quận 1 TP.HCM)
+                        to_district_id: parseInt(districtCode),
+                        to_ward_code: wardCode,
+                        height: 10,
+                        length: 20,
+                        weight: 1000, // gram
+                        width: 15
+                    })
+                });
+
+                const result = await response.json();
+                if (result.code === 200) {
+                    const fee = result.data.total;
+                    document.getElementById("shipping-fee").textContent = fee.toLocaleString("vi-VN") + " đ";
+                } else {
+                    alert("Không thể tính phí: " + result.message);
+                }
+            } catch (error) {
+                console.error("Lỗi khi tính phí GHN:", error);
+                alert("Đã xảy ra lỗi khi gọi GHN API.");
+            }
+        }
+
+        // Khi chọn tỉnh -> Load quận/huyện theo GHN
         document.getElementById("province").addEventListener("change", async function () {
-            const provinceCode = this.value;
+            const provinceId = this.value;
             const districtSelect = document.getElementById("district");
             const wardSelect = document.getElementById("ward");
 
@@ -537,47 +604,56 @@
             districtSelect.disabled = true;
             wardSelect.disabled = true;
 
-            if (!provinceCode) return;
+            if (!provinceId) return;
 
-            // Lấy tất cả quận huyện, sau đó lọc theo province_code
-            const res = await fetch("https://provinces.open-api.vn/api/d/");
-            const districts = await res.json();
-
-            const filteredDistricts = districts.filter(d => d.province_code == provinceCode);
-
-            filteredDistricts.forEach(d => {
-                const option = document.createElement("option");
-                option.value = d.code;
-                option.textContent = d.name;
-                districtSelect.appendChild(option);
+            const response = await fetch("https://online-gateway.ghn.vn/shiip/public-api/master-data/district", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Token": token
+                },
+                body: JSON.stringify({province_id: parseInt(provinceId)})
             });
-
-            districtSelect.disabled = false;
+            const result = await response.json();
+            if (result.code === 200) {
+                result.data.forEach(d => {
+                    const option = document.createElement("option");
+                    option.value = d.DistrictID; // ID district GHN
+                    option.textContent = d.DistrictName;
+                    districtSelect.appendChild(option);
+                });
+                districtSelect.disabled = false;
+            }
         });
 
+        // Khi chọn quận -> Load phường/xã theo GHN
         document.getElementById("district").addEventListener("change", async function () {
-            const districtCode = this.value;
+            const districtId = this.value;
             const wardSelect = document.getElementById("ward");
 
             wardSelect.innerHTML = `<option value="">-- Chọn phường/xã --</option>`;
             wardSelect.disabled = true;
 
-            if (!districtCode) return;
+            if (!districtId) return;
 
-            // Lấy toàn bộ danh sách phường/xã rồi lọc theo district_code
-            const res = await fetch("https://provinces.open-api.vn/api/w/");
-            const wards = await res.json();
-
-            const filteredWards = wards.filter(w => w.district_code == districtCode);
-
-            filteredWards.forEach(w => {
-                const option = document.createElement("option");
-                option.value = w.code;
-                option.textContent = w.name;
-                wardSelect.appendChild(option);
+            const response = await fetch("https://online-gateway.ghn.vn/shiip/public-api/master-data/ward", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Token": token
+                },
+                body: JSON.stringify({district_id: parseInt(districtId)})
             });
-
-            wardSelect.disabled = false;
+            const result = await response.json();
+            if (result.code === 200) {
+                result.data.forEach(w => {
+                    const option = document.createElement("option");
+                    option.value = w.WardCode; // WardCode GHN (String)
+                    option.textContent = w.WardName;
+                    wardSelect.appendChild(option);
+                });
+                wardSelect.disabled = false;
+            }
         });
 
         document.getElementById("confirm-address").addEventListener("click", async function () {
@@ -600,10 +676,10 @@
 
             // Gửi request cập nhật địa chỉ
             try {
-                console.log({ province, district, ward, detailed, orderId: "<%=order.getId()%>" });
+                console.log({province, district, ward, detailed, orderId: "<%=order.getId()%>"});
                 const res = await fetch("/web/update-transport", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
                         province,
                         district,
@@ -623,6 +699,8 @@
             } catch (err) {
                 alert("Đã xảy ra lỗi khi cập nhật địa chỉ.");
             }
+            // tính phí vận chuyển
+            await calculateShippingFee();
         });
 
 
