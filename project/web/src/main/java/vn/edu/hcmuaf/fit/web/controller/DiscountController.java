@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.web.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.jdbi.v3.core.Jdbi;
+import vn.edu.hcmuaf.fit.web.dao.DiscountDao;
 import vn.edu.hcmuaf.fit.web.db.JDBIConnector;
 import vn.edu.hcmuaf.fit.web.model.Discount;
 import vn.edu.hcmuaf.fit.web.servieces.DiscountService;
@@ -48,8 +49,15 @@ public class DiscountController extends HttpServlet {
             deleteDiscount(request);
         }
 
-        response.sendRedirect(request.getContextPath() + "/discounts");
+        // Sau khi xử lý, lấy lại danh sách và forward về bảng mã giảm giá
+        List<Discount> discounts = discountService.getAllDiscounts();
+        request.setAttribute("discounts", discounts);
+
+        // Gửi lại fragment HTML bảng discount để dùng cho AJAX
+        request.getRequestDispatcher("/discount_table.jsp").forward(request, response);
     }
+
+
 
     private void addDiscount(HttpServletRequest request , HttpServletResponse response) {
         String id = request.getParameter("id");
