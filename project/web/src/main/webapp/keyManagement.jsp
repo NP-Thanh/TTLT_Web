@@ -8,15 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý Key</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"
-            integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Css/keyManagement.css">
-    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
 </head>
 <body>
 <div class="admin-container">
@@ -29,59 +23,25 @@
             <h2>Quản lý Key</h2>
         </header>
         <section>
-            <%--Tìm kiếm--%>
             <button class="btn-find" onclick="toggleFind()">Tìm kiếm</button>
-            <form class="hidden" id="findKeyForm" action="KeyManagement" method="post">
-                <input type="text" name="keyID" placeholder="Mã key">
-                <button type="submit">Tìm kiếm</button>
+            <form class="hidden" id="findKeyForm">
+                <input type="text" id="searchKeyID" name="keyID" placeholder="Mã key">
+                <button type="button" id="searchBtn">Tìm kiếm</button>
             </form>
 
-            <!-- Nút Thêm sản phẩm -->
             <button class="btn-add" onclick="toggleAddForm()">+ Thêm Key</button>
-            <form action="addKey" method="post" id="addKeyForm" class="hidden">
+            <form id="addKeyForm" class="hidden">
+                <input type="hidden" name="action" value="add">
                 <input name="pid" type="text" id="pid" placeholder="Mã sản phẩm" required>
                 <span id="statusMessage" style="font-size: 14px;"></span>
-
                 <input name="keys" type="text" id="addKeyName" placeholder="Tên Key">
-                <button type="submit" id="saveBtn" name="action" value="save" disabled> LƯU </button>
+                <button type="submit" id="saveBtn" name="action" value="save" disabled>LƯU</button>
             </form>
 
-            <%--                Form chỉnh sửa chi tiết sản phẩm--%>
             <div id="editKeyDetails" class="hidden">
-                <form action="editKey" method="post">
-                    <table style="margin-bottom: 10px">
-                        <tr>
-                            <td>Mã Key:</td>
-                            <td><input type="text" id="editIDKey" name="kid" required readonly></td>
-                        </tr>
-                        <tr>
-                            <td>Key:</td>
-                            <td><input type="text" id="editNameKey" name="kName" required></td>
-                        </tr>
-
-                        <tr>
-                            <td>Tên sản phẩm:</td>
-                            <td><input type="text" id="editKeyName" name="pName" required></td>
-                        </tr>
-                        <tr>
-                            <td>Loại:</td>
-                            <td><input type="text" id="editKeyType" name="pType" required></td>
-                        </tr>
-                        <tr>
-                            <td>Hình ảnh (URL):</td>
-                            <td><input type="text" id="editKeyImage" name="pImg" required></td>
-                        </tr>
-                    </table>
-                    <div class="d-flex">
-                        <button style="width: 100px !important;" type="submit">Lưu</button>
-                        <button style="width: 70px !important; background: #f12323" type="button" onclick="cancelled()">
-                            Hủy
-                        </button>
-                    </div>
-                </form>
+                <!-- Form cập nhật key nếu dùng modal hoặc chi tiết -->
             </div>
 
-            <!-- Bảng sản phẩm -->
             <table>
                 <thead>
                 <tr>
@@ -92,42 +52,23 @@
                     <th>Tình trạng</th>
                     <th>Hình ảnh</th>
                     <th>Hành động</th>
-
                 </tr>
                 </thead>
                 <tbody id="keyTable">
-                <!-- Các sản phẩm cố định được thêm vào ở đây -->
                 <c:forEach var="key" items="${keys}">
-                    <tr data-id="${key.id}"
-                        data-key="${key.key}"
-                        data-name="${key.productName}"
-                        data-type="${key.productType}"
-                        data-status="${key.status}"
-                        data-image="${key.image}">
-
+                    <tr data-id="${key.id}">
                         <td>${key.id}</td>
                         <td>${key.key}</td>
                         <td>${key.productName}</td>
                         <td>${key.productType}</td>
-                        <td class="status ${key.status eq 'đã xuất' ? 'in-stock' : 'out-of-stock'}">
-                                ${key.status}
-                        </td>
+                        <td class="status ${key.status eq 'đã xuất' ? 'in-stock' : 'out-of-stock'}">${key.status}</td>
                         <td><img src="${key.image}" style="width: 50px; height: 50px;"></td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <button class="d-flex align-items-center"
-                                        style="width: 60px; height: 30px; padding-left: 8px; font-weight: bold"
-                                        onclick="editKey(this)">Update
+                                <button class="edit-btn" data-id="${key.id}">Update</button>
+                                <button class="delete-btn" data-id="${key.id}">
+                                    <i class="fa-solid fa-trash"></i>
                                 </button>
-<%--                                <button class="d-flex align-items-center"--%>
-<%--                                        style="width: 40px; height: 30px; padding-left: 8px;--%>
-<%--                                         background: #ffe250; font-weight: bold" onclick="loadProductKeyInfo(this)"--%>
-<%--                                        data-id="${key.id}">Key--%>
-<%--                                </button>--%>
-                                <a class="icon-trash d-flex align-items-center" href="deleteKey?kid=${key.id}"
-                                   class="delete"
-                                   style="color: #fbfbfb;width: 20px; height: 30px; background: #ff3d3d; border-radius: 4px; padding-left: 8px"><i
-                                        class="fa-solid fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -137,9 +78,24 @@
         </section>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    function toggleAddForm() {
+        $("#addKeyForm").toggleClass("hidden");
+    }
+
+    function toggleFind() {
+        $("#findKeyForm").toggleClass("hidden");
+    }
+
     $(document).ready(function () {
+        function loadKeys() {
+            $.get("KeyManagement", function (data) {
+                $("#keyTable").html($(data).find("#keyTable").html());
+            });
+        }
+
         $("#pid").on("input", function () {
             var pid = $(this).val().trim();
             if (pid === "") {
@@ -153,10 +109,67 @@
                 $("#saveBtn").prop("disabled", !response.valid);
             });
         });
+
+        $("#addKeyForm").on("submit", function (e) {
+            e.preventDefault();
+            $.post("KeyManagement", {
+                action: "add",
+                pid: $("#pid").val(),
+                keys: $("#addKeyName").val()
+            }, function () {
+                alert("Đã thêm key!");
+                loadKeys();
+                $("#addKeyForm")[0].reset();
+                $("#statusMessage").text("");
+            });
+        });
+
+        $("#searchBtn").on("click", function () {
+            const keyID = $("#searchKeyID").val();
+            $.post("KeyManagement", {
+                action: "search",
+                keyID: keyID
+            }, function (data) {
+                $("#keyTable").html($(data).find("#keyTable").html());
+            });
+        });
+
+        $(document).on("click", ".delete-btn", function () {
+            if (!confirm("Bạn chắc chắn muốn xóa key này?")) return;
+            let kid = $(this).data("id");
+            $.post("KeyManagement", {
+                action: "delete",
+                kid: kid
+            }, function () {
+                alert("Đã xóa!");
+                loadKeys();
+            });
+        });
+
+        $(document).on("click", ".edit-btn", function () {
+            let row = $(this).closest("tr");
+            let id = $(this).data("id");
+            let key = row.find("td:eq(1)").text();
+            let name = row.find("td:eq(2)").text();
+            let type = row.find("td:eq(3)").text();
+            let img = row.find("td:eq(5)").find("img").attr("src");
+
+            let newKey = prompt("Sửa key:", key);
+            if (newKey === null || newKey.trim() === "") return;
+
+            $.post("KeyManagement", {
+                action: "update",
+                kid: id,
+                kName: newKey,
+                pName: name,
+                pType: type,
+                pImg: img
+            }, function () {
+                alert("Đã cập nhật!");
+                loadKeys();
+            });
+        });
     });
 </script>
-
-<script src="${pageContext.request.contextPath}/Js/keyManagement.js"></script>
 </body>
-
 </html>
