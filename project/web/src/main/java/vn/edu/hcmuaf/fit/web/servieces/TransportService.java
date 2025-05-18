@@ -41,4 +41,8 @@ public class TransportService {
     public void deleteTransport(int orderId) {
         transportDao.deleteTransport(orderId);
     }
+
+    public void updateFullAddress(int orderId, String province, String district, String subDistrict, String specificAddress) {
+        transportDao.updateFullAddress(orderId, province, district, subDistrict, specificAddress);
+    }
 }

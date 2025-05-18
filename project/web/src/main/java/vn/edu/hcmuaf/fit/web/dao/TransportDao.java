@@ -94,4 +94,19 @@ public class TransportDao {
                         .execute()
         );
     }
+
+    public void updateFullAddress(int orderId, String province, String district, String subDistrict, String specificAddress) {
+        String sql = "UPDATE transport SET province = :province, district = :district, sub_district = :subDistrict, specific_address = :specificAddress WHERE order_id = :orderId";
+        JDBIConnector.getJdbi().useHandle(handle ->
+                handle.createUpdate(sql)
+                        .bind("province", province)
+                        .bind("district", district)
+                        .bind("subDistrict", subDistrict)
+                        .bind("specificAddress", specificAddress)
+                        .bind("orderId", orderId)
+                        .execute()
+        );
+    }
+
+
 }
