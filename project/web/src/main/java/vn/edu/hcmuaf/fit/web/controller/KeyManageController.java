@@ -12,6 +12,7 @@ import vn.edu.hcmuaf.fit.web.servieces.StorageServiece;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet("/KeyManagement")
@@ -34,7 +35,51 @@ public class KeyManageController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
 
+        if ("add".equals(action)) {
+            addKey(request, response);
+            response.sendRedirect(request.getContextPath() + "/KeyManagement");
+        } else if ("search".equals(action)) {
+            searchKey(request, response);
+        } else if ("delete".equals(action)) {
+            deleteKey(request);
+            response.sendRedirect(request.getContextPath() + "/KeyManagement");
+        }else if ("update".equals(action)) {
+            updateKey(request);
+            response.sendRedirect(request.getContextPath() + "/KeyManagement");
+        }
+
+    }
+
+    private void updateKey(HttpServletRequest request) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("kid"));
+        String key = request.getParameter("kName");
+        String productName = request.getParameter("pName");
+        String productType = request.getParameter("pType");
+        String image = request.getParameter("pImg");
+
+        AdminService adminService = new AdminService();
+        adminService.editKey(id, key, productName, productType, image);
+    }
+
+    private void addKey(HttpServletRequest request , HttpServletResponse response) {
+        int pid = Integer.parseInt(request.getParameter("pid"));
+        String keys = request.getParameter("keys");
+
+        List<String> keyList = Arrays.asList(keys.split("\\r?\\n"));
+
+        // thêm từng key vào sản phẩm
+        AdminService adminService = new AdminService();
+        for (String key : keyList) {
+            key = key.trim(); // Xóa khoảng trắng thừa
+            if (!key.isEmpty()) {
+                adminService.addProductKey(pid, key);
+            }
+        }
+    }
+
+    private void searchKey(HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException {
         Integer keyId = request.getParameter("keyID") != null && !request.getParameter("keyID").isEmpty()
                 ? Integer.parseInt(request.getParameter("keyID"))
                 : null;
@@ -44,8 +89,14 @@ public class KeyManageController extends HttpServlet {
 
         request.setAttribute("keys", filteredKeys);
         request.getRequestDispatcher("/keyManagement.jsp").forward(request, response);
-
     }
+
+    private void deleteKey(HttpServletRequest request) {
+        int kid = Integer.parseInt(request.getParameter("kid"));
+        AdminService adminService = new AdminService();
+        adminService.deleteKeyManage(kid);
+    }
+
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -62,7 +113,7 @@ public class KeyManageController extends HttpServlet {
 
                 if (exists) {
                     jsonResponse.addProperty("valid", true);
-                    jsonResponse.addProperty("message", "✅ Mã sản phẩm hợp lệ!");
+                    jsonResponse.addProperty("message", "Mã sản phẩm hợp lệ!");
                 } else {
                     jsonResponse.addProperty("valid", false);
                     jsonResponse.addProperty("message", "Mã sản phẩm không tồn tại!");

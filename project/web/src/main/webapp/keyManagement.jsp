@@ -31,14 +31,16 @@
         <section>
             <%--Tìm kiếm--%>
             <button class="btn-find" onclick="toggleFind()">Tìm kiếm</button>
-            <form class="hidden" id="findKeyForm" action="KeyManagement" method="post">
+            <form class="hidden" id="findKeyForm" action="${pageContext.request.contextPath}/KeyManagement" method="post">
+                <input type="hidden" name="action" value="search">
                 <input type="text" name="keyID" placeholder="Mã key">
                 <button type="submit">Tìm kiếm</button>
             </form>
 
             <!-- Nút Thêm sản phẩm -->
             <button class="btn-add" onclick="toggleAddForm()">+ Thêm Key</button>
-            <form action="addKey" method="post" id="addKeyForm" class="hidden">
+            <form action="${pageContext.request.contextPath}/KeyManagement" method="post" id="addKeyForm" class="hidden">
+                <input type="hidden" name="action" value="add">
                 <input name="pid" type="text" id="pid" placeholder="Mã sản phẩm" required>
                 <span id="statusMessage" style="font-size: 14px;"></span>
 
@@ -48,7 +50,8 @@
 
             <%--                Form chỉnh sửa chi tiết sản phẩm--%>
             <div id="editKeyDetails" class="hidden">
-                <form action="editKey" method="post">
+                <form action="${pageContext.request.contextPath}/KeyManagement" method="post">
+                    <input type="hidden" name="action" value="update">
                     <table style="margin-bottom: 10px">
                         <tr>
                             <td>Mã Key:</td>
@@ -61,15 +64,15 @@
 
                         <tr>
                             <td>Tên sản phẩm:</td>
-                            <td><input type="text" id="editKeyName" name="pName" required></td>
+                            <td><input type="text" id="editKeyName" name="pName" readonly></td>
                         </tr>
                         <tr>
                             <td>Loại:</td>
-                            <td><input type="text" id="editKeyType" name="pType" required></td>
+                            <td><input type="text" id="editKeyType" name="pType" readonly></td>
                         </tr>
                         <tr>
                             <td>Hình ảnh (URL):</td>
-                            <td><input type="text" id="editKeyImage" name="pImg" required></td>
+                            <td><input type="text" id="editKeyImage" name="pImg" readonly></td>
                         </tr>
                     </table>
                     <div class="d-flex">
@@ -119,15 +122,14 @@
                                         style="width: 60px; height: 30px; padding-left: 8px; font-weight: bold"
                                         onclick="editKey(this)">Update
                                 </button>
-<%--                                <button class="d-flex align-items-center"--%>
-<%--                                        style="width: 40px; height: 30px; padding-left: 8px;--%>
-<%--                                         background: #ffe250; font-weight: bold" onclick="loadProductKeyInfo(this)"--%>
-<%--                                        data-id="${key.id}">Key--%>
-<%--                                </button>--%>
-                                <a class="icon-trash d-flex align-items-center" href="deleteKey?kid=${key.id}"
-                                   class="delete"
-                                   style="color: #fbfbfb;width: 20px; height: 30px; background: #ff3d3d; border-radius: 4px; padding-left: 8px"><i
-                                        class="fa-solid fa-trash"></i></a>
+                                <form action="${pageContext.request.contextPath}/KeyManagement" method="post" style="margin: 0">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="kid" value="${key.id}">
+                                    <button type="submit"
+                                            style="color: #fbfbfb;width: 30px; height: 30px; background: #ff3d3d; border-radius: 4px; padding-left: 8px">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -155,7 +157,6 @@
         });
     });
 </script>
-
 <script src="${pageContext.request.contextPath}/Js/keyManagement.js"></script>
 </body>
 
