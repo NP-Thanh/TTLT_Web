@@ -24,13 +24,24 @@
         </header>
         <section>
             <button class="btn-find" onclick="toggleFind()">Tìm kiếm</button>
+<<<<<<< HEAD
             <form class="hidden" id="findKeyForm">
                 <input type="text" id="searchKeyID" name="keyID" placeholder="Mã key">
                 <button type="button" id="searchBtn">Tìm kiếm</button>
+=======
+            <form class="hidden" id="findKeyForm" action="${pageContext.request.contextPath}/KeyManagement" method="post">
+                <input type="hidden" name="action" value="search">
+                <input type="text" name="keyID" placeholder="Mã key">
+                <button type="submit">Tìm kiếm</button>
+>>>>>>> e0de6e7eaa9ef79246b9debc5e03c237f3883560
             </form>
 
             <button class="btn-add" onclick="toggleAddForm()">+ Thêm Key</button>
+<<<<<<< HEAD
             <form id="addKeyForm" class="hidden">
+=======
+            <form action="${pageContext.request.contextPath}/KeyManagement" method="post" id="addKeyForm" class="hidden">
+>>>>>>> e0de6e7eaa9ef79246b9debc5e03c237f3883560
                 <input type="hidden" name="action" value="add">
                 <input name="pid" type="text" id="pid" placeholder="Mã sản phẩm" required>
                 <span id="statusMessage" style="font-size: 14px;"></span>
@@ -39,7 +50,42 @@
             </form>
 
             <div id="editKeyDetails" class="hidden">
+<<<<<<< HEAD
                 <!-- Form cập nhật key nếu dùng modal hoặc chi tiết -->
+=======
+                <form action="${pageContext.request.contextPath}/KeyManagement" method="post">
+                    <input type="hidden" name="action" value="update">
+                    <table style="margin-bottom: 10px">
+                        <tr>
+                            <td>Mã Key:</td>
+                            <td><input type="text" id="editIDKey" name="kid" required readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Key:</td>
+                            <td><input type="text" id="editNameKey" name="kName" required></td>
+                        </tr>
+
+                        <tr>
+                            <td>Tên sản phẩm:</td>
+                            <td><input type="text" id="editKeyName" name="pName" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Loại:</td>
+                            <td><input type="text" id="editKeyType" name="pType" readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Hình ảnh (URL):</td>
+                            <td><input type="text" id="editKeyImage" name="pImg" readonly></td>
+                        </tr>
+                    </table>
+                    <div class="d-flex">
+                        <button style="width: 100px !important;" type="submit">Lưu</button>
+                        <button style="width: 70px !important; background: #f12323" type="button" onclick="cancelled()">
+                            Hủy
+                        </button>
+                    </div>
+                </form>
+>>>>>>> e0de6e7eaa9ef79246b9debc5e03c237f3883560
             </div>
 
             <table>
@@ -69,6 +115,17 @@
                                 <button class="delete-btn" data-id="${key.id}">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
+<<<<<<< HEAD
+=======
+                                <form action="${pageContext.request.contextPath}/KeyManagement" method="post" style="margin: 0">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="kid" value="${key.id}">
+                                    <button type="submit"
+                                            style="color: #fbfbfb;width: 30px; height: 30px; background: #ff3d3d; border-radius: 4px; padding-left: 8px">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+>>>>>>> e0de6e7eaa9ef79246b9debc5e03c237f3883560
                             </div>
                         </td>
                     </tr>
@@ -171,5 +228,9 @@
         });
     });
 </script>
+<<<<<<< HEAD
+=======
+<script src="${pageContext.request.contextPath}/Js/keyManagement.js"></script>
+>>>>>>> e0de6e7eaa9ef79246b9debc5e03c237f3883560
 </body>
 </html>

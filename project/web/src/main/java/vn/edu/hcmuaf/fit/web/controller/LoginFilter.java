@@ -32,12 +32,11 @@ public class LoginFilter implements Filter {
             isAdmin = (adminAttr instanceof Boolean) && (Boolean) adminAttr;
         }
 
-        if (path.equals("/ProductManagement") || path.equals("/bank") || path.equals("/dashboard") || path.equals("/user") || path.equals("/discounts")) {
-            if (!isAdmin) {
-                res.sendRedirect("home");
-                return;
-            }
+        if (!isAdmin) {
+            res.sendRedirect("home");
+            return;
         }
+
         chain.doFilter(request, response);
     }
 }

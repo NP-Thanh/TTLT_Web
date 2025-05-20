@@ -7,10 +7,7 @@ import vn.edu.hcmuaf.fit.web.dao.UserDao;
 import vn.edu.hcmuaf.fit.web.dao.cart.Cart;
 import vn.edu.hcmuaf.fit.web.dao.cart.CartProduct;
 import vn.edu.hcmuaf.fit.web.model.User;
-import vn.edu.hcmuaf.fit.web.servieces.CartService;
-import vn.edu.hcmuaf.fit.web.servieces.DiscountService;
-import vn.edu.hcmuaf.fit.web.servieces.OrderServiece;
-import vn.edu.hcmuaf.fit.web.servieces.UserServiece;
+import vn.edu.hcmuaf.fit.web.servieces.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +25,7 @@ public class ProcessPaymentServlet extends HttpServlet {
         UserServiece userServiece = new UserServiece();
         DiscountService discountServiece = new DiscountService();
         CartService cartServiece = new CartService();
+        TransportService transportService = new TransportService();
 
         // Kiểm tra nếu người dùng đã đăng nhập
         Integer userId = (Integer) session.getAttribute("uid");
@@ -72,6 +70,10 @@ public class ProcessPaymentServlet extends HttpServlet {
         for (CartProduct item : cartItems) {
             ordersServiece.insertOrderDetail(orderId, item.getProduct_id(), item.getQuantity(), item.getPrice());
         }
+
+        // Insert vào bảng transport
+        transportService.insertTransport(orderId, "email");
+
         cartServiece.deleteCart(cart.getId());
         // Trả về thông báo hoặc chuyển hướng đến trang xác nhận thanh toán
         response.sendRedirect("payment?oid=" + orderId + "&bid=1");

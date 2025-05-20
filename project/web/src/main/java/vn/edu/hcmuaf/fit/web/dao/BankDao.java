@@ -23,4 +23,34 @@ public class BankDao {
         });
         return bank;
     }
+    public void updateBank(int id, String name, String number, String owner, String qr){
+        JDBIConnector.getJdbi().useHandle(handle -> {
+            handle.createUpdate("UPDATE banks SET name = :name, number = :number, owner = :owner, qr = :qr  WHERE id = :id")
+                    .bind("id", id)
+                    .bind("name", name)
+                    .bind("number", number)
+                    .bind("owner", owner)
+                    .bind("qr", qr)
+                    .execute();
+        });
+    }
+
+    public void deleteBank(int bankId) {
+        JDBIConnector.getJdbi().useHandle(handle ->
+                handle.createUpdate("DELETE FROM banks WHERE id = :id")
+                        .bind("id", bankId)
+                        .execute()
+        );
+    }
+
+    public void addBank(String name, String number, String owner, String qr){
+        JDBIConnector.getJdbi().useHandle(handle -> {
+            handle.createUpdate("INSERT INTO banks (name,number,owner, qr) VALUES (:name, :number, :owner, :qr)")
+                    .bind("name", name)
+                    .bind("number", number)
+                    .bind("owner", owner)
+                    .bind("qr", qr)
+                    .execute();
+        });
+    }
 }

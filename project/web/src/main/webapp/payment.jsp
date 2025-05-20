@@ -117,7 +117,8 @@
 
         .info {
             width: 95%;
-            height: 200px;
+            min-height: 220px;
+            height: auto;
             border: 2px solid #e5e7eb;
             border-radius: 5px;
             margin-top: 20px;
@@ -321,6 +322,52 @@
                         <input class="text-gray editable" id="email" style="margin-left: 10px"
                                value="<%=user.getEmail()%>" readonly>
                     </div>
+                    <!-- Địa chỉ chi tiết (ẩn mặc định) -->
+                    <div id="address-info" style="display: none; margin-top: 15px; margin-left: 120px">
+                        <div class="d-flex info-item" style="margin-bottom: 10px">
+                            <label class="font-600 font-sz16">Tỉnh/Thành phố:</label>
+                            <select id="province" class="text-gray" style="margin-left: 10px">
+                                <option value="">-- Chọn tỉnh/thành phố --</option>
+                            </select>
+                        </div>
+                        <div class="d-flex info-item" style="margin-bottom: 10px">
+                            <label class="font-600 font-sz16">Quận/Huyện:</label>
+                            <select id="district" class="text-gray" style="margin-left: 10px" disabled>
+                                <option value="">-- Chọn quận/huyện --</option>
+                            </select>
+                        </div>
+                        <div class="d-flex info-item" style="margin-bottom: 10px">
+                            <label class="font-600 font-sz16">Phường/Xã:</label>
+                            <select id="ward" class="text-gray" style="margin-left: 10px" disabled>
+                                <option value="">-- Chọn phường/xã --</option>
+                            </select>
+                        </div>
+                        <div class="d-flex info-item">
+                            <label class="font-600 font-sz16">Địa chỉ cụ thể:</label>
+                            <input type="text" id="detailed-address" class="text-gray"
+                                   placeholder="Số nhà, tên đường..." style="margin-left: 10px; width: 300px">
+                        </div>
+                        <%--                        phí vận chuyển --%>
+                        <div class="d-flex info-item" style="margin-top: 10px">
+                            <label class="font-600 font-sz16">Phí vận chuyển (GHN):</label>
+                            <span id="shipping-fee"
+                                  style="margin-left: 10px; color: #d32f2f; font-weight: bold">--</span>
+                        </div>
+                        <%--                    Nút xác nhận                    --%>
+                        <button id="confirm-address"
+                                style="margin-top: 15px; padding: 6px 12px; background-color: #d32f2f; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                            Xác nhận
+                        </button>
+                    </div>
+
+                    <!-- Radio Buttons: Giao hàng qua email hoặc địa chỉ -->
+                    <div class="d-flex info-item" style="margin-top: 15px">
+                        <label class="font-600 font-sz16" style="margin-right: 10px">Phương thức nhận hàng:</label>
+                        <input type="radio" name="delivery-method" id="email-method" value="email" checked>
+                        <label for="email-method" style="margin-right: 20px; margin-left: 5px">Giao hàng email</label>
+                        <input type="radio" name="delivery-method" id="address-method" value="address">
+                        <label for="address-method" style="margin-left: 5px">Giao hàng địa chỉ</label>
+                    </div>
                 </div>
 
                 <div class="pd-12" style="background: #f6f8f9; margin-top: auto; color: #7a8c96; font-size: 13px">
@@ -422,7 +469,7 @@
                 </div>
                 <hr class="w-full" style="height: auto; margin-top: 5px">
                 <div class="wrapper justify-between">
-                    <form action="VNPay" method="post">
+                    <form action="payment?oid=<%=order.getId()%>" method="post">
                         <input type="hidden" name="oid" value="<%=order.getId()%>"/>
                         <button type="submit" class="button-pay">
                             <span class="font-sz18 font-600" id="confirmText" style="color: white">Xác nhận</span>
@@ -458,9 +505,209 @@
             // Lấy giá trị ID của ngân hàng đã chọn
             var bankId = document.getElementById("bankSelect").value;
 
-            window.location.href = "payment?oid=" + <%=order.getId()%> + "&bid=" + bankId;
+            window.location.href = "payment?oid=" + <%=order.getId()%> +"&bid=" + bankId;
         }
     </script>
+
+    <script>
+        const emailRadio = document.getElementById("email-method");
+        const addressRadio = document.getElementById("address-method");
+        const addressInfo = document.getElementById("address-info");
+
+        emailRadio.addEventListener("change", () => {
+            if (emailRadio.checked) addressInfo.style.display = "none";
+        });
+
+        addressRadio.addEventListener("change", () => {
+            if (addressRadio.checked) addressInfo.style.display = "block";
+        });
+
+        const token = "2df6ab57-2d7f-11f0-a555-5269f44b06d2"; // GHN token
+        const shopId = "5770324"; // ID shop
+
+        async function fetchProvinces() {
+            const provinceSelect = document.getElementById("province");
+            const response = await fetch("https://online-gateway.ghn.vn/shiip/public-api/master-data/province", {
+                method: "GET",
+                headers: {
+                    "Token": token
+                }
+            });
+            const result = await response.json();
+            if (result.code === 200) {
+                result.data.forEach(p => {
+                    const option = document.createElement("option");
+                    option.value = p.ProvinceID; // ID province GHN
+                    option.textContent = p.ProvinceName;
+                    provinceSelect.appendChild(option);
+                });
+            }
+        }
+
+        async function calculateShippingFee() {
+            const districtCode = document.getElementById("district").value;
+            const wardCode = document.getElementById("ward").value;
+            if (!districtCode || isNaN(parseInt(districtCode))) {
+                alert("Vui lòng chọn quận/huyện hợp lệ.");
+                return;
+            }
+            if (!wardCode) {
+                alert("Vui lòng chọn phường/xã hợp lệ.");
+                return;
+            }
+
+            if (!districtCode || !wardCode) return;
+
+            try {
+                const response = await fetch("https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Token": token,
+                        "ShopId": shopId
+                    },
+                    body: JSON.stringify({
+                        service_type_id: 2, // 2 = tiêu chuẩn
+                        insurance_value: <%=order.getTotal_amount()%>,
+                        coupon: null,
+                        from_district_id: 1542, // Quận gửi hàng (Quận 1 TP.HCM)
+                        to_district_id: parseInt(districtCode),
+                        to_ward_code: wardCode,
+                        height: 10,
+                        length: 20,
+                        weight: 1000, // gram
+                        width: 15
+                    })
+                });
+
+                const result = await response.json();
+                if (result.code === 200) {
+                    const fee = result.data.total;
+                    document.getElementById("shipping-fee").textContent = fee.toLocaleString("vi-VN") + " đ";
+                } else {
+                    alert("Không thể tính phí: " + result.message);
+                }
+            } catch (error) {
+                console.error("Lỗi khi tính phí GHN:", error);
+                alert("Đã xảy ra lỗi khi gọi GHN API.");
+            }
+        }
+
+        // Khi chọn tỉnh -> Load quận/huyện theo GHN
+        document.getElementById("province").addEventListener("change", async function () {
+            const provinceId = this.value;
+            const districtSelect = document.getElementById("district");
+            const wardSelect = document.getElementById("ward");
+
+            districtSelect.innerHTML = `<option value="">-- Chọn quận/huyện --</option>`;
+            wardSelect.innerHTML = `<option value="">-- Chọn phường/xã --</option>`;
+            districtSelect.disabled = true;
+            wardSelect.disabled = true;
+
+            if (!provinceId) return;
+
+            const response = await fetch("https://online-gateway.ghn.vn/shiip/public-api/master-data/district", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Token": token
+                },
+                body: JSON.stringify({province_id: parseInt(provinceId)})
+            });
+            const result = await response.json();
+            if (result.code === 200) {
+                result.data.forEach(d => {
+                    const option = document.createElement("option");
+                    option.value = d.DistrictID; // ID district GHN
+                    option.textContent = d.DistrictName;
+                    districtSelect.appendChild(option);
+                });
+                districtSelect.disabled = false;
+            }
+        });
+
+        // Khi chọn quận -> Load phường/xã theo GHN
+        document.getElementById("district").addEventListener("change", async function () {
+            const districtId = this.value;
+            const wardSelect = document.getElementById("ward");
+
+            wardSelect.innerHTML = `<option value="">-- Chọn phường/xã --</option>`;
+            wardSelect.disabled = true;
+
+            if (!districtId) return;
+
+            const response = await fetch("https://online-gateway.ghn.vn/shiip/public-api/master-data/ward", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Token": token
+                },
+                body: JSON.stringify({district_id: parseInt(districtId)})
+            });
+            const result = await response.json();
+            if (result.code === 200) {
+                result.data.forEach(w => {
+                    const option = document.createElement("option");
+                    option.value = w.WardCode; // WardCode GHN (String)
+                    option.textContent = w.WardName;
+                    wardSelect.appendChild(option);
+                });
+                wardSelect.disabled = false;
+            }
+        });
+
+        document.getElementById("confirm-address").addEventListener("click", async function () {
+            const province = document.getElementById("province").value;
+            const district = document.getElementById("district").value;
+            const ward = document.getElementById("ward").value;
+            const detailed = document.getElementById("detailed-address").value.trim();
+
+            let missing = [];
+
+            if (!province) missing.push("Tỉnh/Thành phố");
+            if (!district) missing.push("Quận/Huyện");
+            if (!ward) missing.push("Phường/Xã");
+            if (!detailed) missing.push("Địa chỉ cụ thể");
+
+            if (missing.length > 0) {
+                alert("Vui lòng nhập đầy đủ thông tin: " + missing.join(", "));
+                return;
+            }
+
+            // Gửi request cập nhật địa chỉ
+            try {
+                console.log({province, district, ward, detailed, orderId: "<%=order.getId()%>"});
+                const res = await fetch("/web/update-transport", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        province,
+                        district,
+                        ward,
+                        detailed,
+                        orderId: "<%=order.getId()%>"
+                    })
+
+                });
+
+                const result = await res.json();
+                if (result.success) {
+                    alert("Cập nhật địa chỉ giao hàng thành công!");
+                } else {
+                    alert("Cập nhật thất bại: " + result.message);
+                }
+            } catch (err) {
+                alert("Đã xảy ra lỗi khi cập nhật địa chỉ.");
+            }
+            // tính phí vận chuyển
+            await calculateShippingFee();
+        });
+
+
+        // Load tỉnh khi bắt đầu
+        fetchProvinces();
+    </script>
+
 </div>
 </body>
 </html>

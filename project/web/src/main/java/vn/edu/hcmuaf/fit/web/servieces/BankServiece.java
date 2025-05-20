@@ -15,4 +15,15 @@ public class BankServiece {
     public Bank getBankById(int id) {
         return bankDao.getBankById(id);
     }
+
+    public void updateBank(int id, String name, String number, String owner, String qr) {
+        bankDao.updateBank(id, name, number, owner, qr);
+    }
+    public void deleteBank(int id) {
+        bankDao.deleteBank(id);
+    }
+    public void addBank(String name, String number, String owner, String qr) {
+        bankDao.addBank( name, number, owner, qr);
+    }
+
 }

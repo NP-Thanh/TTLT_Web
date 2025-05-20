@@ -4,32 +4,22 @@ function toggleAddForm() {
     const form = document.getElementById("addBankForm");
     form.classList.toggle("hidden");
 }
-// Hiển thị hoặc ẩn form sửa thông tin
-function toggleEditForm() {
-    const form = document.getElementById("editBankForm");
-    form.classList.toggle("hidden");
-    document.getElementById("editBankDetails").classList.add("hidden");
+
+function editBank(button) {
+    const row = button.closest('tr'); // Lấy hàng (tr) chứa nút được bấm
+
+    document.getElementById('editBankDetails').classList.remove('hidden'); // Hiển thị form sửa
+
+    // Gán dữ liệu vào các input
+    document.getElementById('editBID').value = row.getAttribute('data-id');
+    document.getElementById('editBankName').value = row.getAttribute('data-name');
+    document.getElementById('editBankNum').value = row.getAttribute('data-num')
+    document.getElementById('editBankOwn').value = row.getAttribute('data-own');
+    document.getElementById('editBankImage').value = row.getAttribute('data-image');
+    console.log("Form cập nhật đã hiện và dữ liệu đã gán.");
 }
 
-// Hiển thị thông tin ngân hàng cần sửa
-function loadBankInfo() {
-    const id = document.getElementById("editBankId").value;
-    const rows = document.querySelectorAll('#bankTable tr');
-
-    for (let i = 0; i < rows.length; i++) {
-        const cells = rows[i].getElementsByTagName('td');
-        if (cells[0] && cells[0].innerText === id) {
-            document.getElementById('editBankDetails').classList.remove('hidden');
-            document.getElementById('editBID').value = id; // Product ID
-            document.getElementById('editBankName').value = cells[1].innerText; // Product Name
-            document.getElementById('editBankNum').value = cells[2].innerText; // Product Type
-            document.getElementById('editBankOwn').value = cells[3].innerText; // Product Price
-            document.getElementById('editBankImage').value = cells[4].querySelector('img').src; // Product Image
-
-            return;
-        }
-
-    }
-    alert('Không tìm thấy ngân hàng với mã này!');
+function cancelled() {
+    const form = document.getElementById('editBankDetails');
+    form.classList.add('hidden');
 }
-

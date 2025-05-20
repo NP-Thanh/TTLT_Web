@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.web.servieces;
 
+import redis.clients.jedis.Jedis;
 import vn.edu.hcmuaf.fit.web.dao.CartDao;
 import vn.edu.hcmuaf.fit.web.dao.ProductDao;
 import vn.edu.hcmuaf.fit.web.dao.ProductManageDao;
@@ -9,6 +10,7 @@ import vn.edu.hcmuaf.fit.web.model.Bank;
 import vn.edu.hcmuaf.fit.web.model.KeyManage;
 import vn.edu.hcmuaf.fit.web.model.Product;
 import vn.edu.hcmuaf.fit.web.model.ProductManage;
+import vn.edu.hcmuaf.fit.web.redis.RedisManager;
 
 import java.util.List;
 
@@ -60,6 +62,11 @@ public class AdminService {
 
     public List<CartProduct> getAllListCartDetails (){
         return cartDao.getAllListCartDetails();
+    }
+
+    public void revokeAdmin(int adminId) {
+        Jedis jedis = RedisManager.getJedis();
+        jedis.sadd("revoked_admins", String.valueOf(adminId));
     }
 
     public List<ProductManage> getProductListByRole(int userId, boolean isAdmin) {
