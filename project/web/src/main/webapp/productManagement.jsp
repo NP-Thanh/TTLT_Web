@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: THAI
-  Date: 1/13/2025
-  Time: 12:41 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -37,7 +30,8 @@
         <section>
             <%--Tìm kiếm--%>
             <button class="btn-find" onclick="toggleFind()">Tìm kiếm</button>
-            <form class="hidden" id="findProductForm" action="ProductManagement" method="post">
+            <form class="hidden" id="findProductForm" action="${pageContext.request.contextPath}/ProductManagement" method="post">
+                <input type="hidden" name="action" value="search">
                 <input type="text" name="productID" placeholder="Mã sản phẩm">
                 <input type="text" name="productName" placeholder="Tên sản phẩm">
                 <select name="status">
@@ -50,8 +44,8 @@
 
             <!-- Nút Thêm sản phẩm -->
             <button class="btn-add" onclick="toggleAddForm()">+ Thêm sản phẩm</button>
-            <form action="addProduct" method="post" id="addProductForm" class="hidden">
-
+            <form action="${pageContext.request.contextPath}/ProductManagement" method="post" id="addProductForm" class="hidden">
+                <input type="hidden" name="action" value="add">
                 <input name="name" type="text" id="addProductName" placeholder="Tên sản phẩm" required>
                 <%--                <input name="type" type="text" id="addProductType" placeholder="Loại" required>--%>
                 <select name="type" id="addProductType" required>
@@ -77,17 +71,10 @@
                 <button type="submit">Lưu</button>
             </form>
 
-
-            <%--            <!-- Nút Sửa thông tin -->--%>
-            <%--            <button class="btn-edit" onclick="toggleEditForm()">Sửa thông tin</button>--%>
-            <%--            <form id="editProductForm" class="hidden">--%>
-            <%--                <input type="text" id="editProductId" placeholder="Nhập mã sản phẩm để sửa" required>--%>
-            <%--                <button type="button" onclick="loadProductInfo()">Tìm kiếm</button>--%>
-            <%--            </form>--%>
-
             <%--form nhập key--%>
             <div id="addKey" class="hidden">
-                <form action="addKey" method="post">
+                <form action="${pageContext.request.contextPath}/ProductManagement" method="post">
+                    <input type="hidden" name="action" value="addKey">
                     <table style="margin-bottom: 10px">
                         <tr>
                             <td>Mã sản phẩm:</td>
@@ -112,7 +99,8 @@
 
             <%--                Form chỉnh sửa chi tiết sản phẩm--%>
             <div id="editProductDetails" class="hidden">
-                <form action="editProduct" method="post">
+                <form action="${pageContext.request.contextPath}/ProductManagement" method="post">
+                    <input type="hidden" name="action" value="update">
                     <table style="margin-bottom: 10px">
                         <tr>
                             <td>Mã sản phẩm:</td>
@@ -220,10 +208,14 @@
                                          background: #ffe250; font-weight: bold" onclick="loadProductKeyInfo(this)"
                                         data-id="${product.id}">Key
                                 </button>
-                                <a class="icon-trash d-flex align-items-center" href="deleteProduct?pid=${product.id}"
-                                   class="delete"
-                                   style="color: #fbfbfb;width: 20px; height: 30px; background: #ff3d3d; border-radius: 4px; padding-left: 8px"><i
-                                        class="fa-solid fa-trash"></i></a>
+                                <form action="${pageContext.request.contextPath}/ProductManagement" method="post" style="margin: 0">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="pid" value="${product.id}">
+                                    <button type="submit"
+                                            style="color: #fbfbfb;width: 30px; height: 30px; background: #ff3d3d; border-radius: 4px; padding-left: 8px">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
