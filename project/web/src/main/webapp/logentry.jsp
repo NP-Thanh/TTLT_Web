@@ -30,6 +30,7 @@
             color: #404040;
             font-family: Arial, sans-serif;
             height: 100%;
+            flex-wrap: wrap;
         }
 
         .btn-add {
@@ -166,7 +167,8 @@
         <section>
             <!-- Nút tìm kiếm -->
             <button class="btn-find" onclick="toggleEditForm()">Tìm kiếm</button>
-            <form class="hidden" id="findLog" action="logs" method="post">
+            <form class="hidden" id="findLog" action="${pageContext.request.contextPath}/logs" method="post">
+                <input type="hidden" name="action" value="search">
                 <input type="text" name="productName" placeholder="ID admin">
                 <select name="level">
                     <option value="">Tất cả</option>
@@ -215,9 +217,15 @@
                     </td>
                     <td><%=log.getAfterData()%>
                     </td>
-                    <td class="icon-trash">
-                        <a href="deleteLog?lid=<%=log.getId()%>" class="delete" style="color: black"><i
-                                class="fa-solid fa-trash"></i></a>
+                    <td>
+                        <form action="${pageContext.request.contextPath}/logs" method="post" style="margin: 0">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="lid" value="<%=log.getId()%>">
+                            <button type="submit"
+                                    style="color: #fbfbfb;width: 30px; height: 30px; background: #ff3d3d; border-radius: 4px; padding-left: 8px">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 <%

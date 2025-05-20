@@ -163,12 +163,13 @@
 
     <div class="content">
         <header>
-            <h2>Quản lý thông tin chuyển khoản</h2>
+            <h2>Quản lý đơn hàng</h2>
         </header>
         <section>
             <!-- Nút tìm kiếm -->
             <button class="btn-find" onclick="toggleEditForm()">Tìm kiếm</button>
-            <form class="hidden" id="findOrderForm" action="orderManagement" method="post">
+            <form class="hidden" id="findOrderForm" action="${pageContext.request.contextPath}/orderManagement" method="post">
+                <input type="hidden" name="action" value="search">
                 <input type="text" name="orderID" placeholder="Mã đơn hàng">
                 <input type="text" name="productName" placeholder="Tên sản phẩm">
                 <select name="status">
@@ -226,8 +227,16 @@
                     <td style="color: #2fa50c; font-weight: 600"><%=order.getStatus()%>
                     </td>
                     <td class="icon-trash">
-                        <a href="DeleteOrder?oid=<%=order.getId()%>" class="delete" style="color: black"><i
-                                class="fa-solid fa-trash"></i></a>
+                        <form action="${pageContext.request.contextPath}/orderManagement" method="post" style="margin: 0">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="oid" value="<%=order.getId()%>">
+                            <button type="submit"
+                                    style="color: #fbfbfb;width: 30px; height: 30px; background: #ff3d3d; border-radius: 4px; padding-left: 8px">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+<%--                        <a href="DeleteOrder?oid=<%=order.getId()%>" class="delete" style="color: black"><i--%>
+<%--                                class="fa-solid fa-trash"></i></a>--%>
                     </td>
                     <%
                     } else {

@@ -4,6 +4,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.web.model.OrderWithUser;
+import vn.edu.hcmuaf.fit.web.model.ProductManage;
+import vn.edu.hcmuaf.fit.web.servieces.AdminService;
 import vn.edu.hcmuaf.fit.web.servieces.LogEntryService;
 import vn.edu.hcmuaf.fit.web.servieces.OrderServiece;
 
@@ -27,6 +29,17 @@ public class OrderManagement extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if ("search".equals(action)) {
+            searchOrder(request, response);
+        } else if ("delete".equals(action)) {
+            deleteOrder(request);
+            response.sendRedirect(request.getContextPath() + "/orderManagement");
+        }
+    }
+
+    private void searchOrder(HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException {
         String orderId = request.getParameter("orderID");
         String productName = request.getParameter("productName");
         String status = request.getParameter("status");
@@ -57,6 +70,14 @@ public class OrderManagement extends HttpServlet {
         request.setAttribute("list", filteredOrders);
         request.getRequestDispatcher("/orderManagement.jsp").forward(request, response);
     }
+    private void deleteOrder(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        int oid = Integer.parseInt(request.getParameter("oid"));
+        OrderServiece orderServiece = new OrderServiece();
+        orderServiece.deleteOrder(oid);
 
-
+        int uid = (int) session.getAttribute("uid");
+        LogEntryService logService = new LogEntryService();
+        logService.logAction("Danger", "Xóa đơn hàng", uid, "id order: "+oid, "Empty");
+    }
 }
