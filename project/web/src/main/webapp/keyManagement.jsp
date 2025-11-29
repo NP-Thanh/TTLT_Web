@@ -39,36 +39,27 @@
                 <input type="hidden" name="action" value="add">
                 <input name="pid" type="text" id="pid" placeholder="Mã sản phẩm" required>
                 <span id="statusMessage" style="font-size: 14px;"></span>
-                <input name="keys" type="text" id="addKeyName" placeholder="Tên Key">
+                <input name="keys" type="text" id="addKeyName" placeholder="Tên Key" required>
                 <button type="submit" id="saveBtn" name="action" value="save" disabled>LƯU</button>
             </form>
 
             <div id="editKeyDetails" class="hidden">
-
-                <!-- Form cập nhật key nếu dùng modal hoặc chi tiết -->
-
                 <form action="${pageContext.request.contextPath}/KeyManagement" method="post">
                     <input type="hidden" name="action" value="update">
                     <table style="margin-bottom: 10px">
-                        <tr>
-                            <td>Mã Key:</td>
+                        <tr style="display: none;"> <td>Mã Key:</td>
                             <td><input type="text" id="editIDKey" name="kid" required readonly></td>
                         </tr>
-                        <tr>
-                            <td>Key:</td>
+                        <tr> <td>Key:</td>
                             <td><input type="text" id="editNameKey" name="kName" required></td>
                         </tr>
-
-                        <tr>
-                            <td>Tên sản phẩm:</td>
+                        <tr style="display: none;"> <td>Tên sản phẩm:</td>
                             <td><input type="text" id="editKeyName" name="pName" readonly></td>
                         </tr>
-                        <tr>
-                            <td>Loại:</td>
+                        <tr style="display: none;"> <td>Loại:</td>
                             <td><input type="text" id="editKeyType" name="pType" readonly></td>
                         </tr>
-                        <tr>
-                            <td>Hình ảnh (URL):</td>
+                        <tr style="display: none;"> <td>Hình ảnh (URL):</td>
                             <td><input type="text" id="editKeyImage" name="pImg" readonly></td>
                         </tr>
                     </table>
@@ -79,7 +70,6 @@
                         </button>
                     </div>
                 </form>
-
             </div>
 
             <table>
@@ -196,19 +186,36 @@
             let type = row.find("td:eq(3)").text();
             let img = row.find("td:eq(5)").find("img").attr("src");
 
-            let newKey = prompt("Sửa key:", key);
-            if (newKey === null || newKey.trim() === "") return;
+            $("#editIDKey").val(id);
+            $("#editNameKey").val(key);
+            $("#editKeyName").val(name);
+            $("#editKeyType").val(type);
+            $("#editKeyImage").val(img);
 
-            $.post("KeyManagement", {
-                action: "update",
-                kid: id,
-                kName: newKey,
-                pName: name,
-                pType: type,
-                pImg: img
-            }, function () {
-                alert("Đã cập nhật!");
-                loadKeys();
+            // 2. Hiển thị form sửa
+            $("#editKeyDetails").removeClass("hidden");
+
+            $('html, body').animate({
+                scrollTop: $("#editKeyDetails").offset().top
+            }, 500);
+
+            $("#editKeyDetails form").on("submit", function(e) {
+                e.preventDefault();
+
+                const formData = {
+                    action: "update",
+                    kid: $("#editIDKey").val(),
+                    kName: $("#editNameKey").val(),
+                    pName: $("#editKeyName").val(),
+                    pType: $("#editKeyType").val(),
+                    pImg: $("#editKeyImage").val()
+                };
+
+                $.post("KeyManagement", formData, function () {
+                    alert("Đã cập nhật!");
+                    loadKeys();
+                    cancelled();
+                });
             });
         });
     });

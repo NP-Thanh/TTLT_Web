@@ -15,7 +15,7 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Css/productmanagement.css">
-    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 </head>
 <body>
 <div class="admin-container">
@@ -227,6 +227,7 @@
 </div>
 <script src=""></script>
 <script src="${pageContext.request.contextPath}/Js/product-management.js"></script>
+
 <script>
     CKEDITOR.replace('editProDes');
 </script>
