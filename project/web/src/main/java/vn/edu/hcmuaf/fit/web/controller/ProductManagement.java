@@ -53,10 +53,10 @@ public class ProductManagement extends HttpServlet {
         } else if ("delete".equals(action)) {
             deleteProduct(request);
             response.sendRedirect(request.getContextPath() + "/ProductManagement");
-        }else if ("update".equals(action)) {
+        } else if ("update".equals(action)) {
             updateProduct(request);
             response.sendRedirect(request.getContextPath() + "/ProductManagement");
-        }else if ("addKey".equals(action)) {
+        } else if ("addKey".equals(action)) {
             addKey(request);
             response.sendRedirect(request.getContextPath() + "/ProductManagement");
         }
@@ -75,7 +75,7 @@ public class ProductManagement extends HttpServlet {
         String support = request.getParameter("pSupport");
 
         AdminService adminService = new AdminService();
-        adminService.editProduct(id,name,type,price,duration,image,description,introduction,manufacturer,support);
+        adminService.editProduct(id, name, type, price, duration, image, description, introduction, manufacturer, support);
     }
 
     private void addProduct(HttpServletRequest request, HttpServletResponse response) {
@@ -85,7 +85,7 @@ public class ProductManagement extends HttpServlet {
         String duration = request.getParameter("duration");
         String img = request.getParameter("img");
         String des = request.getParameter("des");
-        String intro  = request.getParameter("intro");
+        String intro = request.getParameter("intro");
         String manu = request.getParameter("manu");
         String support = request.getParameter("support");
         String banner = request.getParameter("banner");
@@ -93,9 +93,9 @@ public class ProductManagement extends HttpServlet {
         AdminService adminService = new AdminService();
         HttpSession session = request.getSession(true);
         int uid = (int) session.getAttribute("uid");
-        int pid = adminService.addProduct(name,type,price,duration,img,des,intro,manu,support,banner);
+        int pid = adminService.addProduct(name, type, price, duration, img, des, intro, manu, support, banner);
         LogEntryService logService = new LogEntryService();
-        logService.logAction("Info", "Thêm sản phẩm", uid, "Empty", "id product: "+pid);
+        logService.logAction("Info", "Thêm sản phẩm", uid, "Empty", "id product: " + pid);
     }
 
     private void deleteProduct(HttpServletRequest request) {
@@ -106,13 +106,11 @@ public class ProductManagement extends HttpServlet {
 
         int uid = (int) session.getAttribute("uid");
         LogEntryService logService = new LogEntryService();
-        logService.logAction("Danger", "Xóa sản phẩm", uid, "id product: "+pid, "Empty");
+        logService.logAction("Danger", "Xóa sản phẩm", uid, "id product: " + pid, "Empty");
     }
 
-    private void searchProduct(HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException {
-        Integer productId = request.getParameter("productID") != null && !request.getParameter("productID").isEmpty()
-                ? Integer.parseInt(request.getParameter("productID"))
-                : null;
+    private void searchProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Integer productId = request.getParameter("productID") != null && !request.getParameter("productID").isEmpty() ? Integer.parseInt(request.getParameter("productID")) : null;
         String productName = request.getParameter("productName");
         String status = request.getParameter("status");
 
