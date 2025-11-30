@@ -24,6 +24,7 @@
         </header>
         <section>
             <button class="btn-add" onclick="toggleAddForm()">+ Thêm mã giảm giá</button>
+            <p id="errorMessage" style="color: red; display: none; margin-top: 10px;"></p>
             <form id="addDiscountForm" method="post" style="display: none;">
                 <input type="hidden" name="action" value="add">
                 <input type="text" name="id" placeholder="Mã" required>
@@ -71,6 +72,7 @@
     function toggleAddForm() {
         const form = document.getElementById('addDiscountForm');
         form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        $('#errorMessage').hide();
     }
 
     function toggleEditForm() {
@@ -85,8 +87,10 @@
             $('#discountTableBody').html(response);
             $('#addDiscountForm')[0].reset();
             toggleAddForm();
-        }).fail(function() {
-            alert('Lỗi khi thêm mã giảm giá.');
+            $('#errorMessage').hide();
+        }).fail(function(e) {
+            const errorText = 'Lỗi khi thêm mã giảm giá.';
+            $('#errorMessage').text(errorText).show();
         });
     }
 

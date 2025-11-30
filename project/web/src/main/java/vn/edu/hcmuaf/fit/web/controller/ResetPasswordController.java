@@ -63,7 +63,7 @@ public class ResetPasswordController extends HttpServlet {
             boolean isSuccess = resetPasswordService.resetPassword(email, oldPassword, newPassword);
             if (isSuccess) {
                 session.setAttribute("error", "Đổi mật khẩu thành công.");
-                response.sendRedirect("/web/home");
+                response.sendRedirect("/web/account");
             } else {
                 session.setAttribute("error", "Mật khẩu cũ không đúng.");
                 response.sendRedirect(request.getHeader("referer"));
