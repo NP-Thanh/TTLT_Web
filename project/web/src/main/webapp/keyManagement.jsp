@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Css/keyManagement.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div class="admin-container">
@@ -32,7 +33,7 @@
             </form>
 
             <button class="btn-add" onclick="toggleAddForm()">+ Thêm Key</button>
-
+            <p id="message" style="color: red; display: none; margin-top: 10px;"></p>
 
             <form action="${pageContext.request.contextPath}/KeyManagement" method="post" id="addKeyForm" class="hidden">
 
@@ -99,8 +100,6 @@
                                 <button class="delete-btn" data-id="${key.id}">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
-
-
                             </div>
                         </td>
                     </tr>
@@ -149,10 +148,11 @@
                 pid: $("#pid").val(),
                 keys: $("#addKeyName").val()
             }, function () {
-                alert("Đã thêm key!");
                 loadKeys();
                 $("#addKeyForm")[0].reset();
                 $("#statusMessage").text("");
+                const messageElement = $('#message');
+                messageElement.text("Thêm key thành công!").css("color", "green").show();
             });
         });
 
@@ -167,14 +167,16 @@
         });
 
         $(document).on("click", ".delete-btn", function () {
-            if (!confirm("Bạn chắc chắn muốn xóa key này?")) return;
+            // if (!confirm("Bạn chắc chắn muốn xóa key này?")) return;
             let kid = $(this).data("id");
             $.post("KeyManagement", {
                 action: "delete",
                 kid: kid
             }, function () {
-                alert("Đã xóa!");
                 loadKeys();
+                const messageElement = $('#message');
+                messageElement.text("Xóa key thành công!").css("color", "green").show();
+
             });
         });
 
@@ -212,7 +214,8 @@
                 };
 
                 $.post("KeyManagement", formData, function () {
-                    alert("Đã cập nhật!");
+                    const messageElement = $('#message');
+                    messageElement.text("Thêm key thành công!").css("color", "green").show();
                     loadKeys();
                     cancelled();
                 });
