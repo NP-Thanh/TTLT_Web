@@ -43,7 +43,7 @@
                     <h3 class="product-title"><%= product.getName() %>
                     </h3>
                     <p class="product-price"><%= formattedPrice %>đ</p>
-                    <a href="../HTML/chi_tiet_sp.html?id=<%= product.getId() %>" class="btn">Xem Chi Tiết</a>
+                    <a href="ProductDetail?id=<%= product.getId() %>" class="btn">Xem Chi Tiết</a>
                 </div>
                 <%
                     }

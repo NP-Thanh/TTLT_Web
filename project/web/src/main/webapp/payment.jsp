@@ -23,6 +23,7 @@
     <meta charset="UTF-8">
     <title>Trang thanh toán</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         html, body, p {
             width: 100%;
@@ -324,6 +325,7 @@
                     </div>
                     <!-- Địa chỉ chi tiết (ẩn mặc định) -->
                     <div id="address-info" style="display: none; margin-top: 15px; margin-left: 120px">
+                        <p id="message" style="color: red; display: none; margin-top: 10px;"></p>
                         <div class="d-flex info-item" style="margin-bottom: 10px">
                             <label class="font-600 font-sz16">Tỉnh/Thành phố:</label>
                             <select id="province" class="text-gray" style="margin-left: 10px">
@@ -520,6 +522,7 @@
 
         addressRadio.addEventListener("change", () => {
             if (addressRadio.checked) addressInfo.style.display = "block";
+            $('#message').hide();
         });
 
         const token = "2df6ab57-2d7f-11f0-a555-5269f44b06d2"; // GHN token
@@ -692,7 +695,9 @@
 
                 const result = await res.json();
                 if (result.success) {
-                    alert("Cập nhật địa chỉ giao hàng thành công!");
+                    // alert("Cập nhật địa chỉ giao hàng thành công!");
+                    const text = 'Cập nhật địa chỉ giao hàng thành công!';
+                    $('#message').text(text).show();
                 } else {
                     alert("Cập nhật thất bại: " + result.message);
                 }
@@ -701,6 +706,7 @@
             }
             // tính phí vận chuyển
             await calculateShippingFee();
+
         });
 
 

@@ -93,11 +93,9 @@ public class DiscountController extends HttpServlet {
         if (errorMessage != null) {
             request.setAttribute("errorMessage", errorMessage);
             // Chuyển hướng hoặc forward đến trang thông báo lỗi
-            try {
-                request.getRequestDispatcher("/giamgia.jsp").forward(request, response);
-            } catch (ServletException | IOException e) {
-                System.err.println("Lỗi khi chuyển hướng: " + e.getMessage());
-            }
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            // 2. Ghi thông báo lỗi ra Response (Ajax sẽ nhận thông báo này)
+            return;
         }
     }
 
