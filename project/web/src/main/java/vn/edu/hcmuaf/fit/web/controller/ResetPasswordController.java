@@ -34,7 +34,7 @@ public class ResetPasswordController extends HttpServlet {
 
         // Kiểm tra mật khẩu nhập lại có khớp không
         if (newPassword == null || confirm_password == null || !newPassword.equals(confirm_password)) {
-            session.setAttribute("error", "Mật khẩu không khớp.");
+            session.setAttribute("error", "Mật khẩu xác nhận không trùng khớp.");
             response.sendRedirect(request.getHeader("referer")); // Quay lại trang trước đó
             return;
         }
@@ -62,7 +62,7 @@ public class ResetPasswordController extends HttpServlet {
             }
             boolean isSuccess = resetPasswordService.resetPassword(email, oldPassword, newPassword);
             if (isSuccess) {
-                session.setAttribute("error", "Đổi mật khẩu thành công.");
+                session.setAttribute("error", "Đổi mật khẩu thành công");
                 response.sendRedirect("/web/account");
             } else {
                 session.setAttribute("error", "Mật khẩu cũ không đúng.");

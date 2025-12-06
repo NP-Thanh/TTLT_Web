@@ -101,8 +101,11 @@
             $('#discountTableBody').html(response);
             $('#editDiscountForm')[0].reset();
             toggleEditForm();
+            $('#errorMessage').hide();
         }).fail(function() {
-            alert('Lỗi khi sửa mã giảm giá.');
+            // alert('Lỗi khi sửa mã giảm giá.');
+            const errorText = 'Lỗi khi sửa mã giảm giá.';
+            $('#errorMessage').text(errorText).show();
         });
     }
 

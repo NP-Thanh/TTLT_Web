@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.web.model.User;
 import vn.edu.hcmuaf.fit.web.servieces.UpdateProfileService;
 
@@ -24,6 +25,7 @@ public class UpdateProfileController extends HttpServlet {
         String name = request.getParameter("full_name");
         String phone = request.getParameter("phone_number");
         String email = request.getParameter("email");
+        HttpSession session = request.getSession();
 
         System.out.println("Name: " + name + ", Phone: " + phone + ", Email: " + email); // Log thông tin
 
@@ -34,6 +36,7 @@ public class UpdateProfileController extends HttpServlet {
         user.setEmail(email);
 
         if (updateProfileService.updateUserProfile(user)) {
+            session.setAttribute("error", "Cập nhật thông tin thành công.");
             response.sendRedirect("account"); // Chuyển hướng đến trang tài khoản
         } else {
             request.setAttribute("errorMessage", "Cập nhật thông tin thất bại.");

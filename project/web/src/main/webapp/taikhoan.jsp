@@ -191,6 +191,12 @@
             <form action="updateProfile" method="post">
                 <div id="personal-info-card" class="personal-info-card card">
                     <h2>Thông tin cá nhân</h2>
+                    <% if (session.getAttribute("error") != null) { %>
+                    <div id="message" style="color: red; font-weight: bold; padding-bottom: 5px">
+                        <%= session.getAttribute("error") %>
+                    </div>
+                    <% session.removeAttribute("error"); %> <%-- Xóa lỗi sau khi hiển thị --%>
+                    <% } %>
                     <div class="form-group">
                         <label for="username" class="form-label">Tên người dùng *</label>
                         <input value="<%=user.getName()%>" type="text" id="username" name="full_name" class="form-input personal-input" placeholder="Nhập tên người dùng" required>
@@ -212,12 +218,6 @@
             <form action="resetPassword" method="post" id="resetPasswordForm">
                 <div id="password-change-card" class="password-change-card card">
                     <h2>Đổi mật khẩu</h2>
-                    <% if (session.getAttribute("error") != null) { %>
-                    <div id="error-message" style="color: red; font-weight: bold; padding-bottom: 5px">
-                        <%= session.getAttribute("error") %>
-                    </div>
-                    <% session.removeAttribute("error"); %> <%-- Xóa lỗi sau khi hiển thị --%>
-                    <% } %>
                     <div class="form-group">
                         <label for="email2" class="form-label">Email</label>
                         <input type="email" id="email2" name="email" class="form-input personal-input" value="<%= request.getSession().getAttribute("email") != null ? request.getSession().getAttribute("email") : "" %>" readonly>
@@ -238,7 +238,7 @@
                         <div class="form-label"></div>
                         <button type="submit" class="form-button password-button" id="changePasswordButton">Xác nhận thay đổi</button>
                     </div>
-                    <div id="message" style="color: red;"></div> <!-- Khối hiển thị thông báo -->
+<%--                    <div id="message" style="color: red;"></div> <!-- Khối hiển thị thông báo -->--%>
                 </div>
             </form>
         </div>
